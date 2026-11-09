@@ -1,13 +1,23 @@
+/// <reference types="vitest/config" />
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import path from "path";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+    // The repository is eylulg.github.io, a GitHub Pages user site served from the domain root.
+    base: "/",
     plugins: [react(), tailwindcss()],
     resolve: {
         alias: {
-            "@": path.resolve(__dirname, "./src"),
+            "@": fileURLToPath(new URL("./src", import.meta.url)),
         },
+    },
+    test: {
+        environment: "jsdom",
+        setupFiles: ["./src/test/setup.ts"],
+        include: ["src/**/*.test.{ts,tsx}"],
+        css: false,
+        restoreMocks: true,
     },
 });
