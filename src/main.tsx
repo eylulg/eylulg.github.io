@@ -1,23 +1,18 @@
 import { StrictMode } from "react";
+import "@fontsource-variable/inter";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router";
-import { HomeScreen } from "@/pages/home-screen";
-import { NotFound } from "@/pages/not-found";
-import { RouteProvider } from "@/providers/router-provider";
+import { createBrowserRouter } from "react-router";
+import { RouterProvider } from "react-router/dom";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { routes } from "@/router";
 import "@/styles/globals.css";
+
+const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <ThemeProvider>
-            <BrowserRouter>
-                <RouteProvider>
-                    <Routes>
-                        <Route path="/" element={<HomeScreen />} />
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
-                </RouteProvider>
-            </BrowserRouter>
+            <RouterProvider router={router} />
         </ThemeProvider>
     </StrictMode>,
 );
