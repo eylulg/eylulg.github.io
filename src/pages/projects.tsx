@@ -1,11 +1,10 @@
 import { useMemo, useState } from "react";
 import { Input } from "@eylulg/ui/input";
+import { PageHeader } from "@eylulg/ui/page-header";
 import { Tag, TagGroup } from "@eylulg/ui/tag";
 import { Search } from "lucide-react";
 import type { Key } from "react-aria-components";
 import { useSearchParams } from "react-router";
-import { Container } from "@/components/site/container";
-import { PageIntro } from "@/components/site/page-intro";
 import { ProjectCard } from "@/components/site/project-card";
 import { Seo } from "@/components/site/seo";
 import { projectTags, projects, tagFromSlug, tagToSlug } from "@/content/projects";
@@ -37,13 +36,15 @@ export default function ProjectsPage() {
                 title="Projects"
                 description="Projects by Eylül Güneş: a component library, a design-token tool, AI agent and review tools, a Word add-in, and React, Next.js and Vue apps."
             />
-            <PageIntro
-                eyebrow="Work"
-                title="Projects"
-                description="Public projects I'm building or rebuilding, each with tests, CI and a deployment. Filter by tag or search by name or stack."
-            />
+            <div className="max-w-3xl pt-6 pb-8 md:pb-12">
+                <PageHeader
+                    eyebrow="Work"
+                    title="Projects"
+                    description="Public projects I'm building or rebuilding, each with tests, CI and a deployment. Filter by tag or search by name or stack."
+                />
+            </div>
 
-            <Container className="flex flex-col gap-8 pb-16 md:pb-24">
+            <div className="flex flex-col gap-8 pb-16 md:pb-24">
                 <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                     <TagGroup
                         label="Filter projects by tag"
@@ -86,7 +87,7 @@ export default function ProjectsPage() {
                 ) : (
                     <p className="rounded-xl bg-secondary p-6 text-md text-tertiary">No projects match. Try another tag or a shorter search.</p>
                 )}
-            </Container>
+            </div>
         </>
     );
 }

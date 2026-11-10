@@ -1,7 +1,7 @@
+import { Button } from "@eylulg/ui/button";
 import { FileDown, Mail } from "lucide-react";
 import GitHub from "@/components/foundations/social-icons/github";
 import LinkedIn from "@/components/foundations/social-icons/linkedin";
-import { LinkButton } from "@/components/site/link-button";
 import { site } from "@/content/site";
 
 const GitHubIcon = ({ className }: { className?: string }) => <GitHub aria-hidden="true" className={className} />;
@@ -19,25 +19,25 @@ export function ContactButtons({ size = "md", withCv = true }: ContactButtonsPro
         <ul className="flex flex-wrap gap-3">
             {withCv && (
                 <li>
-                    <LinkButton href={site.cvPath} target="_blank" rel="noopener" size={size} iconLeading={FileDown}>
+                    <Button href={site.cvPath} target="_blank" rel="noopener" size={size} iconLeading={FileDown}>
                         CV (PDF)
-                    </LinkButton>
+                    </Button>
                 </li>
             )}
             <li>
-                <LinkButton href={site.links.github} target="_blank" rel="noopener noreferrer" variant="secondary" size={size} iconLeading={GitHubIcon}>
+                <Button href={site.links.github} target="_blank" rel="noopener noreferrer" variant="secondary" size={size} iconLeading={GitHubIcon}>
                     GitHub
-                </LinkButton>
+                </Button>
             </li>
             <li>
-                <LinkButton href={site.links.linkedin} target="_blank" rel="noopener noreferrer" variant="secondary" size={size} iconLeading={LinkedInIcon}>
+                <Button href={site.links.linkedin} target="_blank" rel="noopener noreferrer" variant="secondary" size={size} iconLeading={LinkedInIcon}>
                     LinkedIn
-                </LinkButton>
+                </Button>
             </li>
             <li>
-                <LinkButton href={`mailto:${site.email}`} variant="secondary" size={size} iconLeading={Mail}>
+                <Button href={`mailto:${site.email}`} variant="secondary" size={size} iconLeading={Mail}>
                     Email
-                </LinkButton>
+                </Button>
             </li>
         </ul>
     );

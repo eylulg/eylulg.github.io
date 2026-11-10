@@ -1,8 +1,7 @@
 import { Badge } from "@eylulg/ui/badge";
+import { Button } from "@eylulg/ui/button";
+import { PageHeader } from "@eylulg/ui/page-header";
 import { FileDown } from "lucide-react";
-import { Container } from "@/components/site/container";
-import { LinkButton } from "@/components/site/link-button";
-import { PageIntro } from "@/components/site/page-intro";
 import { Seo } from "@/components/site/seo";
 import { education, roles } from "@/content/experience";
 import { site } from "@/content/site";
@@ -15,13 +14,20 @@ export default function ExperiencePage() {
                 title="Experience"
                 description="Five years of frontend work in TypeScript, React, Next.js and Vue across legal tech, marketing tech, healthcare, e-commerce and online learning."
             />
-            <PageIntro eyebrow="Career" title="Experience" description={site.about[1]}>
-                <LinkButton href={site.cvPath} target="_blank" rel="noopener" variant="secondary" size="md" iconLeading={FileDown} className="self-start">
-                    Download the CV (PDF)
-                </LinkButton>
-            </PageIntro>
+            <div className="max-w-3xl pt-6 pb-8 md:pb-12">
+                <PageHeader
+                    eyebrow="Career"
+                    title="Experience"
+                    description={site.about[1]}
+                    meta={
+                        <Button href={site.cvPath} target="_blank" rel="noopener" variant="secondary" size="md" iconLeading={FileDown}>
+                            Download the CV (PDF)
+                        </Button>
+                    }
+                />
+            </div>
 
-            <Container className="flex flex-col gap-16 pb-16 md:pb-24">
+            <div className="flex flex-col gap-16 pb-16 md:pb-24">
                 <section aria-labelledby="roles-title" className="flex flex-col gap-8">
                     <h2 id="roles-title" className="sr-only">
                         Roles
@@ -102,7 +108,7 @@ export default function ExperiencePage() {
                         ))}
                     </ul>
                 </section>
-            </Container>
+            </div>
         </>
     );
 }

@@ -1,9 +1,8 @@
 import type { ReactNode } from "react";
 import { Badge } from "@eylulg/ui/badge";
+import { Button } from "@eylulg/ui/button";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useParams } from "react-router";
-import { Container } from "@/components/site/container";
-import { LinkButton } from "@/components/site/link-button";
 import { Seo } from "@/components/site/seo";
 import { StatusBadge } from "@/components/site/status-badge";
 import { getProject, projectLinks } from "@/content/projects";
@@ -42,10 +41,10 @@ export default function ProjectDetailPage() {
     return (
         <>
             <Seo title={project.title} description={project.summary} />
-            <Container className="flex flex-col gap-8 pt-8 pb-16 md:pt-12 md:pb-24">
-                <LinkButton href="/projects" variant="tertiary" size="md" iconLeading={ArrowLeft} className="-ml-3 self-start">
+            <div className="flex flex-col gap-8 pt-8 pb-16 md:pt-12 md:pb-24">
+                <Button href="/projects" variant="tertiary" size="md" iconLeading={ArrowLeft} className="-ml-3 self-start">
                     All projects
-                </LinkButton>
+                </Button>
 
                 <header className="flex max-w-3xl flex-col gap-4">
                     <div className="flex flex-wrap items-center gap-2">
@@ -99,7 +98,7 @@ export default function ProjectDetailPage() {
                             <ul className="flex flex-col gap-3">
                                 {links.map((link) => (
                                     <li key={link.href} className="flex flex-wrap items-center gap-2">
-                                        <LinkButton
+                                        <Button
                                             href={link.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -108,7 +107,7 @@ export default function ProjectDetailPage() {
                                             iconTrailing={ArrowUpRight}
                                         >
                                             {link.label}
-                                        </LinkButton>
+                                        </Button>
                                         {link.planned && <Badge size="sm">Not deployed yet</Badge>}
                                     </li>
                                 ))}
@@ -135,7 +134,7 @@ export default function ProjectDetailPage() {
                         </ul>
                     </Section>
                 </div>
-            </Container>
+            </div>
         </>
     );
 }

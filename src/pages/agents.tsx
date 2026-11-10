@@ -1,9 +1,8 @@
+import { Button } from "@eylulg/ui/button";
+import { PageHeader } from "@eylulg/ui/page-header";
 import { Tab, TabList, TabPanel, Tabs } from "@eylulg/ui/tabs";
 import { ArrowRight } from "lucide-react";
 import { AgentFlowDiagram } from "@/components/site/agent-flow-diagram";
-import { Container } from "@/components/site/container";
-import { LinkButton } from "@/components/site/link-button";
-import { PageIntro } from "@/components/site/page-intro";
 import { Seo } from "@/components/site/seo";
 import { agentFlow, agentIntro, agentSections } from "@/content/agents";
 
@@ -14,11 +13,12 @@ export default function AgentsPage() {
                 title="AI agents"
                 description="An engineering agent that takes tickets to pull requests with human approval gates, and a library of reusable agent skills."
             />
-            <PageIntro eyebrow="AI engineering" title="AI agents" description={agentIntro[0]}>
+            <div className="flex max-w-3xl flex-col gap-4 pt-6 pb-8 md:pb-12">
+                <PageHeader eyebrow="AI engineering" title="AI agents" description={agentIntro[0]} />
                 <p className="text-md text-tertiary">{agentIntro[1]}</p>
-            </PageIntro>
+            </div>
 
-            <Container className="flex flex-col gap-16 pb-16 md:pb-24">
+            <div className="flex flex-col gap-16 pb-16 md:pb-24">
                 <section aria-labelledby="flow-title" className="grid items-start gap-10 lg:grid-cols-2">
                     <div className="flex flex-col gap-4">
                         <h2 id="flow-title" className="text-xl font-semibold text-primary">
@@ -79,15 +79,15 @@ export default function AgentsPage() {
                         agent, and a review tool where every AI finding passes through a person.
                     </p>
                     <div className="flex flex-wrap gap-3">
-                        <LinkButton href="/projects/agent-control-room" variant="secondary" size="md" iconTrailing={ArrowRight}>
+                        <Button href="/projects/agent-control-room" variant="secondary" size="md" iconTrailing={ArrowRight}>
                             Agent control room
-                        </LinkButton>
-                        <LinkButton href="/projects/review-companion" variant="secondary" size="md" iconTrailing={ArrowRight}>
+                        </Button>
+                        <Button href="/projects/review-companion" variant="secondary" size="md" iconTrailing={ArrowRight}>
                             Review Companion
-                        </LinkButton>
+                        </Button>
                     </div>
                 </section>
-            </Container>
+            </div>
         </>
     );
 }

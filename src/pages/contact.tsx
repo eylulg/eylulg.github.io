@@ -1,7 +1,6 @@
+import { PageHeader } from "@eylulg/ui/page-header";
 import { Mail, MapPin } from "lucide-react";
 import { ContactButtons } from "@/components/site/contact-buttons";
-import { Container } from "@/components/site/container";
-import { PageIntro } from "@/components/site/page-intro";
 import { Seo } from "@/components/site/seo";
 import { languages, site } from "@/content/site";
 
@@ -12,15 +11,16 @@ export default function ContactPage() {
     return (
         <>
             <Seo title="Contact" description={`Contact ${site.name} by email, LinkedIn or GitHub. Based in ${site.location}, open to remote work.`} />
-            <PageIntro
-                eyebrow="Get in touch"
-                title="Contact"
-                description="The quickest way to reach me is email. I'm based in Türkiye and open to remote work."
-            >
+            <div className="flex max-w-3xl flex-col gap-4 pt-6 pb-8 md:pb-12">
+                <PageHeader
+                    eyebrow="Get in touch"
+                    title="Contact"
+                    description="The quickest way to reach me is email. I'm based in Türkiye and open to remote work."
+                />
                 <ContactButtons size="lg" />
-            </PageIntro>
+            </div>
 
-            <Container className="grid gap-6 pb-16 md:grid-cols-2 md:pb-24">
+            <div className="grid gap-6 pb-16 md:grid-cols-2 md:pb-24">
                 <section aria-labelledby="details-title" className="flex flex-col gap-4 rounded-xl bg-primary p-5 ring-1 ring-default ring-inset md:p-6">
                     <h2 id="details-title" className="text-lg font-semibold text-primary">
                         Details
@@ -87,7 +87,7 @@ export default function ContactPage() {
                         ))}
                     </dl>
                 </section>
-            </Container>
+            </div>
         </>
     );
 }

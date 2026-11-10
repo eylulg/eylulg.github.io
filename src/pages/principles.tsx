@@ -1,5 +1,4 @@
-import { Container } from "@/components/site/container";
-import { PageIntro } from "@/components/site/page-intro";
+import { PageHeader } from "@eylulg/ui/page-header";
 import { Seo } from "@/components/site/seo";
 import { principleGroups, principlesIntro } from "@/content/principles";
 
@@ -7,24 +6,31 @@ export default function PrinciplesPage() {
     return (
         <>
             <Seo title="How I work" description="How Eylül Güneş works: design and UI, code, local checks, pull requests, reviewing and communication." />
-            <PageIntro eyebrow="Principles" title="How I work" description={principlesIntro}>
-                <nav aria-label="On this page">
-                    <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm font-semibold">
-                        {principleGroups.map((group) => (
-                            <li key={group.id}>
-                                <a
-                                    href={`#${group.id}`}
-                                    className="rounded text-brand underline-offset-2 outline-focus hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
-                                >
-                                    {group.title}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            </PageIntro>
+            <div className="max-w-3xl pt-6 pb-8 md:pb-12">
+                <PageHeader
+                    eyebrow="Principles"
+                    title="How I work"
+                    description={principlesIntro}
+                    meta={
+                        <nav aria-label="On this page">
+                            <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm font-semibold">
+                                {principleGroups.map((group) => (
+                                    <li key={group.id}>
+                                        <a
+                                            href={`#${group.id}`}
+                                            className="rounded text-brand underline-offset-2 outline-focus hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
+                                        >
+                                            {group.title}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+                    }
+                />
+            </div>
 
-            <Container className="grid gap-6 pb-16 md:grid-cols-2 md:pb-24">
+            <div className="grid gap-6 pb-16 md:grid-cols-2 md:pb-24">
                 {principleGroups.map((group) => (
                     <section
                         key={group.id}
@@ -42,7 +48,7 @@ export default function PrinciplesPage() {
                         </ul>
                     </section>
                 ))}
-            </Container>
+            </div>
         </>
     );
 }

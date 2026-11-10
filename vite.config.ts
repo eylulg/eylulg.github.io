@@ -17,14 +17,9 @@ export default defineConfig({
         },
     ],
     resolve: {
-        // The linked library has its own node_modules; pin React to this app's copy so there is only one.
-        alias: [
-            {
-                find: /^(react|react-dom|lucide-react|react-aria-components)(\/.*)?$/,
-                replacement: `${fileURLToPath(new URL("./node_modules", import.meta.url))}/$1$2`,
-            },
-            { find: "@", replacement: fileURLToPath(new URL("./src", import.meta.url)) },
-        ],
+        alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
+        // The linked library has its own node_modules; share this app's single copy of these.
+        dedupe: ["react", "react-dom", "react-aria-components", "lucide-react"],
     },
     test: {
         environment: "jsdom",
@@ -32,7 +27,5 @@ export default defineConfig({
         include: ["src/**/*.test.{ts,tsx}"],
         css: false,
         restoreMocks: true,
-        // The linked library has its own node_modules; inline dependencies so they share this app's single copy of React.
-        server: { deps: { inline: true } },
     },
 });

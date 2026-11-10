@@ -50,7 +50,7 @@ export function RootLayout() {
 
     return (
         <RouteProvider>
-            <AppShell header={<Nav pathname={pathname} />} footer={<SiteFooter currentId="portfolio" />}>
+            <AppShell maxWidth="6xl" header={<Nav pathname={pathname} />} footer={<SiteFooter currentId="portfolio" />}>
                 <Outlet />
             </AppShell>
             <ScrollRestoration />
