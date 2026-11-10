@@ -41,7 +41,7 @@ export default function HomePage() {
                     <h2 id="proof-title" className="text-xl font-semibold text-primary md:text-2xl">
                         Three things I can show you
                     </h2>
-                    <ul className="grid gap-6 md:grid-cols-3">
+                    <ul className="grid gap-6 lg:grid-cols-3">
                         {proofPoints.map((point) => {
                             const Icon = proofIcons[point.id];
                             return (

@@ -44,20 +44,20 @@ export const proofPoints: ProofPoint[] = [
         title: "Product UI craft",
         body: "Product screens that hold up under real data: an issue tracker with optimistic updates that roll back when the server says no, a command palette with nested pages, and every state from empty to error covered by a test. Built in Next.js and React, keyboard first, tested with axe in light and dark.",
         href: "/projects/workspace",
-        linkLabel: "Read the Workspace case study",
+        linkLabel: "See Workspace",
     },
     {
         id: "design-systems",
         title: "Design-system engineering",
         body: "More than thirty accessible components on React Aria, eight theme variants that change only hue, grays, radius and density, and a test that every text token passes WCAG AA in light and dark.",
         href: "/projects/ui",
-        linkLabel: "Read the component library case study",
+        linkLabel: "See the component library",
     },
     {
         id: "ai-agents",
         title: "AI agent engineering",
         body: "AI where a person stays in charge: a review tool that checks every finding against the diff before showing it and posts nothing on its own. The agent workflow behind this site is written up too.",
         href: "/projects/review-companion",
-        linkLabel: "Read the Review Companion case study",
+        linkLabel: "See Review Companion",
     },
 ];

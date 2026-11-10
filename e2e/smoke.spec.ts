@@ -57,8 +57,9 @@ test("navigates client-side and keeps external links intact", async ({ page }) =
 
 test("a fresh load starts at the top even after another page was scrolled", async ({ page }) => {
     await page.goto("/experience");
-    await page.evaluate(() => window.scrollTo(0, 1200));
-    await page.waitForFunction(() => window.scrollY > 0);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await page.mouse.wheel(0, 1200);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
 
     await page.goto("/contact");
 
