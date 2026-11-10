@@ -7,9 +7,28 @@ import type { Key } from "react-aria-components";
 import { useSearchParams } from "react-router";
 import { ProjectCard } from "@/components/site/project-card";
 import { Seo } from "@/components/site/seo";
-import { projectTags, projects, tagFromSlug, tagToSlug } from "@/content/projects";
+import { type Project, projectTags, projects, tagFromSlug, tagToSlug } from "@/content/projects";
 
 const ALL = "all";
+
+function ProjectGroup({ id, title, projects: group }: { id: string; title: string; projects: Project[] }) {
+    if (group.length === 0) return null;
+
+    return (
+        <section aria-labelledby={id} className="flex flex-col gap-6">
+            <h2 id={id} className="text-xl font-semibold text-primary">
+                {title}
+            </h2>
+            <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {group.map((project) => (
+                    <li key={project.slug}>
+                        <ProjectCard project={project} headingLevel={3} />
+                    </li>
+                ))}
+            </ul>
+        </section>
+    );
+}
 
 export default function ProjectsPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -25,6 +44,9 @@ export default function ProjectsPage() {
         });
     }, [activeTag, query]);
 
+    const mainProjects = visible.filter((project) => !project.smaller);
+    const smallerProjects = visible.filter((project) => project.smaller);
+
     const onTagChange = (keys: Set<Key> | "all") => {
         const [key] = keys === "all" ? [ALL] : [...keys];
         setSearchParams(key && key !== ALL ? { tag: String(key) } : {}, { replace: true, preventScrollReset: true });
@@ -34,17 +56,17 @@ export default function ProjectsPage() {
         <>
             <Seo
                 title="Projects"
-                description="Projects by Eylül Güneş: a component library, a design-token tool, AI agent and review tools, a Word add-in, and React, Next.js and Vue apps."
+                description="Projects by Eylül Güneş: a component library, an issue tracker, an AI pull request review tool, a design-token tool, a Word add-in and smaller apps."
             />
             <div className="max-w-3xl pt-6 pb-8 md:pb-12">
                 <PageHeader
                     eyebrow="Work"
                     title="Projects"
-                    description="Public projects I'm building or rebuilding, each with tests, CI and a deployment. Filter by tag or search by name or stack."
+                    description="Public projects with tests and CI. The main ones come first, smaller ones after. Filter by tag or search by name or stack."
                 />
             </div>
 
-            <div className="flex flex-col gap-8 pb-16 md:pb-24">
+            <div className="flex flex-col gap-10 pb-16 md:pb-24">
                 <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                     <TagGroup
                         label="Filter projects by tag"
@@ -77,13 +99,10 @@ export default function ProjectsPage() {
                 </p>
 
                 {visible.length > 0 ? (
-                    <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {visible.map((project) => (
-                            <li key={project.slug}>
-                                <ProjectCard project={project} headingLevel={2} />
-                            </li>
-                        ))}
-                    </ul>
+                    <>
+                        <ProjectGroup id="main-projects" title="Main projects" projects={mainProjects} />
+                        <ProjectGroup id="smaller-projects" title="Smaller projects" projects={smallerProjects} />
+                    </>
                 ) : (
                     <p className="rounded-xl bg-secondary p-6 text-md text-tertiary">No projects match. Try another tag or a shorter search.</p>
                 )}

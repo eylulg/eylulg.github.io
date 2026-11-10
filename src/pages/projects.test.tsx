@@ -6,7 +6,7 @@ import { renderRoute, runAxe } from "@/test/render-route";
 
 const cardTitles = () =>
     within(screen.getByRole("main"))
-        .queryAllByRole("heading", { level: 2 })
+        .queryAllByRole("heading", { level: 3 })
         .map((heading) => heading.textContent);
 
 describe("Projects page", () => {
@@ -15,7 +15,14 @@ describe("Projects page", () => {
 
         expect(heading).toHaveTextContent("Projects");
         expect(cardTitles()).toEqual(projects.map((project) => project.title));
+        expect(screen.getByRole("heading", { level: 2, name: "Smaller projects" })).toBeInTheDocument();
         expect(screen.getByRole("status")).toHaveTextContent(`${projects.length} projects`);
+    });
+
+    it("lists the smaller projects after the main ones", async () => {
+        await renderRoute("/projects");
+
+        expect(cardTitles().slice(-2)).toEqual(["Agent control room", "Sudoku"]);
     });
 
     it("filters by tag chip and keeps the filter in the URL", async () => {

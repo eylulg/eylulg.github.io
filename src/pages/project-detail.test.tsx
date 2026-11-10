@@ -1,7 +1,5 @@
-import { projects as familyProjects } from "@eylulg/ui/projects";
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { getProject } from "@/content/projects";
 import { renderRoute, runAxe } from "@/test/render-route";
 
 describe("Project detail page", () => {
@@ -9,21 +7,24 @@ describe("Project detail page", () => {
         const { heading } = await renderRoute("/projects/ui");
 
         expect(heading).toHaveTextContent("Component library");
-        for (const section of ["Problem", "What I built", "Stack", "What I tested", "Outcome", "Links", "Screenshots"]) {
+        for (const section of ["Context", "What I built", "Decisions", "What I tested", "Stack", "What I would do next", "Links"]) {
             expect(screen.getByRole("heading", { level: 2, name: section })).toBeInTheDocument();
         }
         expect(screen.getByRole("link", { name: /Source on GitHub/ })).toHaveAttribute("href", "https://github.com/eylulg/ui");
-        expect(screen.getByText("Not deployed yet")).toBeInTheDocument();
-        for (const shot of getProject("ui")!.screenshots) {
-            expect(screen.getByRole("img", { name: shot.alt })).toBeInTheDocument();
-        }
     });
 
-    it("takes the planned live address from the shared project list", async () => {
+    it("has no Outcome section until something is measured, and no screenshots section while they are placeholders", async () => {
+        await renderRoute("/projects/review-companion");
+
+        expect(screen.queryByRole("heading", { name: "Outcome" })).not.toBeInTheDocument();
+        expect(screen.queryByRole("heading", { name: "Screenshots" })).not.toBeInTheDocument();
+    });
+
+    it("shows Live site as a disabled control with the planned badge while the project has no url", async () => {
         await renderRoute("/projects/workspace");
 
-        const planned = familyProjects.find((project) => project.id === "workspace")?.plannedUrl;
-        expect(screen.getByRole("link", { name: /Live site/ })).toHaveAttribute("href", planned);
+        expect(screen.queryByRole("link", { name: /Live site/ })).not.toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Live site" })).toBeDisabled();
         expect(screen.getByText("Not deployed yet")).toBeInTheDocument();
     });
 
