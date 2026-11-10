@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { AppShell, type LinkProps, SiteFooter, TopNav } from "@eylulg/ui/chrome";
-import { Link, type Location, Outlet, ScrollRestoration, useLocation } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import { NavActionsShell } from "@/components/site/nav-actions-shell";
 import { site } from "@/content/site";
 import { trackPageView } from "@/lib/analytics";
@@ -13,9 +13,6 @@ const navItems = [
     { label: "AI agents", href: "/agents" },
     { label: "Contact", href: "/contact" },
 ];
-
-/** One saved scroll position per page, so a fresh load of one page never inherits another page's offset. */
-const scrollKey = (location: Location) => location.pathname;
 
 function RouterLink({ href, ...props }: LinkProps) {
     return <Link to={href} {...props} />;
@@ -61,7 +58,6 @@ export function RootLayout() {
             >
                 <Outlet />
             </AppShell>
-            <ScrollRestoration getKey={scrollKey} />
         </RouteProvider>
     );
 }

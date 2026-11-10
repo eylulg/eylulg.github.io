@@ -27,12 +27,12 @@ describe("Projects page", () => {
 
     it("filters by tag chip and keeps the filter in the URL", async () => {
         const user = userEvent.setup();
-        const { router } = await renderRoute("/projects");
+        const { current } = await renderRoute("/projects");
 
         await user.click(screen.getByRole("row", { name: "Vue" }));
 
         expect(cardTitles()).toEqual(["Sudoku"]);
-        expect(router.state.location.search).toBe("?tag=vue");
+        expect(current.location?.search).toBe("?tag=vue");
     });
 
     it("reads the tag filter from the URL", async () => {
