@@ -16,6 +16,7 @@
         "test:e2e": "playwright test",
         "knip": "knip",
         "size": "size-limit",
+        "lighthouse": "lhci autorun",
         "relink": "rm -rf node_modules/@eylulg/ui && npm install ../ui --install-links",
         "prepare": "husky"
     },
@@ -33,6 +34,7 @@
         "@commitlint/cli": "^21.2.4",
         "@commitlint/config-conventional": "^21.2.4",
         "@eslint/js": "^9.39.5",
+        "@lhci/cli": "^0.16.0",
         "@playwright/test": "^1.65.0",
         "@size-limit/file": "^14.3.0",
         "@testing-library/dom": "^10.4.2",

@@ -1,0 +1,23 @@
+{
+    "ci": {
+        "collect": {
+            "startServerCommand": "npx vite preview --port 4801 --strictPort",
+            "startServerReadyPattern": "Local",
+            "url": [
+                "http://localhost:4801/",
+                "http://localhost:4801/projects",
+                "http://localhost:4801/projects/ui",
+                "http://localhost:4801/experience",
+                "http://localhost:4801/how-this-was-built"
+            ],
+            "numberOfRuns": 3
+        },
+        "assert": {
+            "assertions": {
+                "categories:performance": ["error", { "minScore": 0.9, "aggregationMethod": "median-run" }],
+                "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1, "aggregationMethod": "median-run" }],
+                "total-byte-weight": ["error", { "maxNumericValue": 400000, "aggregationMethod": "median-run" }]
+            }
+        }
+    }
+}

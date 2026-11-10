@@ -47,6 +47,15 @@ jobs:
                   path: playwright-report
                   retention-days: 7
 
+    lighthouse:
+        name: Lighthouse (mobile, production build)
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/setup
+            - run: npm run build
+            - run: npm run lighthouse
+
     secrets:
         name: Secret scan
         runs-on: ubuntu-latest
