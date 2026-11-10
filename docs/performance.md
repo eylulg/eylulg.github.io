@@ -52,6 +52,20 @@ FCP stays at about 754 ms on every route, before and after. The score was alread
 - The home route is 125.8 kB before the menus, 5.8 kB over the 120 kB goal. React DOM and React Router are about 80 kB of that, the library's Button (React Aria press and link code) about 14 kB and `tailwind-merge` behind `cx` about 9 kB. Getting under 120 kB needs a lighter Button and `cx` in `@eylulg/ui`.
 - LCP is 2.7 to 3.1 s under Lighthouse's slow 4G emulation, limited by the stylesheet and the font before first render.
 
+## After the library performance pass
+
+The library now loads its overlays on first open and loads the project switcher and theme menus on first press. Measured the same way as above (production build, headless Chromium at 375 px, gzip of every script the page loads), plus Lighthouse mobile, median of three runs.
+
+| Route               | JS at load | JS after idle | Previous total | Score | LCP     | Transfer |
+| ------------------- | ---------- | ------------- | -------------- | ----- | ------- | -------- |
+| /                   | 135.9      | 135.9         | 171.0          | 96    | 2734 ms | 209.1 kB |
+| /projects           | 165.9      | 165.9         | 183.7          | 95    | 2885 ms | 240.4 kB |
+| /projects/ui        | 138.4      | 138.4         | 172.4          | 96    | 2757 ms | 210.4 kB |
+| /experience         | 131.7      | 131.7         | 166.9          | 96    | 2731 ms | 204.2 kB |
+| /how-this-was-built | 129.5      | 129.5         | 164.7          | 96    | 2729 ms | 201.5 kB |
+
+The total JavaScript on the home route fell from 171.0 to 135.9 kB (-35.1) and Lighthouse moved from 95 to 96, with transfer down from 243.9 to 209.1 kB. JavaScript at load equals JavaScript after idle in this measurement, so it is not comparable with the earlier "before the menus" column (125.8 kB on the home route), which excluded the idle upgrade of the top bar controls. The total is the comparable figure.
+
 ## Budgets
 
 - `size-limit`: first load entry script and stylesheet, 106 kB gzipped (measured 104.1 kB).

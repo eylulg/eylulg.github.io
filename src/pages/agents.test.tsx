@@ -14,12 +14,13 @@ describe("AI agents page", () => {
         );
     });
 
-    it("links to the two agent case studies and the page about how this site was built", async () => {
+    it("links to the three agent case studies and the page about how this site was built", async () => {
         await renderRoute("/agents");
 
         const main = within(screen.getByRole("main"));
         expect(main.getByRole("link", { name: /Agent control room/ })).toHaveAttribute("href", "/projects/agent-control-room");
         expect(main.getByRole("link", { name: /Review Companion/ })).toHaveAttribute("href", "/projects/review-companion");
+        expect(main.getByRole("link", { name: /Assistant Studio/ })).toHaveAttribute("href", "/projects/assistant-studio");
         expect(main.getByRole("link", { name: /How this portfolio was built/ })).toHaveAttribute("href", "/how-this-was-built");
     });
 

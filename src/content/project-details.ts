@@ -137,6 +137,42 @@ const details: Record<string, ProjectDetail> = {
             },
         ],
     },
+    "assistant-studio": {
+        context:
+            "Most AI demos are a chat box with a model behind it. The product work is in the states around the model: an answer that streams in, a tool call that runs, an action that must wait for a person, a connection that drops. This project is built to get those right, and to check what the assistant did instead of trusting how it looks.",
+        built: [
+            "A streaming conversation where one pure reducer turns server events into a message made of ordered parts, with its own rendering for streaming, waiting for approval, complete, stopped, interrupted and failed.",
+            "Tool calls rendered as cards. Seven local tools, of which create_task does not run until the user approves, edits its input or denies it.",
+            "Stop, Resume, Regenerate and Edit, with the conversation kept as a tree so a fork or a second answer never loses a branch.",
+            "A readout of tokens, cache reads and an estimated cost for every answer, labelled as estimates, and a demo mode that says it is a demo.",
+            "An eval suite that replays model streams through the real engine, store and tools and asserts tool choice, tool input and answer constraints.",
+        ],
+        decisions: [
+            "Stop and disconnect are different things. Stop keeps the partial answer and cancels the running tool. A dropped connection is shown as an interruption with a Resume button, never as an error, because the user did nothing wrong.",
+            "The server is stateless, so actions with side effects use two requests: the first reports the pending call and stops, the browser runs it after approval, and a second request carries the result. The protocol is written down in the repository.",
+            "Demo mode replays recorded model streams at the model boundary, so everything after it is real: the tools run again, the approval step is real and the task list is real. Anything the demo cannot answer says so instead of pretending.",
+            "Costs and limits are visible in the interface and enforced on the server: an origin check, a body cap, a per-IP rate limit, a model allowlist and an output token ceiling.",
+        ],
+        tested: [
+            "The reducer, the wire builder, the conversation tree, persistence and the two-phase protocol as plain functions, because a wrong state there looks like a model problem.",
+            "The route handler and the engine: origin, size, rate limit, allowlist and the request sent to the SDK.",
+            "The Studio screen with a real route behind a stubbed fetch, so approval, interruption and resume run the code a user runs.",
+            "The checks of the eval suite themselves, so a broken assertion cannot quietly pass every case.",
+            "One Playwright run in demo mode covering ask, approval with an edited input, Stop, Regenerate, fork, Resume and reload, with axe in light and dark at 375 and 1280 pixels.",
+        ],
+        next: [
+            "Record the 13 fixtures with a real API key. They are authored today: written in the recorded format with tool results computed by the real tools, and their token counts are estimates. Passing on them shows the pipeline and the assertions work, and says nothing yet about the model.",
+            "Run the same cases live and publish the result next to the fixture run.",
+            "Move the rate limit out of memory so it holds across server instances.",
+            "Render long answers incrementally instead of parsing the Markdown again on each batch.",
+        ],
+        screenshots: [
+            {
+                src: PLACEHOLDER,
+                alt: "Conversation with a tool card waiting for approval",
+            },
+        ],
+    },
     watchlist: {
         context:
             "A catalogue app is easy to start and hard to finish well. This one keeps the API key on the server and proves it with a bundle scan in CI, validates every TMDB response at the boundary so one bad record cannot break a page, and shares a list through the URL fragment so nothing is ever uploaded. It runs in three languages and installs as a PWA. I rebuilt it from a 2021 demo to show how I would ship the same idea today.",

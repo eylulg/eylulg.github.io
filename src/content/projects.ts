@@ -50,6 +50,15 @@ export const projects: Project[] = [
         featured: true,
     },
     {
+        slug: "assistant-studio",
+        libraryId: "assistant-studio",
+        stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "React Aria", "Zustand", "zod", "Anthropic SDK", "Vitest", "Playwright"],
+        title: "Assistant Studio",
+        summary: "A streaming assistant UI for the states around a model: tool cards, approval before side effects, stop and resume, branching, and evals.",
+        status: "in progress",
+        tags: ["React", "Next.js", "AI"],
+    },
+    {
         slug: "watchlist",
         libraryId: "watchlist",
         stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "React Aria", "next-intl", "zod", "MSW", "Vitest", "Playwright"],

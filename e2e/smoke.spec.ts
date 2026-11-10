@@ -5,6 +5,7 @@ const routes: Array<{ path: string; h1: string }> = [
     { path: "/projects", h1: "Projects" },
     { path: "/projects/workspace", h1: "Workspace" },
     { path: "/projects/review-companion", h1: "Review Companion" },
+    { path: "/projects/assistant-studio", h1: "Assistant Studio" },
     { path: "/projects/agent-control-room", h1: "Agent control room" },
     { path: "/projects/watchlist", h1: "Watchlist" },
     { path: "/projects/tokens-to-tailwind", h1: "Tokens to Tailwind" },
