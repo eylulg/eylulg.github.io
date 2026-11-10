@@ -72,7 +72,7 @@ export function AgentFlowDiagram() {
                             <text x={NODE_X + NODE_W / 2} y={cy - 4} textAnchor="middle" fontSize="15" fontWeight="600" style={{ fill: style.label }}>
                                 {step.label}
                             </text>
-                            <text x={NODE_X + NODE_W / 2} y={cy + 15} textAnchor="middle" fontSize="12" style={{ fill: "var(--color-text-tertiary)" }}>
+                            <text x={NODE_X + NODE_W / 2} y={cy + 15} textAnchor="middle" fontSize="12" style={{ fill: "var(--ui-text-tertiary)" }}>
                                 {step.short}
                             </text>
                             {step.kind === "loop" && (
@@ -84,7 +84,7 @@ export function AgentFlowDiagram() {
                                         strokeWidth={1.5}
                                         markerEnd="url(#agent-flow-arrow)"
                                     />
-                                    <text x={right + 36} y={cy + 4} fontSize="11" style={{ fill: "var(--color-text-tertiary)" }}>
+                                    <text x={right + 36} y={cy + 4} fontSize="11" style={{ fill: "var(--ui-text-tertiary)" }}>
                                         repeat
                                     </text>
                                 </>
