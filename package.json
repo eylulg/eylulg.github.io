@@ -17,7 +17,7 @@
         "knip": "knip",
         "size": "size-limit",
         "lighthouse": "lhci autorun",
-        "relink": "rm -rf node_modules/@eylulg/ui && npm install ../ui --install-links",
+        "relink": "rm -rf node_modules/@eylulg/ui && npm install ../ui --install-links && git checkout -- package-lock.json",
         "prepare": "husky"
     },
     "dependencies": {
