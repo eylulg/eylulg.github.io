@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { AppShell, type LinkProps, ProjectSwitcher, SiteFooter, ThemeToggle, TopNav } from "@eylulg/ui/chrome";
-import { Link, Outlet, ScrollRestoration, useLocation } from "react-router";
+import { Link, type Location, Outlet, ScrollRestoration, useLocation } from "react-router";
 import { site } from "@/content/site";
 import { trackPageView } from "@/lib/analytics";
 import { RouteProvider } from "@/providers/router-provider";
@@ -12,6 +12,9 @@ const navItems = [
     { label: "AI agents", href: "/agents" },
     { label: "Contact", href: "/contact" },
 ];
+
+/** One saved scroll position per page, so a fresh load of one page never inherits another page's offset. */
+const scrollKey = (location: Location) => location.pathname;
 
 function RouterLink({ href, ...props }: LinkProps) {
     return <Link to={href} {...props} />;
@@ -27,8 +30,18 @@ function Nav({ pathname }: { pathname: string }) {
             links={links}
             actions={
                 <>
-                    <ProjectSwitcher currentId="portfolio" label="Switch project" />
-                    <ThemeToggle />
+                    <div className="max-md:block md:hidden lg:block">
+                        <ProjectSwitcher currentId="portfolio" label="Switch project" />
+                    </div>
+                    <div className="hidden md:block lg:hidden">
+                        <ProjectSwitcher currentId="portfolio" label="Switch" />
+                    </div>
+                    <div className="max-md:block md:hidden lg:block">
+                        <ThemeToggle />
+                    </div>
+                    <div className="hidden md:block lg:hidden">
+                        <ThemeToggle compact />
+                    </div>
                 </>
             }
         />
@@ -53,7 +66,7 @@ export function RootLayout() {
             <AppShell maxWidth="6xl" header={<Nav pathname={pathname} />} footer={<SiteFooter currentId="portfolio" />}>
                 <Outlet />
             </AppShell>
-            <ScrollRestoration />
+            <ScrollRestoration getKey={scrollKey} />
         </RouteProvider>
     );
 }
