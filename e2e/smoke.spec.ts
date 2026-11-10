@@ -72,3 +72,34 @@ test("serves the CV PDF", async ({ request }) => {
     expect(response.ok()).toBe(true);
     expect(response.headers()["content-type"]).toContain("pdf");
 });
+
+test.describe("top bar controls before the idle upgrade", () => {
+    test.use({ viewport: { width: 1280, height: 800 } });
+
+    test.beforeEach(async ({ page }) => {
+        await page.addInitScript(() => {
+            window.requestIdleCallback = () => 0;
+        });
+        await page.goto("/");
+    });
+
+    test("pressing Switch project right after load opens the switcher", async ({ page }) => {
+        await page.getByRole("button", { name: "Switch project" }).click();
+
+        await expect(page.getByRole("menu")).toBeVisible();
+        await expect(page.getByRole("menuitem", { name: /Portfolio/ })).toBeVisible();
+    });
+
+    test("a keyboard press on Switch project opens the switcher", async ({ page }) => {
+        await page.getByRole("button", { name: "Switch project" }).focus();
+        await page.keyboard.press("Enter");
+
+        await expect(page.getByRole("menu")).toBeVisible();
+    });
+
+    test("the theme switch changes the theme at once", async ({ page }) => {
+        await page.getByRole("radio", { name: "Dark theme" }).click();
+
+        await expect(page.locator("html")).toHaveClass(/dark-mode/);
+    });
+});
