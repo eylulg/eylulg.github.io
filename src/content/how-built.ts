@@ -42,7 +42,7 @@ export const builtSections: BuiltSection[] = [
         points: [
             "Rate limits stopped runs half way. A repository could be left partly built.",
             "Interrupted runs had to be restarted from the brief, which is why the brief has to hold everything an agent needs.",
-            "A focus ring bug. Every library control had an invisible keyboard focus ring, because one class set the outline to none on the same element that was meant to draw it. Five reviewers found it. The automated accessibility checks passed, because they do not check that a ring is drawn. The fix went into the library once, which repaired every app, and a test of the computed style is on my list.",
+            "A focus ring bug. Every library control had an invisible keyboard focus ring, because one class set the outline to none on the same element that was meant to draw it. Five reviewers found it. The automated accessibility checks passed, because they do not check that a ring is drawn. The fix went into the library once, which repaired every app, and a check of the computed style now runs in the library CI so it cannot come back.",
         ],
     },
     {
