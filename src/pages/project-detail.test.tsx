@@ -1,3 +1,4 @@
+import { projects as familyProjects } from "@eylulg/ui/projects";
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { getProject } from "@/content/projects";
@@ -7,7 +8,7 @@ describe("Project detail page", () => {
     it("renders the case-study sections", async () => {
         const { heading } = await renderRoute("/projects/ui");
 
-        expect(heading).toHaveTextContent("Component library with Storybook");
+        expect(heading).toHaveTextContent("Component library");
         for (const section of ["Problem", "What I built", "Stack", "What I tested", "Outcome", "Links", "Screenshots"]) {
             expect(screen.getByRole("heading", { level: 2, name: section })).toBeInTheDocument();
         }
@@ -18,9 +19,18 @@ describe("Project detail page", () => {
         }
     });
 
-    it("says when a project has no public repository", async () => {
-        await renderRoute("/projects/ticket-to-pr-agent");
-        expect(screen.getByText("The repository isn't public yet.")).toBeInTheDocument();
+    it("takes the planned live address from the shared project list", async () => {
+        await renderRoute("/projects/workspace");
+
+        const planned = familyProjects.find((project) => project.id === "workspace")?.plannedUrl;
+        expect(screen.getByRole("link", { name: /Live site/ })).toHaveAttribute("href", planned);
+        expect(screen.getByText("Not deployed yet")).toBeInTheDocument();
+    });
+
+    it("has no live link for a project that runs inside Word", async () => {
+        await renderRoute("/projects/plain-language-word-addin");
+
+        expect(screen.queryByRole("link", { name: /Live site/ })).not.toBeInTheDocument();
     });
 
     it("shows the 404 page for an unknown slug", async () => {

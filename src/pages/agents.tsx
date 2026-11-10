@@ -1,9 +1,9 @@
-import { ArrowRight } from "@untitledui/icons";
-import { Tabs } from "@/components/application/tabs/tabs";
-import { Button } from "@/components/base/buttons/button";
+import { Tab, TabList, TabPanel, Tabs } from "@eylulg/ui/tabs";
+import { ArrowRight } from "lucide-react";
 import { AgentFlowDiagram } from "@/components/site/agent-flow-diagram";
 import { Container } from "@/components/site/container";
-import { PageHeader } from "@/components/site/page-header";
+import { LinkButton } from "@/components/site/link-button";
+import { PageIntro } from "@/components/site/page-intro";
 import { Seo } from "@/components/site/seo";
 import { agentFlow, agentIntro, agentSections } from "@/content/agents";
 
@@ -14,14 +14,14 @@ export default function AgentsPage() {
                 title="AI agents"
                 description="An engineering agent that takes tickets to pull requests with human approval gates, and a library of reusable agent skills."
             />
-            <PageHeader eyebrow="AI engineering" title="AI agents" description={agentIntro[0]}>
+            <PageIntro eyebrow="AI engineering" title="AI agents" description={agentIntro[0]}>
                 <p className="text-md text-tertiary">{agentIntro[1]}</p>
-            </PageHeader>
+            </PageIntro>
 
             <Container className="flex flex-col gap-16 pb-16 md:pb-24">
                 <section aria-labelledby="flow-title" className="grid items-start gap-10 lg:grid-cols-2">
                     <div className="flex flex-col gap-4">
-                        <h2 id="flow-title" className="text-display-xs font-semibold text-primary">
+                        <h2 id="flow-title" className="text-xl font-semibold text-primary">
                             From ticket to pull request
                         </h2>
                         <ol className="flex flex-col gap-3">
@@ -29,7 +29,7 @@ export default function AgentsPage() {
                                 <li key={step.id} className="flex gap-3">
                                     <span
                                         aria-hidden="true"
-                                        className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-solid text-xs font-semibold text-white"
+                                        className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-solid text-xs font-semibold text-on-solid"
                                     >
                                         {index + 1}
                                     </span>
@@ -44,47 +44,48 @@ export default function AgentsPage() {
                 </section>
 
                 <section aria-labelledby="details-title" className="flex flex-col gap-6">
-                    <h2 id="details-title" className="text-display-xs font-semibold text-primary">
+                    <h2 id="details-title" className="text-xl font-semibold text-primary">
                         How it's built
                     </h2>
                     <Tabs defaultSelectedKey={agentSections[0].id} className="gap-6">
                         <div className="-mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
-                            <Tabs.List
-                                type="button-minimal"
-                                size="sm"
-                                aria-label="Agent details"
-                                className="w-max rounded-lg bg-secondary p-1 ring-1 ring-secondary ring-inset"
-                            >
+                            <TabList aria-label="Agent details" className="w-max">
                                 {agentSections.map((section) => (
-                                    <Tabs.Item key={section.id} id={section.id}>
+                                    <Tab key={section.id} id={section.id}>
                                         {section.title}
-                                    </Tabs.Item>
+                                    </Tab>
                                 ))}
-                            </Tabs.List>
+                            </TabList>
                         </div>
                         {agentSections.map((section) => (
-                            <Tabs.Panel key={section.id} id={section.id} className="flex max-w-3xl flex-col gap-4 rounded-lg">
+                            <TabPanel key={section.id} id={section.id} className="flex max-w-3xl flex-col gap-4 rounded-lg">
                                 <p className="text-lg text-secondary">{section.intro}</p>
-                                <ul className="flex list-disc flex-col gap-2 pl-5 text-md text-tertiary marker:text-fg-quaternary">
+                                <ul className="flex list-disc flex-col gap-2 pl-5 text-md text-tertiary marker:text-fg-tertiary">
                                     {section.points.map((point) => (
                                         <li key={point}>{point}</li>
                                     ))}
                                 </ul>
-                            </Tabs.Panel>
+                            </TabPanel>
                         ))}
                     </Tabs>
                 </section>
 
-                <section aria-labelledby="rewrite-title" className="flex flex-col items-start gap-4 rounded-xl bg-secondary p-6 md:p-8">
-                    <h2 id="rewrite-title" className="text-xl font-semibold text-primary">
-                        The open rewrite
+                <section aria-labelledby="case-studies-title" className="flex flex-col items-start gap-4 rounded-xl bg-secondary p-6 md:p-8">
+                    <h2 id="case-studies-title" className="text-xl font-semibold text-primary">
+                        See it in practice
                     </h2>
                     <p className="max-w-3xl text-md text-tertiary">
-                        I'm rewriting the agent from scratch in TypeScript as a generic project, with a dry-run mode so anyone can see the flow without tokens.
+                        Two case studies show the human side of working with agents: the dashboard an operator uses to approve, guard and route an engineering
+                        agent, and a review tool where every AI finding passes through a person.
                     </p>
-                    <Button href="/projects/ticket-to-pr-agent" color="secondary" size="md" iconTrailing={ArrowRight}>
-                        Read the case study
-                    </Button>
+                    <div className="flex flex-wrap gap-3">
+                        <LinkButton href="/projects/agent-control-room" variant="secondary" size="md" iconTrailing={ArrowRight}>
+                            Agent control room
+                        </LinkButton>
+                        <LinkButton href="/projects/review-companion" variant="secondary" size="md" iconTrailing={ArrowRight}>
+                            Review Companion
+                        </LinkButton>
+                    </div>
                 </section>
             </Container>
         </>

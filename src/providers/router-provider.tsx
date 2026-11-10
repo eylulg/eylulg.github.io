@@ -16,7 +16,7 @@ function useRouterHref(href: string): string {
     return isExternal(href) ? href : routerHref;
 }
 
-/** Lets Untitled UI (React Aria) links navigate client-side through React Router. */
+/** Lets React Aria links navigate client-side through React Router. */
 export const RouteProvider = ({ children }: PropsWithChildren) => {
     const navigate = useNavigate();
 

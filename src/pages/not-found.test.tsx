@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { renderRoute, runAxe } from "@/test/render-route";
 
@@ -8,7 +8,7 @@ describe("404 page", () => {
 
         expect(heading).toHaveTextContent("Page not found");
         expect(screen.getByRole("link", { name: /Back to home/ })).toHaveAttribute("href", "/");
-        expect(document.title).toBe("Page not found | Eylül Güneş");
+        await waitFor(() => expect(document.title).toBe("Page not found | Eylül Güneş"));
     });
 
     it("has no axe violations", async () => {

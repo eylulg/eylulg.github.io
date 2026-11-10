@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import { ArrowLeft, ArrowUpRight } from "@untitledui/icons";
+import { Badge } from "@eylulg/ui/badge";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useParams } from "react-router";
-import { Badge } from "@/components/base/badges/badges";
-import { Button } from "@/components/base/buttons/button";
 import { Container } from "@/components/site/container";
+import { LinkButton } from "@/components/site/link-button";
 import { Seo } from "@/components/site/seo";
 import { StatusBadge } from "@/components/site/status-badge";
 import { getProject, projectLinks } from "@/content/projects";
@@ -11,7 +11,7 @@ import NotFoundPage from "./not-found";
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
     return (
-        <section aria-labelledby={id} className="flex flex-col gap-3 border-t border-secondary pt-8">
+        <section aria-labelledby={id} className="flex flex-col gap-3 border-t border-subtle pt-8">
             <h2 id={id} className="text-xl font-semibold text-primary">
                 {title}
             </h2>
@@ -22,7 +22,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
 
 function BulletList({ items }: { items: string[] }) {
     return (
-        <ul className="flex list-disc flex-col gap-2 pl-5 text-md text-tertiary marker:text-fg-quaternary">
+        <ul className="flex list-disc flex-col gap-2 pl-5 text-md text-tertiary marker:text-fg-tertiary">
             {items.map((item) => (
                 <li key={item}>{item}</li>
             ))}
@@ -43,23 +43,23 @@ export default function ProjectDetailPage() {
         <>
             <Seo title={project.title} description={project.summary} />
             <Container className="flex flex-col gap-8 pt-8 pb-16 md:pt-12 md:pb-24">
-                <Button href="/projects" color="link-gray" size="md" iconLeading={ArrowLeft} className="self-start">
+                <LinkButton href="/projects" variant="tertiary" size="md" iconLeading={ArrowLeft} className="-ml-3 self-start">
                     All projects
-                </Button>
+                </LinkButton>
 
                 <header className="flex max-w-3xl flex-col gap-4">
                     <div className="flex flex-wrap items-center gap-2">
                         <StatusBadge status={project.status} />
                         {project.tags.map((tag) => (
-                            <Badge key={tag} type="modern" size="sm" color="gray">
+                            <Badge key={tag} size="sm">
                                 {tag}
                             </Badge>
                         ))}
                     </div>
-                    <h1 className="text-display-sm font-semibold text-primary md:text-display-md">{project.title}</h1>
+                    <h1 className="text-2xl font-semibold text-primary md:text-3xl">{project.title}</h1>
                     <p className="text-lg text-tertiary md:text-xl">{project.summary}</p>
                     {inProgress && (
-                        <p className="rounded-lg bg-warning-primary px-4 py-3 text-sm text-warning-primary">
+                        <p className="rounded-lg bg-warning-subtle px-4 py-3 text-sm text-warning">
                             This project is in progress. The sections below describe the scope I'm building to.
                         </p>
                     )}
@@ -78,7 +78,7 @@ export default function ProjectDetailPage() {
                         <ul className="flex flex-wrap gap-2">
                             {project.stack.map((item) => (
                                 <li key={item}>
-                                    <Badge type="pill-color" size="md" color="brand">
+                                    <Badge size="md" color="brand">
                                         {item}
                                     </Badge>
                                 </li>
@@ -99,21 +99,17 @@ export default function ProjectDetailPage() {
                             <ul className="flex flex-col gap-3">
                                 {links.map((link) => (
                                     <li key={link.href} className="flex flex-wrap items-center gap-2">
-                                        <Button
+                                        <LinkButton
                                             href={link.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            color="link-color"
+                                            variant="tertiary"
                                             size="md"
                                             iconTrailing={ArrowUpRight}
                                         >
                                             {link.label}
-                                        </Button>
-                                        {link.planned && (
-                                            <Badge type="modern" size="sm" color="gray">
-                                                Not deployed yet
-                                            </Badge>
-                                        )}
+                                        </LinkButton>
+                                        {link.planned && <Badge size="sm">Not deployed yet</Badge>}
                                     </li>
                                 ))}
                             </ul>
@@ -132,7 +128,7 @@ export default function ProjectDetailPage() {
                                         width={640}
                                         height={400}
                                         loading="lazy"
-                                        className="h-auto w-full rounded-lg bg-secondary ring-1 ring-secondary"
+                                        className="h-auto w-full rounded-lg bg-secondary ring-1 ring-default"
                                     />
                                 </li>
                             ))}

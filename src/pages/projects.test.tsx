@@ -24,15 +24,23 @@ describe("Projects page", () => {
 
         await user.click(screen.getByRole("row", { name: "Vue" }));
 
-        expect(cardTitles()).toEqual(["Sudoku in Vue 3"]);
+        expect(cardTitles()).toEqual(["Sudoku"]);
         expect(router.state.location.search).toBe("?tag=vue");
     });
 
-    it("explains the empty Microsoft 365 filter", async () => {
+    it("reads the tag filter from the URL", async () => {
         await renderRoute("/projects?tag=microsoft-365");
 
-        expect(cardTitles()).toEqual([]);
-        expect(screen.getByText(/Word and Outlook add-ins/)).toBeInTheDocument();
+        expect(cardTitles()).toEqual(["Plain Language Word add-in"]);
+    });
+
+    it("says when nothing matches", async () => {
+        const user = userEvent.setup();
+        await renderRoute("/projects");
+
+        await user.type(screen.getByRole("searchbox", { name: /Search projects/ }), "zzzz");
+
+        expect(screen.getByText(/No projects match/)).toBeInTheDocument();
     });
 
     it("filters by search text", async () => {
@@ -41,7 +49,7 @@ describe("Projects page", () => {
 
         await user.type(screen.getByRole("searchbox", { name: /Search projects/ }), "tmdb");
 
-        expect(cardTitles()).toEqual(["Streaming catalogue"]);
+        expect(cardTitles()).toEqual(["Watchlist"]);
     });
 
     it("has no axe violations", async () => {

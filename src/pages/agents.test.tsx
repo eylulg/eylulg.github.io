@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { renderRoute, runAxe } from "@/test/render-route";
@@ -12,6 +12,14 @@ describe("AI agents page", () => {
         expect(diagram).toHaveAccessibleDescription(
             /Ticket, then Plan, then Approval gate, then Implement, then CI fix loop, then Review replies, then Approval gate, then Ready for review/,
         );
+    });
+
+    it("links to the two agent case studies", async () => {
+        await renderRoute("/agents");
+
+        const main = within(screen.getByRole("main"));
+        expect(main.getByRole("link", { name: /Agent control room/ })).toHaveAttribute("href", "/projects/agent-control-room");
+        expect(main.getByRole("link", { name: /Review Companion/ })).toHaveAttribute("href", "/projects/review-companion");
     });
 
     it("switches detail tabs", async () => {

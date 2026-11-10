@@ -8,16 +8,16 @@ const GAP = 28;
 const TOP = 8;
 
 const nodeStyle = {
-    step: { fill: "var(--color-bg-primary)", stroke: "var(--color-border-primary)", label: "var(--color-text-primary)" },
-    loop: { fill: "var(--color-bg-secondary)", stroke: "var(--color-border-primary)", label: "var(--color-text-primary)" },
-    gate: { fill: "var(--color-bg-primary)", stroke: "var(--color-border-brand)", label: "var(--color-text-brand-secondary)" },
+    step: { fill: "var(--ui-bg-primary)", stroke: "var(--ui-border-default)", label: "var(--ui-text-primary)" },
+    loop: { fill: "var(--ui-bg-secondary)", stroke: "var(--ui-border-default)", label: "var(--ui-text-primary)" },
+    gate: { fill: "var(--ui-bg-primary)", stroke: "var(--ui-border-brand)", label: "var(--ui-text-brand)" },
 } as const;
 
-const arrowColor = "var(--color-fg-quaternary)";
+const arrowColor = "var(--ui-fg-tertiary)";
 
 /**
  * Ticket-to-PR flow, drawn vertically so it stays legible at phone width.
- * All colours come from Untitled UI theme variables, so it follows light and dark mode.
+ * All colours come from library theme variables, so it follows light and dark mode.
  */
 export function AgentFlowDiagram() {
     const height = TOP * 2 + agentFlow.length * NODE_H + (agentFlow.length - 1) * GAP;

@@ -1,12 +1,11 @@
 import { useMemo, useState } from "react";
-import { ArrowRight, SearchLg } from "@untitledui/icons";
+import { Input } from "@eylulg/ui/input";
+import { Tag, TagGroup } from "@eylulg/ui/tag";
+import { Search } from "lucide-react";
 import type { Key } from "react-aria-components";
 import { useSearchParams } from "react-router";
-import { Button } from "@/components/base/buttons/button";
-import { Input } from "@/components/base/input/input";
-import { Tag, TagGroup, TagList } from "@/components/base/tags/tags";
 import { Container } from "@/components/site/container";
-import { PageHeader } from "@/components/site/page-header";
+import { PageIntro } from "@/components/site/page-intro";
 import { ProjectCard } from "@/components/site/project-card";
 import { Seo } from "@/components/site/seo";
 import { projectTags, projects, tagFromSlug, tagToSlug } from "@/content/projects";
@@ -36,9 +35,9 @@ export default function ProjectsPage() {
         <>
             <Seo
                 title="Projects"
-                description="Projects by Eylül Güneş: a component library, a design-token tool, an engineering agent, and React and Vue apps."
+                description="Projects by Eylül Güneş: a component library, a design-token tool, AI agent and review tools, a Word add-in, and React, Next.js and Vue apps."
             />
-            <PageHeader
+            <PageIntro
                 eyebrow="Work"
                 title="Projects"
                 description="Public projects I'm building or rebuilding, each with tests, CI and a deployment. Filter by tag or search by name or stack."
@@ -49,24 +48,21 @@ export default function ProjectsPage() {
                     <TagGroup
                         label="Filter projects by tag"
                         selectionMode="single"
-                        size="lg"
                         selectedKeys={[activeTag ? tagToSlug(activeTag) : ALL]}
                         onSelectionChange={onTagChange}
                     >
-                        <TagList className="flex flex-wrap gap-2">
-                            <Tag id={ALL}>All</Tag>
-                            {projectTags.map((tag) => (
-                                <Tag key={tag} id={tagToSlug(tag)}>
-                                    {tag}
-                                </Tag>
-                            ))}
-                        </TagList>
+                        <Tag id={ALL}>All</Tag>
+                        {projectTags.map((tag) => (
+                            <Tag key={tag} id={tagToSlug(tag)}>
+                                {tag}
+                            </Tag>
+                        ))}
                     </TagGroup>
                     <Input
                         className="md:w-72"
                         label="Search projects"
                         placeholder="Search by name or stack"
-                        icon={SearchLg}
+                        iconLeading={Search}
                         value={query}
                         onChange={setQuery}
                         type="search"
@@ -83,23 +79,12 @@ export default function ProjectsPage() {
                     <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         {visible.map((project) => (
                             <li key={project.slug}>
-                                <ProjectCard project={project} headingLevel="h2" />
+                                <ProjectCard project={project} headingLevel={2} />
                             </li>
                         ))}
                     </ul>
                 ) : (
-                    <div className="flex flex-col items-start gap-3 rounded-xl bg-secondary p-6">
-                        <p className="text-md text-tertiary">
-                            {activeTag === "Microsoft 365"
-                                ? "No public projects yet. My Microsoft 365 work, Word and Outlook add-ins with Office.js and Microsoft Graph, lives in private company repositories."
-                                : "No projects match. Try another tag or a shorter search."}
-                        </p>
-                        {activeTag === "Microsoft 365" && (
-                            <Button href="/experience" color="link-color" size="md" iconTrailing={ArrowRight}>
-                                Read about it on the Experience page
-                            </Button>
-                        )}
-                    </div>
+                    <p className="rounded-xl bg-secondary p-6 text-md text-tertiary">No projects match. Try another tag or a shorter search.</p>
                 )}
             </Container>
         </>

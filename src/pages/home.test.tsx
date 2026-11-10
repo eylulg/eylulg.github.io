@@ -15,7 +15,7 @@ describe("Home page", () => {
         }
         expect(featuredProjects).toHaveLength(3);
         for (const project of featuredProjects) {
-            expect(screen.getByRole("link", { name: project.title })).toHaveAttribute("href", `/projects/${project.slug}`);
+            expect(within(screen.getByRole("main")).getByRole("link", { name: project.title })).toHaveAttribute("href", `/projects/${project.slug}`);
         }
 
         const main = within(screen.getByRole("main"));

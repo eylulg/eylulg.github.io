@@ -1,14 +1,14 @@
-import { FileDownload02, Mail01 } from "@untitledui/icons";
-import { Button } from "@/components/base/buttons/button";
+import { FileDown, Mail } from "lucide-react";
 import GitHub from "@/components/foundations/social-icons/github";
 import LinkedIn from "@/components/foundations/social-icons/linkedin";
+import { LinkButton } from "@/components/site/link-button";
 import { site } from "@/content/site";
 
 const GitHubIcon = ({ className }: { className?: string }) => <GitHub aria-hidden="true" className={className} />;
 const LinkedInIcon = ({ className }: { className?: string }) => <LinkedIn aria-hidden="true" className={className} />;
 
 interface ContactButtonsProps {
-    size?: "sm" | "md" | "lg" | "xl";
+    size?: "sm" | "md" | "lg";
     /** Show the CV button first, as the primary action. */
     withCv?: boolean;
 }
@@ -19,25 +19,25 @@ export function ContactButtons({ size = "md", withCv = true }: ContactButtonsPro
         <ul className="flex flex-wrap gap-3">
             {withCv && (
                 <li>
-                    <Button href={site.cvPath} target="_blank" rel="noopener" size={size} iconLeading={FileDownload02}>
+                    <LinkButton href={site.cvPath} target="_blank" rel="noopener" size={size} iconLeading={FileDown}>
                         CV (PDF)
-                    </Button>
+                    </LinkButton>
                 </li>
             )}
             <li>
-                <Button href={site.links.github} target="_blank" rel="noopener noreferrer" color="secondary" size={size} iconLeading={GitHubIcon}>
+                <LinkButton href={site.links.github} target="_blank" rel="noopener noreferrer" variant="secondary" size={size} iconLeading={GitHubIcon}>
                     GitHub
-                </Button>
+                </LinkButton>
             </li>
             <li>
-                <Button href={site.links.linkedin} target="_blank" rel="noopener noreferrer" color="secondary" size={size} iconLeading={LinkedInIcon}>
+                <LinkButton href={site.links.linkedin} target="_blank" rel="noopener noreferrer" variant="secondary" size={size} iconLeading={LinkedInIcon}>
                     LinkedIn
-                </Button>
+                </LinkButton>
             </li>
             <li>
-                <Button href={`mailto:${site.email}`} color="secondary" size={size} iconLeading={Mail01}>
+                <LinkButton href={`mailto:${site.email}`} variant="secondary" size={size} iconLeading={Mail}>
                     Email
-                </Button>
+                </LinkButton>
             </li>
         </ul>
     );

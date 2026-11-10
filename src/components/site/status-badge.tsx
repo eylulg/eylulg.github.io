@@ -1,10 +1,10 @@
-import { BadgeWithDot } from "@/components/base/badges/badges";
+import { Badge } from "@eylulg/ui/badge";
 import type { ProjectStatus } from "@/content/projects";
 
 export function StatusBadge({ status }: { status: ProjectStatus }) {
     return (
-        <BadgeWithDot type="pill-color" size="sm" color={status === "live" ? "success" : "warning"}>
+        <Badge dot size="sm" color={status === "live" ? "success" : "warning"}>
             {status === "live" ? "Live" : "In progress"}
-        </BadgeWithDot>
+        </Badge>
     );
 }
