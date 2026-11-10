@@ -2,64 +2,50 @@ export interface PrincipleGroup {
     id: string;
     title: string;
     principles: string[];
+    /** When the rule gives way. */
+    bends: string;
 }
 
-export const principlesIntro = "These are the rules I hold myself to, and the same rules I give the agents I build. They carry over to any team.";
+export const principlesIntro =
+    "These are the rules I hold myself to, and the same rules I write into the briefs of the agents I build. If a rule is too vague for an agent to follow, it is too vague for me. Each group says when I bend it.";
 
 export const principleGroups: PrincipleGroup[] = [
     {
         id: "design-and-ui",
         title: "Design and UI",
         principles: [
-            "Figma is the source of truth. I build only what the design defines. If a style is missing, the designer adds it to Figma first; I don't invent props.",
-            "Design system first. If a component exists, I use it. If it needs to change, I extend the library and then update the apps, rather than customizing it in one screen.",
-            "Once design review passes, I don't change design decisions.",
-            "I cover responsive layouts even when the designs only show desktop, and I cover empty, loading and error states.",
+            "I build what the design defines, because a missing style is a question for the designer, not a prop for me to invent.",
+            "I use the design system first and extend it when it falls short, because a fix in one screen becomes a bug in the next.",
+            "I cover responsive layouts and empty, loading and error states even when the designs show only the desktop happy path, because users meet those first.",
         ],
+        bends: "When a missing design blocks the work, I ship the smallest honest version, write down what I assumed and change it once the design owner has answered.",
     },
     {
         id: "code",
-        title: "Code",
+        title: "Code and checks",
         principles: [
-            "I search for an existing helper before writing one.",
-            "I keep comments that explain why, update comments next to code I touch, and delete comments that restate the code.",
-            "One test file per component, shared mocks, and tests that prove behaviour rather than checking that a string appears.",
+            "I search for an existing helper before writing one, because duplicates drift apart.",
+            "I write tests that prove what a user can see, and comments that explain why, because tests of internals and comments that restate code go stale.",
+            "I run the type check, lint and the tests for my change before I commit, because CI should confirm what I already know.",
         ],
-    },
-    {
-        id: "before-anything-leaves-my-machine",
-        title: "Before anything leaves my machine",
-        principles: [
-            "I run a local gate first: type check, lint, the tests for the changed feature, and a scan for the issues reviewers and static analysis tend to raise. CI should confirm what I already know.",
-            "Commits are signed and follow Conventional Commits, because semantic-release reads them to set the version.",
-            "Every change gets its own branch, worktree and pull request. I never work on a branch someone else has checked out.",
-        ],
+        bends: "A throwaway prototype does not need the full set of tests. Anything that lives longer than a week does.",
     },
     {
         id: "pull-requests",
-        title: "Pull requests",
+        title: "Pull requests and review",
         principles: [
-            "Draft first, assigned to me, with a summary and a test plan the reviewer can actually tick off.",
-            "Evidence in the description: settled before and after screenshots, short cropped videos, failing-then-passing tests.",
-            "I keep the description true after every change, and remove text that is no longer true.",
-            "Every review thread gets a reply and a resolution. I dismiss a finding only when it is wrong, never because the fix is hard.",
+            "I open a draft pull request with a summary, a test plan and evidence such as before and after screenshots, and I keep the description true after every change, because reviewers read it first.",
+            "I review the diff rather than the description, say which findings block and which are suggestions, answer every thread, and dismiss a finding only when it is wrong, because the next reader pays for every unclear name and every duplicate.",
         ],
-    },
-    {
-        id: "reviewing",
-        title: "Reviewing",
-        principles: [
-            'I nitpick on purpose. Duplication is a finding. "It existed before" isn\'t a reason to keep a bad pattern.',
-            "I read the code, not the author's description of it.",
-        ],
+        bends: "A typo fix does not need a screenshot. I say so in the description instead.",
     },
     {
         id: "communication",
         title: "Communication",
         principles: [
-            "I say plainly what is true and don't soften findings.",
-            "Plans go in the conversation, decisions go on the ticket.",
-            "When I'm blocked on a product question, I put it to the owner in one clear message with a recommended option.",
+            "When I am blocked on a product question I ask the owner once, with a recommended option, because a clear question gets a quick answer.",
+            "I record decisions where the team will look for them, usually on the ticket, because a plan agreed in chat is forgotten.",
         ],
+        bends: "For a small question I skip the write-up and ask in a message. The record is for decisions that someone will need later.",
     },
 ];

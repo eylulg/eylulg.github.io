@@ -5,7 +5,10 @@ import { principleGroups, principlesIntro } from "@/content/principles";
 export default function PrinciplesPage() {
     return (
         <>
-            <Seo title="How I work" description="How Eylül Güneş works: design and UI, code, local checks, pull requests, reviewing and communication." />
+            <Seo
+                title="How I work"
+                description="How Eylül Güneş works: design and UI, code and checks, pull requests and review, and communication, with when each rule bends."
+            />
             <div className="max-w-3xl pt-6 pb-8 md:pb-12">
                 <PageHeader
                     eyebrow="Principles"
@@ -36,7 +39,7 @@ export default function PrinciplesPage() {
                         key={group.id}
                         id={group.id}
                         aria-labelledby={`${group.id}-title`}
-                        className="flex scroll-mt-6 flex-col gap-4 rounded-xl bg-primary p-5 ring-1 ring-default ring-inset md:p-6"
+                        className="flex scroll-mt-20 flex-col gap-4 rounded-xl bg-primary p-5 ring-1 ring-default ring-inset md:p-6"
                     >
                         <h2 id={`${group.id}-title`} className="text-lg font-semibold text-primary">
                             {group.title}
@@ -46,6 +49,9 @@ export default function PrinciplesPage() {
                                 <li key={principle}>{principle}</li>
                             ))}
                         </ul>
+                        <p className="text-md text-tertiary">
+                            <span className="font-semibold text-secondary">When it bends.</span> {group.bends}
+                        </p>
                     </section>
                 ))}
             </div>
