@@ -13,7 +13,7 @@ describe("Contact page", () => {
         for (const language of ["Turkish", "English", "German"]) {
             expect(screen.getByText(language)).toBeInTheDocument();
         }
-        expect(screen.getByText(/Türkiye\. Open to remote work\./)).toBeInTheDocument();
+        expect(screen.getByText(/Türkiye\. Available from 1 December 2026\./)).toBeInTheDocument();
     });
 
     it("has no axe violations", async () => {

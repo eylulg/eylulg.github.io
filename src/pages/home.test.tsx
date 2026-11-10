@@ -10,10 +10,11 @@ describe("Home page", () => {
 
         expect(heading).toHaveTextContent(site.name);
         expect(screen.getByText(site.tagline)).toBeInTheDocument();
+        expect(screen.getByText(site.availability)).toBeInTheDocument();
         for (const title of ["Product UI craft", "Design-system engineering", "AI agent engineering"]) {
             expect(screen.getByRole("heading", { level: 3, name: title })).toBeInTheDocument();
         }
-        expect(featuredProjects).toHaveLength(3);
+        expect(featuredProjects.map((project) => project.slug)).toEqual(["ui", "workspace", "review-companion"]);
         for (const project of featuredProjects) {
             expect(within(screen.getByRole("main")).getByRole("link", { name: project.title })).toHaveAttribute("href", `/projects/${project.slug}`);
         }
