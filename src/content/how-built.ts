@@ -29,7 +29,7 @@ export const builtSections: BuiltSection[] = [
         points: [
             "I decided which projects to build and which to leave out, and what each one should prove.",
             "I wrote the standards and the briefs, including the rules I would hold a person to.",
-            "I designed the tokens, the eight theme variants and the shared chrome of the library, and the agents built the components on them.",
+            "I designed the tokens, the nine theme variants and the shared chrome of the library, and the agents built the components on them.",
             "I decided which review findings to fix, which to dispute and which to leave, and I checked each fix in a real browser.",
             "I wrote the rules for the copy on this site, and I decide what it claims.",
             "The agents produced the first version of the code, the tests and the READMEs, the review findings, and most of the fixes.",

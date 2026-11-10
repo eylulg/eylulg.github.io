@@ -3,11 +3,11 @@ import { Link } from "react-router";
 
 const SCALE_STEPS = ["200", "400", "500", "600", "800"] as const;
 
-/** The eight theme variants of the component library, each as a short slice of its brand scale. */
+/** The nine theme variants of the component library, each as a short slice of its brand scale. */
 export function VariantsStrip() {
     return (
         <figure className="flex flex-col gap-3">
-            <ul aria-label="Theme variants of the component library" className="grid grid-cols-4 gap-x-4 gap-y-3 lg:grid-cols-8">
+            <ul aria-label="Theme variants of the component library" className="grid grid-cols-3 gap-x-4 gap-y-3 sm:grid-cols-5 lg:grid-cols-9">
                 {variantNames.map((name) => (
                     <li key={name} className="flex flex-col gap-1.5">
                         <span aria-hidden="true" className="flex h-8 overflow-hidden rounded-md ring-1 ring-default ring-inset">
@@ -20,7 +20,7 @@ export function VariantsStrip() {
                 ))}
             </ul>
             <figcaption className="text-sm text-tertiary">
-                Eight theme variants of one token set, from my{" "}
+                Nine theme variants of one token set, from my{" "}
                 <Link
                     to="/projects/ui"
                     className="rounded text-brand underline-offset-2 outline-focus hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"

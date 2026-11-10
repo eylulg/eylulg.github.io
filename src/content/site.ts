@@ -49,7 +49,7 @@ export const proofPoints: ProofPoint[] = [
     {
         id: "design-systems",
         title: "Design-system engineering",
-        body: "More than thirty accessible components on React Aria, eight theme variants that change only hue, grays, radius and density, and a test that every text token passes WCAG AA in light and dark.",
+        body: "More than thirty accessible components on React Aria, nine theme variants that change only hue, grays, radius and density, and a test that every text token passes WCAG AA in light and dark.",
         href: "/projects/ui",
         linkLabel: "See the component library",
     },

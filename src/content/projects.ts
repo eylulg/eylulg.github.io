@@ -48,14 +48,14 @@ export const projects: Project[] = [
         slug: "ui",
         libraryId: "ui",
         title: "Component library",
-        summary: "@eylulg/ui: an accessible React component library with eight theme variants and the shared app chrome every project here is built with.",
+        summary: "@eylulg/ui: an accessible React component library with nine theme variants and the shared app chrome every project here is built with.",
         status: "in progress",
         tags: ["React", "Design system"],
         featured: true,
         context:
             "Most of my design-system work lives in private company repositories. This is a public library that shows how I design component APIs, tokens, accessibility and releases, and that makes the projects here read as one family.",
         built: [
-            "Tokens in a Tailwind CSS 4 theme, with eight variants that change only brand hue, gray family, radius and density.",
+            "Tokens in a Tailwind CSS 4 theme, with nine variants that change only brand hue, gray family, radius and density.",
             "More than thirty components on React Aria Components, each with its own entry point.",
             "The shared chrome: app shell, top nav, project switcher, theme toggle and footer.",
             "Storybook with accessibility checks, and a bundle size budget in CI.",
@@ -78,7 +78,7 @@ export const projects: Project[] = [
         ],
         screenshots: [
             { src: PLACEHOLDER, alt: "Storybook page for the Button component" },
-            { src: PLACEHOLDER, alt: "The eight theme variants side by side" },
+            { src: PLACEHOLDER, alt: "The nine theme variants side by side" },
         ],
     },
     {
