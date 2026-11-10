@@ -5,18 +5,20 @@ The portfolio site of Eylül Güneş, Senior Frontend Developer: projects, exper
 ## Stack
 
 - Vite 7, React 19, TypeScript (strict), React Router 7 with a lazy-loaded chunk per page
-- [Untitled UI React](https://www.untitledui.com/react) components (MIT) on React Aria Components and Tailwind CSS 4
+- [`@eylulg/ui`](https://github.com/eylulg/ui), the shared design system, with its `portfolio` theme variant, on React Aria Components and Tailwind CSS 4
+- The shared chrome from the library: top nav with the project switcher, theme toggle and a footer that lists every project
 - Inter, self-hosted through `@fontsource-variable/inter`
-- Dark mode with Untitled UI's `dark-mode` class: follows the system setting until the visitor flips the toggle, then the choice is stored in localStorage
+- Dark mode with the library's `dark-mode` class: the library's theme toggle follows the system setting until the visitor flips it, and an inline script avoids a flash on load
 - Vitest, Testing Library and vitest-axe for unit and accessibility tests; Playwright for a smoke test of the built site
-- ESLint 9 (flat config, typescript-eslint, react-hooks) and Prettier
+- ESLint 9 (flat config, typescript-eslint, react-hooks, jsx-a11y), Prettier, knip, commitlint and Husky with lint-staged
 - GitHub Actions for CI and the GitHub Pages deploy
 
 ## Run it
 
-Requires Node 24 and npm 11.
+Requires Node 24 and npm 11. `@eylulg/ui` is a `file:../ui` dependency until the library is published, so clone `eylulg/ui` next to this repository and build it first.
 
 ```sh
+(cd ../ui && npm install && npm run build)
 npm install
 npm run dev          # http://localhost:5173
 ```
@@ -27,6 +29,7 @@ npm run dev          # http://localhost:5173
 | `npm run lint`      | ESLint, zero warnings allowed                                           |
 | `npm run format`    | Prettier, write mode (`format:check` to only check)                     |
 | `npm test`          | Vitest: a render test and an axe test for every page                    |
+| `npm run knip`      | Unused files, exports and dependencies                                  |
 | `npm run build`     | Type check and production build into `dist/`                            |
 | `npm run preview`   | Serve `dist/` locally                                                   |
 | `npm run test:e2e`  | Build, serve on port 47317 and check every route's heading (Playwright) |
@@ -48,9 +51,9 @@ All text lives in typed data files under [`src/content/`](src/content). There is
 
 Common edits:
 
-- **Project goes live:** set `status: "live"` in `projects.ts`. The live link loses its "Not deployed yet" badge.
+- **Project goes live:** set `url` for it in `@eylulg/ui/projects`, then set `status: "live"` in `projects.ts`. The live link loses its "Not deployed yet" badge. Repository and live URLs are read from the library's project list, so there is one source of truth.
 - **Real screenshots:** put images in `public/screenshots/` and replace the `src` of the project's `screenshots` entries. Keep the `alt` text accurate.
-- **New project:** add an entry to `projects.ts` and its URL to `public/sitemap.xml`.
+- **New project:** add it to the library's project list, then add an entry to `projects.ts` with its `libraryId` and its URL to `public/sitemap.xml`.
 - **New CV:** replace `public/Eylul-Gunes-CV.pdf`.
 
 Analytics are not wired up. `src/lib/analytics.ts` holds the commented PostHog hook point.
@@ -59,19 +62,21 @@ Analytics are not wired up. `src/lib/analytics.ts` holds the commented PostHog h
 
 ```
 src/
-  app/root-layout.tsx      skip link, header, main, footer, focus on navigation
+  app/root-layout.tsx      AppShell, top nav, footer, focus on navigation
   router.tsx               route table, one lazy chunk per page
   pages/                   one file per route, each with a *.test.tsx
-  components/base/         Untitled UI components (buttons, badges, tags, inputs, toggle, tooltip)
-  components/application/  Untitled UI tabs
-  components/site/         site-specific pieces: header, footer, Seo, cards, flow diagram
+  components/site/         site-specific pieces: link button, page intro, Seo, cards, flow diagram
   content/                 all text
-  providers/               theme and React Aria router providers
+  providers/               React Aria router provider
 public/                    CV, og.png, sitemap.xml, robots.txt, 404.html
 e2e/smoke.spec.ts          Playwright smoke test
 ```
 
-Untitled UI components are added with `npx untitledui@latest add <component>` and then live in `src/components/`.
+UI components come from `@eylulg/ui`. If one is missing, extend the library instead of adding a copy here.
+
+## Design system dependency
+
+Locally `@eylulg/ui` is linked from `../ui`. In CI and in the Pages deploy, the composite action `.github/actions/setup` checks out `eylulg/ui` into `ui-src`, builds it, and installs it from there with `npm pkg set dependencies.@eylulg/ui=file:./ui-src` (runner only, the committed `package.json` is unchanged). Once the library is published to npm, the dependency switches to `^1.0.0`, the setup action goes back to `npm ci`, and Vercel deploys of the other projects need that publish.
 
 ## Deploy
 

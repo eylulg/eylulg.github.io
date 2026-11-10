@@ -1,0 +1,25 @@
+name: Set up Node and the design system
+description: Installs dependencies with @eylulg/ui built from source, until the package is published to npm.
+
+runs:
+    using: composite
+    steps:
+        - uses: actions/checkout@v4
+          with:
+              repository: eylulg/ui
+              path: ui-src
+        - uses: actions/setup-node@v4
+          with:
+              node-version: 24
+              cache: npm
+        - name: Build @eylulg/ui
+          shell: bash
+          working-directory: ui-src
+          run: |
+              npm ci
+              npm run build
+        - name: Install dependencies against the local build
+          shell: bash
+          run: |
+              npm pkg set dependencies.@eylulg/ui=file:./ui-src
+              npm install --no-audit --no-fund

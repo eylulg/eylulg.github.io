@@ -22,10 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.env
+.env*
+!.env.example
 
 # Test output
 coverage
 playwright-report
 test-results
 blob-report
+ui-src

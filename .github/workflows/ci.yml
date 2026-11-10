@@ -18,14 +18,16 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
               with:
-                  node-version: 24
-                  cache: npm
-            - run: npm ci
+                  fetch-depth: 0
+            - uses: ./.github/actions/setup
+            - name: Commit messages
+              if: github.event_name == 'pull_request'
+              run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
             - run: npm run typecheck
             - run: npm run lint
             - run: npm run format:check
+            - run: npm run knip
             - run: npm test
             - run: npm run build
 
@@ -34,11 +36,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 24
-                  cache: npm
-            - run: npm ci
+            - uses: ./.github/actions/setup
             - run: npx playwright install --with-deps chromium
             - run: npm run test:e2e
             - uses: actions/upload-artifact@v4
@@ -47,3 +45,14 @@ jobs:
                   name: playwright-report
                   path: playwright-report
                   retention-days: 7
+
+    secrets:
+        name: Secret scan
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: gitleaks/gitleaks-action@v2
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
