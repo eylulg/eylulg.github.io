@@ -1,9 +1,14 @@
-import { useEffect, useRef } from "react";
-import { AppShell, type LinkProps, ProjectSwitcher, SiteFooter, ThemeToggle, TopNav } from "@eylulg/ui/chrome";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { AppShell, type LinkProps, SiteFooter, TopNav } from "@eylulg/ui/chrome";
 import { Link, type Location, Outlet, ScrollRestoration, useLocation } from "react-router";
 import { site } from "@/content/site";
 import { trackPageView } from "@/lib/analytics";
 import { RouteProvider } from "@/providers/router-provider";
+
+const NavActions = lazy(() => import("@/components/site/nav-actions"));
+
+// Reserves the room of the two menus so they do not move the bar when they arrive.
+const actionsPlaceholder = <div className="h-control-sm w-48" aria-hidden="true" />;
 
 const navItems = [
     { label: "Projects", href: "/projects" },
@@ -20,7 +25,28 @@ function RouterLink({ href, ...props }: LinkProps) {
     return <Link to={href} {...props} />;
 }
 
+/** True once the page has loaded and the browser is idle, so deferred chrome never competes with the first render. */
+function useAfterLoad(): boolean {
+    const [isReady, setIsReady] = useState(false);
+
+    useEffect(() => {
+        const show = () => setIsReady(true);
+        const whenIdle = () => (window.requestIdleCallback ? window.requestIdleCallback(show) : window.setTimeout(show, 200));
+
+        if (document.readyState === "complete") {
+            whenIdle();
+            return;
+        }
+        window.addEventListener("load", whenIdle, { once: true });
+        return () => window.removeEventListener("load", whenIdle);
+    }, []);
+
+    return isReady;
+}
+
 function Nav({ pathname }: { pathname: string }) {
+    const isReady = useAfterLoad();
+
     const links = navItems.map((item) => ({ ...item, isCurrent: pathname === item.href || pathname.startsWith(`${item.href}/`) }));
 
     return (
@@ -29,20 +55,13 @@ function Nav({ pathname }: { pathname: string }) {
             LinkComponent={RouterLink}
             links={links}
             actions={
-                <>
-                    <div className="max-md:block md:hidden lg:block">
-                        <ProjectSwitcher currentId="portfolio" label="Switch project" />
-                    </div>
-                    <div className="hidden md:block lg:hidden">
-                        <ProjectSwitcher currentId="portfolio" label="Switch" />
-                    </div>
-                    <div className="max-md:block md:hidden lg:block">
-                        <ThemeToggle />
-                    </div>
-                    <div className="hidden md:block lg:hidden">
-                        <ThemeToggle compact />
-                    </div>
-                </>
+                isReady ? (
+                    <Suspense fallback={actionsPlaceholder}>
+                        <NavActions />
+                    </Suspense>
+                ) : (
+                    actionsPlaceholder
+                )
             }
         />
     );

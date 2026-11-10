@@ -5,7 +5,8 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useParams } from "react-router";
 import { Seo } from "@/components/site/seo";
 import { StatusBadge } from "@/components/site/status-badge";
-import { getProject, projectLinks, realScreenshots } from "@/content/projects";
+import { getProjectDetail, projectLinks, realScreenshots } from "@/content/project-details";
+import { getProject } from "@/content/projects";
 import NotFoundPage from "./not-found";
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
@@ -32,11 +33,12 @@ function BulletList({ items }: { items: string[] }) {
 export default function ProjectDetailPage() {
     const { slug } = useParams();
     const project = getProject(slug);
+    const detail = project && getProjectDetail(project.slug);
 
-    if (!project) return <NotFoundPage />;
+    if (!project || !detail) return <NotFoundPage />;
 
     const links = projectLinks(project);
-    const screenshots = realScreenshots(project);
+    const screenshots = realScreenshots(detail);
 
     return (
         <>
@@ -61,19 +63,19 @@ export default function ProjectDetailPage() {
 
                 <div className="flex max-w-3xl flex-col gap-8">
                     <Section id="context" title="Context">
-                        <p className="text-md text-tertiary">{project.context}</p>
+                        <p className="text-md text-tertiary">{detail.context}</p>
                     </Section>
 
                     <Section id="built" title="What I built">
-                        <BulletList items={project.built} />
+                        <BulletList items={detail.built} />
                     </Section>
 
                     <Section id="decisions" title="Decisions">
-                        <BulletList items={project.decisions} />
+                        <BulletList items={detail.decisions} />
                     </Section>
 
                     <Section id="tested" title="What I tested">
-                        <BulletList items={project.tested} />
+                        <BulletList items={detail.tested} />
                     </Section>
 
                     <Section id="stack" title="Stack">
@@ -89,12 +91,12 @@ export default function ProjectDetailPage() {
                     </Section>
 
                     <Section id="next" title="What I would do next">
-                        <BulletList items={project.next} />
+                        <BulletList items={detail.next} />
                     </Section>
 
-                    {project.outcome && (
+                    {detail.outcome && (
                         <Section id="outcome" title="Outcome">
-                            <p className="text-md text-tertiary">{project.outcome}</p>
+                            <p className="text-md text-tertiary">{detail.outcome}</p>
                         </Section>
                     )}
 
