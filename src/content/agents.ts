@@ -14,7 +14,7 @@ export const agentSections: AgentSection[] = [
     {
         id: "agent",
         title: "The agent",
-        intro: "It runs on a cloud VM and watches Slack, Linear and GitHub.",
+        intro: "It runs on a cloud VM and watches the places where tickets and reviews arrive.",
         points: [
             "Picks up tickets and writes a plan.",
             "Implements the approved plan, fixes failing CI and answers review findings.",
@@ -28,15 +28,11 @@ export const agentSections: AgentSection[] = [
         title: "Skills library",
         intro: "A library of reusable agent skills that encode the delivery workflow, so every run follows the same steps.",
         points: [
-            "Kicking off a task.",
-            "A pre-commit gate.",
-            "Pull request evidence.",
-            "Pull request close-out.",
-            "Multi-pass review.",
-            "Self-review against a reviewer's past findings.",
-            "Design-system rollout.",
-            "Cleanup.",
-            "A skill that reads the past week's reviews and updates the review checklist from what was missed, so the process keeps learning.",
+            "Planning a task from its ticket and the code.",
+            "Checking work locally before it is committed.",
+            "Preparing a pull request with evidence and answering review comments.",
+            "Reviewing in several independent passes.",
+            "Learning from past review findings, so the checklist improves.",
         ],
     },
     {
@@ -56,7 +52,7 @@ export const agentSections: AgentSection[] = [
         intro: "The owner stays in charge of anything other people can see.",
         points: [
             "It never posts under the owner's name without approval.",
-            "It never merges on company repositories.",
+            "It never merges on its own.",
             "It keeps a human approval step for anything visible.",
             "It records decisions on the ticket.",
         ],
@@ -75,9 +71,9 @@ export interface FlowStep {
 export const agentFlow: FlowStep[] = [
     {
         id: "ticket",
-        short: "From Slack, Linear or GitHub",
+        short: "From chat, a tracker or a repo",
         label: "Ticket",
-        detail: "A ticket is assigned or mentioned in Slack, Linear or GitHub.",
+        detail: "A ticket is assigned or mentioned in chat, the tracker or the repository.",
         kind: "step",
     },
     { id: "plan", short: "Reads the ticket and the code", label: "Plan", detail: "The agent reads the ticket and the code, and writes a plan.", kind: "step" },

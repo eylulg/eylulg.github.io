@@ -11,10 +11,10 @@ const routes: Array<{ path: string; h1: string }> = [
     { path: "/projects/plain-language-word-addin", h1: "Plain Language Word add-in" },
     { path: "/projects/ui", h1: "Component library" },
     { path: "/projects/sudoku", h1: "Sudoku" },
-    { path: "/projects/portfolio", h1: "This portfolio" },
     { path: "/experience", h1: "Experience" },
     { path: "/principles", h1: "How I work" },
     { path: "/agents", h1: "AI agents" },
+    { path: "/how-this-was-built", h1: "How this portfolio was built" },
     { path: "/contact", h1: "Contact" },
     { path: "/this-page-does-not-exist", h1: "Page not found" },
 ];
@@ -53,6 +53,17 @@ test("navigates client-side and keeps external links intact", async ({ page }) =
     await expect(page).toHaveURL(/\/agents$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("AI agents");
     await expect(page).toHaveTitle("AI agents | Eylül Güneş");
+});
+
+test("a fresh load starts at the top even after another page was scrolled", async ({ page }) => {
+    await page.goto("/experience");
+    await page.evaluate(() => window.scrollTo(0, 1200));
+    await page.waitForFunction(() => window.scrollY > 0);
+
+    await page.goto("/contact");
+
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
 });
 
 test("serves the CV PDF", async ({ request }) => {

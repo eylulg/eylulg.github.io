@@ -63,7 +63,23 @@ export function RootLayout() {
 
     return (
         <RouteProvider>
-            <AppShell maxWidth="6xl" header={<Nav pathname={pathname} />} footer={<SiteFooter currentId="portfolio" />}>
+            <AppShell
+                maxWidth="6xl"
+                header={<Nav pathname={pathname} />}
+                footer={
+                    <SiteFooter currentId="portfolio">
+                        <p className="text-sm text-tertiary">
+                            This portfolio was built with AI agents.{" "}
+                            <Link
+                                to="/how-this-was-built"
+                                className="rounded text-brand underline-offset-2 outline-focus hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
+                            >
+                                How this portfolio was built
+                            </Link>
+                        </p>
+                    </SiteFooter>
+                }
+            >
                 <Outlet />
             </AppShell>
             <ScrollRestoration getKey={scrollKey} />

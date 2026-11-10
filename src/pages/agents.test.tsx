@@ -14,19 +14,20 @@ describe("AI agents page", () => {
         );
     });
 
-    it("links to the two agent case studies", async () => {
+    it("links to the two agent case studies and the page about how this site was built", async () => {
         await renderRoute("/agents");
 
         const main = within(screen.getByRole("main"));
         expect(main.getByRole("link", { name: /Agent control room/ })).toHaveAttribute("href", "/projects/agent-control-room");
         expect(main.getByRole("link", { name: /Review Companion/ })).toHaveAttribute("href", "/projects/review-companion");
+        expect(main.getByRole("link", { name: /How this portfolio was built/ })).toHaveAttribute("href", "/how-this-was-built");
     });
 
     it("switches detail tabs", async () => {
         const user = userEvent.setup();
         await renderRoute("/agents");
 
-        expect(screen.getByRole("tabpanel")).toHaveTextContent("watches Slack, Linear and GitHub");
+        expect(screen.getByRole("tabpanel")).toHaveTextContent("watches the places where tickets and reviews arrive");
         await user.click(screen.getByRole("tab", { name: "Guardrails" }));
         expect(screen.getByRole("tabpanel")).toHaveTextContent("never posts under the owner's name without approval");
     });

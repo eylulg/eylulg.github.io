@@ -78,7 +78,14 @@ export default function AgentsPage() {
                         Two case studies show the human side of working with agents: the dashboard an operator uses to approve, guard and route an engineering
                         agent, and a review tool where every AI finding passes through a person.
                     </p>
+                    <p className="max-w-3xl text-md text-tertiary">
+                        This site and its projects were built with the same kind of workflow, and the page about it says what the agents did, what I decided and
+                        what went wrong.
+                    </p>
                     <div className="flex flex-wrap gap-3">
+                        <Button href="/how-this-was-built" variant="secondary" size="md" iconTrailing={ArrowRight}>
+                            How this portfolio was built
+                        </Button>
                         <Button href="/projects/agent-control-room" variant="secondary" size="md" iconTrailing={ArrowRight}>
                             Agent control room
                         </Button>

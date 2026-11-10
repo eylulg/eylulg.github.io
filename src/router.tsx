@@ -21,6 +21,7 @@ export const routes: RouteObject[] = [
             { path: "experience", ...page(() => import("@/pages/experience")) },
             { path: "principles", ...page(() => import("@/pages/principles")) },
             { path: "agents", ...page(() => import("@/pages/agents")) },
+            { path: "how-this-was-built", ...page(() => import("@/pages/how-built")) },
             { path: "contact", ...page(() => import("@/pages/contact")) },
             { path: "*", ...page(() => import("@/pages/not-found")) },
         ],
