@@ -76,7 +76,7 @@ UI components come from `@eylulg/ui`. If one is missing, extend the library inst
 
 ## Design system dependency
 
-Locally `@eylulg/ui` is linked from `../ui`. In CI and in the Pages deploy, the composite action `.github/actions/setup` checks out `eylulg/ui` into `ui-src`, builds it, and installs it from there with `npm pkg set dependencies.@eylulg/ui=file:./ui-src` (runner only, the committed `package.json` is unchanged). Once the library is published to npm, the dependency switches to `^1.0.0`, the setup action goes back to `npm ci`, and Vercel deploys of the other projects need that publish.
+Locally `@eylulg/ui` is installed as a copy from `../ui` (`npm install ../ui --install-links`); run `npm run relink` after rebuilding the library. In CI and in the Pages deploy, the composite action `.github/actions/setup` checks out `eylulg/ui` into `ui-src`, builds it, and installs it from there with `npm pkg set dependencies.@eylulg/ui=file:./ui-src` (runner only, the committed `package.json` is unchanged). Once the library is published to npm, the dependency switches to `^1.0.0`, the setup action goes back to `npm ci`, and Vercel deploys of the other projects need that publish.
 
 ## Deploy
 
