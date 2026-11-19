@@ -4,6 +4,8 @@ description: Installs dependencies with @eylulg/ui built from source, until the 
 runs:
     using: composite
     steps:
+        # package.json depends on file:../ui. Checkout cannot write outside the workspace,
+        # so the library is checked out here and moved up a level.
         - uses: actions/checkout@v7
           with:
               repository: eylulg/ui
@@ -14,12 +16,12 @@ runs:
               cache: npm
         - name: Build @eylulg/ui
           shell: bash
-          working-directory: ui-src
           run: |
-              npm ci
-              npm run build
-        - name: Install dependencies against the local build
+              mv ui-src ../ui
+              npm --prefix ../ui ci
+              npm --prefix ../ui run build
+        # install-links copies the library in, as the local relink does. A symlink would give
+        # TypeScript two copies of the React types. npm ci cannot be used: the lockfile records a link.
+        - name: Install the app against the built library
           shell: bash
-          run: |
-              npm pkg set dependencies.@eylulg/ui=file:./ui-src
-              npm install --no-audit --no-fund --install-links
+          run: npm install --no-audit --no-fund --install-links
