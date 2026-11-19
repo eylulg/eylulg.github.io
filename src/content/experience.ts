@@ -29,7 +29,7 @@ export const roles: Role[] = [
             "Built Word and Outlook add-in features with Office.js and Microsoft Graph, working across the frontend, API routes and storage.",
             "Improved quality and performance: CI checks in every repo, tests that check user-visible outcomes, and lazy-loaded dialogs.",
             "Scoped projects that other engineers delivered, did code reviews across all products and sat on a hiring panel.",
-            "Built a personal AI engineering agent connected to Slack, Linear and GitHub that takes tickets to pull requests with human approval steps, plus a library of reusable agent skills.",
+            "Built an AI engineering agent at Saga, connected to Slack, Linear and GitHub, that takes tickets to pull requests with human approval steps, plus a library of reusable agent skills.",
         ],
         skills: [
             "Next.js",

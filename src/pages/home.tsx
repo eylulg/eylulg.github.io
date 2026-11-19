@@ -71,7 +71,7 @@ export default function HomePage() {
                             All projects
                         </Button>
                     </div>
-                    <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <ul className="grid gap-6 md:grid-cols-2">
                         {featuredProjects.map((project) => (
                             <li key={project.slug}>
                                 <ProjectCard project={project} />

@@ -32,3 +32,4 @@ test-results
 blob-report
 ui-src
 .lighthouseci
+results.sarif

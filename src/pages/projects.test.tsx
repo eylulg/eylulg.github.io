@@ -22,7 +22,7 @@ describe("Projects page", () => {
     it("lists the smaller projects after the main ones", async () => {
         await renderRoute("/projects");
 
-        expect(cardTitles().slice(-2)).toEqual(["Agent control room", "Sudoku"]);
+        expect(cardTitles().slice(-3)).toEqual(["Review Companion", "Plain Language Word add-in", "Sudoku"]);
     });
 
     it("filters by tag chip and keeps the filter in the URL", async () => {

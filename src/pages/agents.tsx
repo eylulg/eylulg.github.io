@@ -88,7 +88,7 @@ export default function AgentsPage() {
                             How this portfolio was built
                         </Button>
                         <Button href="/projects/agent-control-room" variant="secondary" size="md" iconTrailing={ArrowRight}>
-                            Agent control room
+                            Agent workflows
                         </Button>
                         <Button href="/projects/review-companion" variant="secondary" size="md" iconTrailing={ArrowRight}>
                             Review Companion
