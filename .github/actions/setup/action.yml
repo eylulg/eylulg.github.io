@@ -2,26 +2,26 @@ name: Set up Node and the design system
 description: Installs dependencies with @eylulg/ui built from source, until the package is published to npm.
 
 runs:
-    using: composite
-    steps:
-        # package.json depends on file:../ui. Checkout cannot write outside the workspace,
-        # so the library is checked out here and moved up a level.
-        - uses: actions/checkout@v7
-          with:
-              repository: eylulg/ui
-              path: ui-src
-        - uses: actions/setup-node@v7
-          with:
-              node-version: 24
-              cache: npm
-        - name: Build @eylulg/ui
-          shell: bash
-          run: |
-              mv ui-src ../ui
-              npm --prefix ../ui ci
-              npm --prefix ../ui run build
-        # install-links copies the library in, as the local relink does. A symlink would give
-        # TypeScript two copies of the React types. npm ci cannot be used: the lockfile records a link.
-        - name: Install the app against the built library
-          shell: bash
-          run: npm install --no-audit --no-fund --install-links
+  using: composite
+  steps:
+    # package.json depends on file:../ui. Checkout cannot write outside the workspace,
+    # so the library is checked out here and moved up a level.
+    - uses: actions/checkout@v7
+      with:
+        repository: eylulg/ui
+        path: ui-src
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 24
+        cache: npm
+    - name: Build @eylulg/ui
+      shell: bash
+      run: |
+        mv ui-src ../ui
+        npm --prefix ../ui ci
+        npm --prefix ../ui run build
+    # install-links copies the library in, as the local relink does. A symlink would give
+    # TypeScript two copies of the React types. npm ci cannot be used: the lockfile records a link.
+    - name: Install the app against the built library
+      shell: bash
+      run: npm install --no-audit --no-fund --install-links

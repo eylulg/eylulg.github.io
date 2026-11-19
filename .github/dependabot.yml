@@ -1,28 +1,46 @@
 version: 2
 updates:
-    - package-ecosystem: npm
-      directory: /
-      schedule:
-          interval: monthly
-      open-pull-requests-limit: 5
-      commit-message:
-          prefix: chore
-          include: scope
-      groups:
-          lint-and-format:
-              patterns: ["eslint*", "@eslint/*", "typescript-eslint", "prettier*", "@trivago/*", "knip", "husky", "lint-staged"]
-          test:
-              patterns: ["vitest*", "@testing-library/*", "jsdom", "@playwright/*"]
-          build:
-              patterns: ["vite", "@vitejs/*", "tailwindcss", "@tailwindcss/*", "typescript"]
-          runtime:
-              patterns: ["react", "react-dom", "@types/react*", "react-aria-components", "react-router", "lucide-react"]
-    - package-ecosystem: github-actions
-      directory: /
-      schedule:
-          interval: monthly
-      commit-message:
-          prefix: ci
-      groups:
-          actions:
-              patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      lint-and-format:
+        patterns:
+          [
+            'eslint*',
+            '@eslint/*',
+            'typescript-eslint',
+            'prettier*',
+            '@trivago/*',
+            'knip',
+            'husky',
+            'lint-staged',
+          ]
+      test:
+        patterns: ['vitest*', '@testing-library/*', 'jsdom', '@playwright/*']
+      build:
+        patterns: ['vite', '@vitejs/*', 'tailwindcss', '@tailwindcss/*', 'typescript']
+      runtime:
+        patterns:
+          [
+            'react',
+            'react-dom',
+            '@types/react*',
+            'react-aria-components',
+            'react-router',
+            'lucide-react',
+          ]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ['*']

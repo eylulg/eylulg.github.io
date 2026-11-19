@@ -21,6 +21,6 @@
 
 /** Called by the root layout on every route change. */
 export function trackPageView(path: string): void {
-    void path;
-    // posthog.capture("$pageview", { $current_url: window.location.origin + path });
+  void path;
+  // posthog.capture("$pageview", { $current_url: window.location.origin + path });
 }

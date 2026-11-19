@@ -1,63 +1,63 @@
-@import "tailwindcss";
-@import "@eylulg/ui/theme.css";
-@import "@eylulg/ui/themes/portfolio.css";
-@source "../../node_modules/@eylulg/ui/dist";
+@import 'tailwindcss';
+@import '@eylulg/ui/theme.css';
+@import '@eylulg/ui/themes/portfolio.css';
+@source '../../node_modules/@eylulg/ui/dist';
 
 /* Inter variable, latin plus the six Turkish letters outside it, instead of the library's seven script subsets. */
 @font-face {
-    font-family: "Inter Variable";
-    font-style: normal;
-    font-display: swap;
-    font-weight: 100 900;
-    src: url("../assets/fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
-        U+2215, U+FEFF, U+FFFD;
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../assets/fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-    font-family: "Inter Variable";
-    font-style: normal;
-    font-display: swap;
-    font-weight: 100 900;
-    src: url("../assets/fonts/inter-turkish-wght-normal.woff2") format("woff2-variations");
-    unicode-range: U+011E-011F, U+0130, U+015E-015F;
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../assets/fonts/inter-turkish-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+011E-011F, U+0130, U+015E-015F;
 }
 
 :root {
-    --font-inter: "Inter Variable";
+  --font-inter: 'Inter Variable';
 }
 
 /* Between md and lg the desktop bar is tight: keep every link on one line rather than letting the labels wrap. */
 header nav a {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 @media (min-width: 48rem) and (max-width: 63.999rem) {
-    header nav {
-        margin-left: 0;
-    }
+  header nav {
+    margin-left: 0;
+  }
 
-    header nav ul {
-        gap: 0;
-    }
+  header nav ul {
+    gap: 0;
+  }
 
-    header nav a {
-        padding-inline: 0.375rem;
-    }
+  header nav a {
+    padding-inline: 0.375rem;
+  }
 }
 
 /* main is a focus target after navigation, not a control: no default outline around the whole page. */
 main:focus {
-    outline: none;
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

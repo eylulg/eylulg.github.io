@@ -1,10 +1,10 @@
-import { Badge } from "@eylulg/ui/badge";
-import type { ProjectStatus } from "@/content/projects";
+import { Badge } from '@eylulg/ui/badge';
+import type { ProjectStatus } from '@/content/projects';
 
 export function StatusBadge({ status }: { status: ProjectStatus }) {
-    return (
-        <Badge dot size="sm" color={status === "live" ? "success" : "warning"}>
-            {status === "live" ? "Live" : "In progress"}
-        </Badge>
-    );
+  return (
+    <Badge dot size='sm' color={status === 'live' ? 'success' : 'warning'}>
+      {status === 'live' ? 'Live' : 'In progress'}
+    </Badge>
+  );
 }
