@@ -18,7 +18,7 @@ describe("AI agents page", () => {
         await renderRoute("/agents");
 
         const main = within(screen.getByRole("main"));
-        expect(main.getByRole("link", { name: /Agent control room/ })).toHaveAttribute("href", "/projects/agent-control-room");
+        expect(main.getByRole("link", { name: /Agent workflows/ })).toHaveAttribute("href", "/projects/agent-control-room");
         expect(main.getByRole("link", { name: /Review Companion/ })).toHaveAttribute("href", "/projects/review-companion");
         expect(main.getByRole("link", { name: /Assistant Studio/ })).toHaveAttribute("href", "/projects/assistant-studio");
         expect(main.getByRole("link", { name: /How this portfolio was built/ })).toHaveAttribute("href", "/how-this-was-built");

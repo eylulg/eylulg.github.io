@@ -1,6 +1,6 @@
 export const agentIntro = [
     "I build AI agents that run a real delivery process, with human approval steps where they matter.",
-    "I designed and ran a personal engineering agent that takes tickets through to pull requests, and a library of reusable agent skills that encode a team's delivery workflow. I'm now rewriting the agent from scratch as a generic, open project.",
+    "At Saga I designed and ran an engineering agent that takes tickets through to pull requests, and a library of reusable agent skills that encode a team's delivery workflow.",
 ];
 
 export interface AgentSection {

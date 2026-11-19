@@ -56,8 +56,8 @@ export const proofPoints: ProofPoint[] = [
     {
         id: "ai-agents",
         title: "AI agent engineering",
-        body: "AI where a person stays in charge: a review tool that checks every finding against the diff before showing it and posts nothing on its own. The agent workflow behind this site is written up too.",
-        href: "/projects/review-companion",
-        linkLabel: "See Review Companion",
+        body: "AI where a person stays in charge: a research assistant that answers from your documents with citations you can open, asks before any action with side effects, and checks itself with an eval suite. The agent workflow behind this site is written up too.",
+        href: "/projects/assistant-studio",
+        linkLabel: "See Assistant Studio",
     },
 ];
