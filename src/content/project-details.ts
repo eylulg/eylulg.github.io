@@ -33,9 +33,9 @@ const details: Record<string, ProjectDetail> = {
     context:
       'Most of my design-system work lives in private company repositories. This is a public library that shows how I design component APIs, tokens, accessibility and releases, and that makes the projects here read as one family.',
     built: [
-      'Tokens in a Tailwind CSS 4 theme, with nine variants that change only brand hue, gray family, radius and density.',
+      'Tokens in a Tailwind CSS 4 theme on one warm frame, with nine project themes that each set four things: a colour, a font pairing, a text size and a density.',
       'More than thirty components on React Aria Components, each with its own entry point.',
-      'The shared chrome: app shell, top nav, project switcher, theme toggle and footer.',
+      'The shared chrome: app shell, top nav, project switcher, theme and text size toggles, and footer.',
       'Line, bar and grid charts with keyboard-reachable marks, a table alternative and a palette checked for contrast and colour blindness in every variant.',
       'Storybook with accessibility checks, and a bundle size budget in CI.',
     ],
@@ -47,7 +47,7 @@ const details: Record<string, ProjectDetail> = {
     tested: [
       'The behaviour the library adds on top of React Aria, because that is where its own bugs can be.',
       'An axe audit of every component in light and dark, because a theme can break accessibility without touching the markup.',
-      'A contrast check of every text token in every variant against WCAG AA, because a new hue is the easiest way to break it.',
+      'A contrast check of every text token, solid fill and focus ring in every theme, in light and dark, because a new colour is the easiest way to break it.',
     ],
     next: [
       'Cut a first release on npm.',

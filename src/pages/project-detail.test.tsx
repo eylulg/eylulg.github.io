@@ -6,7 +6,7 @@ describe('Project detail page', () => {
   it('renders the case-study sections', async () => {
     const { heading } = await renderRoute('/projects/ui');
 
-    expect(heading).toHaveTextContent('Component library');
+    expect(heading).toHaveTextContent('Component Library');
     for (const section of [
       'Context',
       'What I built',

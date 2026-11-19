@@ -106,7 +106,7 @@ export default function AgentsPage() {
               size='md'
               iconTrailing={ArrowRight}
             >
-              Agent workflows
+              Agent Workflows
             </Button>
             <Button
               href='/projects/review-companion'

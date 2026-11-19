@@ -18,7 +18,7 @@ describe('AI agents page', () => {
     await renderRoute('/agents');
 
     const main = within(screen.getByRole('main'));
-    expect(main.getByRole('link', { name: /Agent workflows/ })).toHaveAttribute(
+    expect(main.getByRole('link', { name: /Agent Workflows/ })).toHaveAttribute(
       'href',
       '/projects/agent-control-room',
     );

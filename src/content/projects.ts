@@ -19,6 +19,8 @@ export interface Project {
   status: ProjectStatus;
   tags: ProjectTag[];
   featured?: boolean;
+  /** One short line for the featured card on the home page. */
+  teaser?: string;
   /** Smaller projects are listed after the main ones. */
   smaller?: boolean;
   /** Id in the shared project list of @eylulg/ui; the repository and live URLs come from there. */
@@ -40,12 +42,13 @@ export const projects: Project[] = [
       'semantic-release',
       'GitHub Actions',
     ],
-    title: 'Component library',
+    title: 'Component Library',
     summary:
       '@eylulg/ui: an accessible React component library with nine theme variants and the shared app chrome every project here is built with.',
     status: 'in progress',
     tags: ['React', 'Design system'],
     featured: true,
+    teaser: 'Accessible React components, charts and the themes on this page.',
   },
   {
     slug: 'workspace',
@@ -68,6 +71,7 @@ export const projects: Project[] = [
     status: 'in progress',
     tags: ['Next.js', 'React'],
     featured: true,
+    teaser: 'A keyboard-first issue tracker with optimistic updates and a command palette.',
   },
   {
     slug: 'agent-control-room',
@@ -83,12 +87,13 @@ export const projects: Project[] = [
       'Vitest',
       'GitHub Actions',
     ],
-    title: 'Agent workflows',
+    title: 'Agent Workflows',
     summary:
       'A visual workflow builder for a simulated engineering agent: draw the pipeline as a graph, run it, and trace every job through it, all usable by keyboard.',
     status: 'live',
     tags: ['React', 'AI'],
     featured: true,
+    teaser: "Draw an agent's pipeline as a graph, run it and trace every job.",
   },
   {
     slug: 'assistant-studio',
@@ -113,6 +118,7 @@ export const projects: Project[] = [
     status: 'in progress',
     tags: ['React', 'Next.js', 'AI'],
     featured: true,
+    teaser: 'Answers from your documents with citations you can open.',
   },
   {
     slug: 'watchlist',
@@ -190,7 +196,7 @@ export const projects: Project[] = [
       'Anthropic SDK',
       'Vitest',
     ],
-    title: 'Plain Language Word add-in',
+    title: 'Plain Language Add-in',
     summary:
       'A Word add-in that scores readability, points to hard sentences and rewrites a paragraph in plain language as a tracked change.',
     status: 'in progress',

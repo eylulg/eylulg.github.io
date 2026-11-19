@@ -22,11 +22,7 @@ describe('Projects page', () => {
   it('lists the smaller projects after the main ones', async () => {
     await renderRoute('/projects');
 
-    expect(cardTitles().slice(-3)).toEqual([
-      'Review Companion',
-      'Plain Language Word add-in',
-      'Sudoku',
-    ]);
+    expect(cardTitles().slice(-3)).toEqual(['Review Companion', 'Plain Language Add-in', 'Sudoku']);
   });
 
   it('filters by tag chip and keeps the filter in the URL', async () => {
@@ -42,7 +38,7 @@ describe('Projects page', () => {
   it('reads the tag filter from the URL', async () => {
     await renderRoute('/projects?tag=microsoft-365');
 
-    expect(cardTitles()).toEqual(['Plain Language Word add-in']);
+    expect(cardTitles()).toEqual(['Plain Language Add-in']);
   });
 
   it('says when nothing matches', async () => {

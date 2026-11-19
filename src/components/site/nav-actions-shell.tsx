@@ -1,6 +1,6 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import { type ThemePreference, useTheme } from '@eylulg/ui/chrome';
-import { ChevronDown, LayoutGrid, Monitor, Moon, Sun } from 'lucide-react';
+import { type ThemePreference, useTextSize, useTheme } from '@eylulg/ui/chrome';
+import { ALargeSmall, ChevronDown, LayoutGrid, Monitor, Moon, Sun } from 'lucide-react';
 import type { NavActionTarget } from '@/components/site/nav-actions';
 import type { IconComponent } from '@/types/icon';
 
@@ -26,6 +26,8 @@ const compactButton = `relative inline-flex size-control-md cursor-pointer items
 const themeGroup =
   'inline-flex items-center gap-0.5 rounded-md border border-default bg-primary p-0.5';
 const themeButton = `inline-flex size-control-xs min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-sm text-fg-tertiary transition-colors hover:bg-hover hover:text-fg-secondary aria-checked:bg-tertiary aria-checked:text-fg-primary ${focusStyles}`;
+
+const textSizeButton = `inline-flex size-control-md cursor-pointer items-center justify-center rounded-md border border-default bg-primary text-fg-tertiary transition-colors hover:bg-hover hover:text-fg-secondary data-selected:border-brand data-selected:bg-brand-subtle data-selected:text-brand ${focusStyles}`;
 
 interface PlaceholderProps {
   onOpen: (target: NavActionTarget) => void;
@@ -64,6 +66,26 @@ function ThemeChoiceButton({ id, label, icon: Icon }: (typeof themeChoices)[numb
       onClick={handleClick}
     >
       <Icon aria-hidden='true' className='size-4' />
+    </button>
+  );
+}
+
+/** Mirrors the library's TextSizeToggle with a native button, so the first load carries no React Aria. */
+function TextSizePlaceholder() {
+  const { size, setSize } = useTextSize();
+  const handleClick = () => setSize(size === 'compact' ? 'default' : 'compact');
+
+  return (
+    <button
+      type='button'
+      aria-pressed={size === 'compact'}
+      // The same state attribute as the library's toggle, so both share one set of styles.
+      data-selected={size === 'compact' || undefined}
+      aria-label='Compact text'
+      className={textSizeButton}
+      onClick={handleClick}
+    >
+      <ALargeSmall aria-hidden='true' className='size-4' />
     </button>
   );
 }
@@ -107,6 +129,7 @@ function Placeholders({ onOpen }: PlaceholderProps) {
       <div className='hidden md:block lg:hidden'>
         <SwitcherPlaceholder label='Switch' onOpen={onOpen} />
       </div>
+      <TextSizePlaceholder />
       <div className='max-md:block md:hidden lg:block'>
         <ThemeGroupPlaceholder />
       </div>
@@ -118,7 +141,7 @@ function Placeholders({ onOpen }: PlaceholderProps) {
 }
 
 /**
- * The project switcher and theme toggle. The first paint has native buttons that work at once: the theme switch
+ * The project switcher, text size toggle and theme toggle. The first paint has native buttons that work at once: the theme switch
  * changes the theme, the menu buttons load the menu code and open the menu. The real controls take their place
  * when the browser is idle, or when a menu button is pressed.
  */

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ProjectSwitcher, ThemeToggle } from '@eylulg/ui/chrome';
+import { ProjectSwitcher, TextSizeToggle, ThemeToggle } from '@eylulg/ui/chrome';
 
 export type NavActionTarget = 'switcher' | 'theme';
 
@@ -32,6 +32,7 @@ export default function NavActions({ openTarget }: NavActionsProps) {
       <div data-nav-action='switcher' className='hidden md:block lg:hidden'>
         <ProjectSwitcher currentId='portfolio' label='Switch' />
       </div>
+      <TextSizeToggle />
       <div data-nav-action='theme' className='max-md:block md:hidden lg:block'>
         <ThemeToggle />
       </div>
