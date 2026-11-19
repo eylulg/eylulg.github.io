@@ -155,7 +155,7 @@ const details: Record<string, ProjectDetail> = {
             "Passage splitting, ranking and citation offsets as plain functions, and eval checks that fail on a citation pointing outside the document or quoting the wrong text.",
             "The reducer, the conversation tree, the two-phase protocol and the Insights selectors, including 1,000 generated answers, as plain functions.",
             "Filter state in the URL, saved views with corrupt or refused storage, and the check that the committed eval report still matches the cases.",
-            "Browser runs in demo mode for upload errors, citations, the source viewer, approval, Stop, Resume and Insights, with axe in light and dark at 375 and 1280 pixels, and a check that answering from documents sends no chat request.",
+            "Browser runs in demo mode for upload errors, citations, the source viewer, approval, Stop, Resume and Insights, with axe in light and dark at 375 and 1280 pixels, and a test that inspects every request the demo makes after a document was used, switched off and removed, so no document text leaves the browser.",
         ],
         next: [
             "Record the model fixtures with a real key once, locally. They are authored today, so passing on them shows the pipeline and the checks work and says nothing yet about the model.",
@@ -287,7 +287,7 @@ const details: Record<string, ProjectDetail> = {
         ],
         decisions: [
             "No graph library. Steps are HTML over one SVG layer for the connections, because I needed full control of focus, keyboard and announcements.",
-            "Every pointer action has a keyboard path. Steps form a list with roving focus in graph order, a menu connects a port to any valid target, and an outline view shows and edits the same graph as nested lists.",
+            "Every pointer action has a keyboard path. Steps form a list with roving focus in graph order, a menu connects a port to any valid target, and an outline view shows and edits the same graph as one ordered list of steps and their connections.",
             "The workflow is data that the simulator interprets. Before that refactor I recorded the simulator's event stream for three seeds, and the default workflow reproduces them exactly, apart from the step and publish events added since, which proves the change kept behaviour.",
             "Publishing is a versioned command on the event stream. Jobs keep the version they started with, so editing the workflow never changes work in flight.",
             "Every edit goes through one capped command history, so undo and redo cover changes made with the pointer, the keyboard and the outline alike.",
@@ -295,12 +295,10 @@ const details: Record<string, ProjectDetail> = {
         tested: [
             "Graph logic as plain functions: validation, cycle detection, reachability, topological order and auto-layout.",
             "The recorded event streams, so any change to how the simulator walks the graph shows up as a diff.",
-            "Keyboard flows: add a step, connect through the menu, delete and undo, with axe on the editor and on the outline view.",
+            "Keyboard flows: add a step, connect through the menu, delete and undo, and where focus lands after each, with axe on the editor and on the outline view.",
+            "Pointer flows: drag a step and undo, drag from a port onto a step to connect, open a job trace and run a dry run to the end.",
         ],
-        next: [
-            "Cover the pointer paths for dragging and connecting with a browser test, not only by hand.",
-            "Measure the canvas on a production build and on a phone.",
-        ],
+        next: ["Measure the canvas on a production build and on a phone."],
         screenshots: [
             {
                 src: PLACEHOLDER,
