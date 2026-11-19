@@ -10,7 +10,7 @@ The portfolio site of Eylül Güneş, Senior Frontend Developer: projects, exper
 - Inter, self-hosted through `@fontsource-variable/inter`
 - Dark mode with the library's `dark-mode` class: the library's theme toggle follows the system setting until the visitor flips it, and an inline script avoids a flash on load
 - Vitest, Testing Library and vitest-axe for unit and accessibility tests; Playwright for a smoke test of the built site
-- ESLint 9 (flat config, typescript-eslint, react-hooks, jsx-a11y), Prettier, knip, commitlint and Husky with lint-staged
+- ESLint 9 (flat config, typescript-eslint, react-hooks, jsx-a11y), Prettier, knip, and Husky with lint-staged
 - GitHub Actions for CI and the GitHub Pages deploy
 
 ## Run it

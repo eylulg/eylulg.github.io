@@ -10,7 +10,7 @@ updates:
           include: scope
       groups:
           lint-and-format:
-              patterns: ["eslint*", "@eslint/*", "typescript-eslint", "prettier*", "@trivago/*", "knip", "@commitlint/*", "husky", "lint-staged"]
+              patterns: ["eslint*", "@eslint/*", "typescript-eslint", "prettier*", "@trivago/*", "knip", "husky", "lint-staged"]
           test:
               patterns: ["vitest*", "@testing-library/*", "jsdom", "@playwright/*"]
           build:
