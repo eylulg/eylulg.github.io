@@ -7,3 +7,4 @@ test-results
 public
 ui-src
 docs/perf
+results.sarif
