@@ -1,6 +1,5 @@
 export const site = {
     name: "Eylül Güneş",
-    pronouns: "they/them",
     role: "Senior Frontend Developer",
     tagline: "Senior Frontend Developer. React, Next.js and TypeScript, design systems and AI agents.",
     url: "https://eylulg.github.io",
