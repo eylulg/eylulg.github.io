@@ -1,16 +1,16 @@
 import { expect, test } from '@playwright/test';
 
 const routes: Array<{ path: string; h1: string }> = [
-  { path: '/', h1: 'Eylül Güneş' },
+  { path: '/', h1: 'I build product interfaces and the design systems under them.' },
   { path: '/projects', h1: 'Projects' },
   { path: '/projects/workspace', h1: 'Workspace' },
   { path: '/projects/review-companion', h1: 'Review Companion' },
   { path: '/projects/assistant-studio', h1: 'Assistant Studio' },
-  { path: '/projects/agent-control-room', h1: 'Agent workflows' },
+  { path: '/projects/agent-control-room', h1: 'Agent Workflows' },
   { path: '/projects/watchlist', h1: 'Watchlist' },
   { path: '/projects/tokens-to-tailwind', h1: 'Tokens to Tailwind' },
-  { path: '/projects/plain-language-word-addin', h1: 'Plain Language Word add-in' },
-  { path: '/projects/ui', h1: 'Component library' },
+  { path: '/projects/plain-language-word-addin', h1: 'Plain Language Add-in' },
+  { path: '/projects/ui', h1: 'Component Library' },
   { path: '/projects/sudoku', h1: 'Sudoku' },
   { path: '/experience', h1: 'Experience' },
   { path: '/principles', h1: 'How I work' },

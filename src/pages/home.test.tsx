@@ -1,19 +1,21 @@
 import { screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { afterEach, describe, expect, it } from 'vitest';
 import { featuredProjects } from '@/content/projects';
 import { site } from '@/content/site';
 import { renderRoute, runAxe } from '@/test/render-route';
 
+afterEach(() => {
+  delete document.documentElement.dataset.uiVariant;
+});
+
 describe('Home page', () => {
-  it('shows the name, tagline, proof points, featured projects and contact actions', async () => {
+  it('shows the headline, the featured projects and the CV, GitHub and LinkedIn links', async () => {
     const { heading } = await renderRoute('/');
 
-    expect(heading).toHaveTextContent(site.name);
-    expect(screen.getByText(site.tagline)).toBeInTheDocument();
-    expect(screen.getByText(site.availability)).toBeInTheDocument();
-    for (const title of ['Product UI craft', 'Design-system engineering', 'AI agent engineering']) {
-      expect(screen.getByRole('heading', { level: 3, name: title })).toBeInTheDocument();
-    }
+    const main = within(screen.getByRole('main'));
+    expect(heading).toHaveTextContent(site.headline);
+    expect(main.getByText(site.availability)).toBeInTheDocument();
     expect(featuredProjects.map((project) => project.slug)).toEqual([
       'ui',
       'workspace',
@@ -21,13 +23,12 @@ describe('Home page', () => {
       'assistant-studio',
     ]);
     for (const project of featuredProjects) {
-      expect(
-        within(screen.getByRole('main')).getByRole('link', { name: project.title }),
-      ).toHaveAttribute('href', `/projects/${project.slug}`);
+      expect(main.getByRole('link', { name: project.title })).toHaveAttribute(
+        'href',
+        `/projects/${project.slug}`,
+      );
     }
-
-    const main = within(screen.getByRole('main'));
-    expect(main.getByRole('link', { name: /CV \(PDF\)/ })).toHaveAttribute(
+    expect(main.getByRole('link', { name: /Read my CV/ })).toHaveAttribute(
       'href',
       '/Eylul-Gunes-CV.pdf',
     );
@@ -39,11 +40,18 @@ describe('Home page', () => {
       'href',
       'https://www.linkedin.com/in/eylul-gunes',
     );
-    expect(main.getByRole('link', { name: /Email/ })).toHaveAttribute(
-      'href',
-      'mailto:eylulgist@gmail.com',
-    );
     expect(document.title).toBe('Eylül Güneş | Senior Frontend Developer');
+  });
+
+  it('re-themes the page with the picked project theme', async () => {
+    const user = userEvent.setup();
+    await renderRoute('/');
+    const picker = screen.getByRole('radiogroup', { name: /Pick a theme/ });
+
+    await user.click(within(picker).getByRole('radio', { name: 'Workspace, slate blue' }));
+
+    expect(document.documentElement).toHaveAttribute('data-ui-variant', 'workspace');
+    expect(within(picker).getByRole('radio', { name: 'Workspace, slate blue' })).toBeChecked();
   });
 
   it('has no axe violations', async () => {

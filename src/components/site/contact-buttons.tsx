@@ -4,10 +4,10 @@ import GitHub from '@/components/foundations/social-icons/github';
 import LinkedIn from '@/components/foundations/social-icons/linkedin';
 import { site } from '@/content/site';
 
-const GitHubIcon = ({ className }: { className?: string }) => (
+export const GitHubIcon = ({ className }: { className?: string }) => (
   <GitHub aria-hidden='true' className={className} />
 );
-const LinkedInIcon = ({ className }: { className?: string }) => (
+export const LinkedInIcon = ({ className }: { className?: string }) => (
   <LinkedIn aria-hidden='true' className={className} />
 );
 
