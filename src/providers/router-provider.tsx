@@ -1,5 +1,5 @@
 import { type PropsWithChildren } from "react";
-import { RouterProvider } from "react-aria-components";
+import { LinkRouter } from "@eylulg/ui/chrome";
 import { type NavigateOptions, useHref, useNavigate } from "react-router";
 
 declare module "react-aria-components" {
@@ -8,21 +8,13 @@ declare module "react-aria-components" {
     }
 }
 
-const isExternal = (href: string) => /^([a-z][a-z\d+.-]*:|\/\/)/i.test(href);
-
-/** React Router's useHref would mangle absolute URLs such as https: and mailto: links. */
-function useRouterHref(href: string): string {
-    const routerHref = useHref(isExternal(href) ? "/" : href);
-    return isExternal(href) ? href : routerHref;
-}
-
-/** Lets React Aria links navigate client-side through React Router. */
+/** Lets React Aria links navigate through React Router, and load other projects as pages. */
 export const RouteProvider = ({ children }: PropsWithChildren) => {
     const navigate = useNavigate();
 
     return (
-        <RouterProvider navigate={(to, options) => navigate(to, options)} useHref={useRouterHref}>
+        <LinkRouter navigate={navigate} useHref={useHref}>
             {children}
-        </RouterProvider>
+        </LinkRouter>
     );
 };
