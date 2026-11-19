@@ -36,6 +36,7 @@ const details: Record<string, ProjectDetail> = {
             "Tokens in a Tailwind CSS 4 theme, with nine variants that change only brand hue, gray family, radius and density.",
             "More than thirty components on React Aria Components, each with its own entry point.",
             "The shared chrome: app shell, top nav, project switcher, theme toggle and footer.",
+            "Line, bar and grid charts with keyboard-reachable marks, a table alternative and a palette checked for contrast and colour blindness in every variant.",
             "Storybook with accessibility checks, and a bundle size budget in CI.",
         ],
         decisions: [
@@ -48,11 +49,7 @@ const details: Record<string, ProjectDetail> = {
             "An axe audit of every component in light and dark, because a theme can break accessibility without touching the markup.",
             "A contrast check of every text token in every variant against WCAG AA, because a new hue is the easiest way to break it.",
         ],
-        next: [
-            "Deploy the Storybook and cut a first release.",
-            "Add visual regression tests, so a token change shows up as a picture.",
-            "Add a test of the computed focus ring, which would have caught the bug described on the page about how this site was built.",
-        ],
+        next: ["Cut a first release on npm.", "Add visual regression tests, so a token change shows up as a picture."],
         screenshots: [
             {
                 src: PLACEHOLDER,
@@ -148,7 +145,7 @@ const details: Record<string, ProjectDetail> = {
             "An eval suite that runs cases through the real engine, store and tools and checks tool choice, tool input, answer constraints and that every citation points at real text.",
         ],
         decisions: [
-            "The public demo never calls a model. Questions about your documents are answered in the browser by ranking passages and quoting the best ones with exact citations, labelled as an extractive answer, so the documents never leave the device. With your own key, the same screen sends them to Claude with citations turned on.",
+            "The public demo never calls a model. Questions about your documents are answered in the browser by ranking passages and quoting the best ones with exact citations, labelled as an extractive answer, so the documents never leave the device. When the app runs with an API key on the server, the same screen sends the documents to Claude with citations turned on.",
             "PDF reading loads only when you pick a PDF and runs off the main thread, so the first page does not pay for it.",
             "The Insights page shows only data the app produced. Older answers without timing say so instead of showing zero, demo numbers are labelled as demo, and there is no invented history.",
             "Stop and disconnect are different things. Stop keeps the partial answer. A dropped connection is shown as an interruption with a Resume button, never as an error, because the user did nothing wrong.",
@@ -158,7 +155,7 @@ const details: Record<string, ProjectDetail> = {
             "Passage splitting, ranking and citation offsets as plain functions, and eval checks that fail on a citation pointing outside the document or quoting the wrong text.",
             "The reducer, the conversation tree, the two-phase protocol and the Insights selectors, including 1,000 generated answers, as plain functions.",
             "Filter state in the URL, saved views with corrupt or refused storage, and the check that the committed eval report still matches the cases.",
-            "Browser runs in demo mode for upload errors, citations, the source viewer, approval, Stop, Resume and Insights, with axe in light and dark at 375 and 1280 pixels, and a check that no request reaches the chat API.",
+            "Browser runs in demo mode for upload errors, citations, the source viewer, approval, Stop, Resume and Insights, with axe in light and dark at 375 and 1280 pixels, and a check that answering from documents sends no chat request.",
         ],
         next: [
             "Record the model fixtures with a real key once, locally. They are authored today, so passing on them shows the pipeline and the checks work and says nothing yet about the model.",
@@ -289,20 +286,18 @@ const details: Record<string, ProjectDetail> = {
             "The operator pages around it: queue, job detail, approvals, guards and model routing.",
         ],
         decisions: [
-            "No graph library. Steps are HTML over one SVG layer for the connections, because I needed full control of focus, keyboard and announcements, and a library would have been most of the bundle and none of the point.",
-            "Every pointer action has a keyboard path. Steps form a list with roving focus in run order, a menu connects a port to any valid target, and an outline view shows and edits the same graph as nested lists.",
-            "The workflow is data that the simulator interprets. Before that refactor I recorded the simulator's event stream for three seeds, and the default workflow reproduces them exactly, which proves the change kept behaviour.",
+            "No graph library. Steps are HTML over one SVG layer for the connections, because I needed full control of focus, keyboard and announcements.",
+            "Every pointer action has a keyboard path. Steps form a list with roving focus in graph order, a menu connects a port to any valid target, and an outline view shows and edits the same graph as nested lists.",
+            "The workflow is data that the simulator interprets. Before that refactor I recorded the simulator's event stream for three seeds, and the default workflow reproduces them exactly, apart from the step and publish events added since, which proves the change kept behaviour.",
             "Publishing is a versioned command on the event stream. Jobs keep the version they started with, so editing the workflow never changes work in flight.",
             "Every edit goes through one capped command history, so undo and redo cover changes made with the pointer, the keyboard and the outline alike.",
         ],
         tested: [
             "Graph logic as plain functions: validation, cycle detection, reachability, topological order and auto-layout.",
             "The recorded event streams, so any change to how the simulator walks the graph shows up as a diff.",
-            "Keyboard flows: add a step, connect through the menu, delete, undo, and the outline view, with axe on the editor.",
-            "Dragging and panning a generated graph of about 200 steps, measured with and without memoisation, to back the rendering choices with numbers.",
+            "Keyboard flows: add a step, connect through the menu, delete and undo, with axe on the editor and on the outline view.",
         ],
         next: [
-            "Open on a layout that fits the whole default workflow on a laptop screen.",
             "Cover the pointer paths for dragging and connecting with a browser test, not only by hand.",
             "Measure the canvas on a production build and on a phone.",
         ],
