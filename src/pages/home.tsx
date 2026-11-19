@@ -22,9 +22,7 @@ export default function HomePage() {
             <section aria-labelledby="hero-title" className="border-b border-subtle">
                 <div className="flex flex-col gap-8 py-10 md:py-14">
                     <div className="flex max-w-3xl flex-col gap-4">
-                        <p className="text-sm font-semibold text-brand md:text-md">
-                            {site.location} · {site.pronouns}
-                        </p>
+                        <p className="text-sm font-semibold text-brand md:text-md">{site.location}</p>
                         <h1 id="hero-title" className="text-3xl font-semibold text-primary">
                             {site.name}
                         </h1>
