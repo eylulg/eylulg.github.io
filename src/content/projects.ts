@@ -46,7 +46,7 @@ export const projects: Project[] = [
         title: "Agent workflows",
         summary:
             "A visual workflow builder for a simulated engineering agent: draw the pipeline as a graph, run it, and trace every job through it, all usable by keyboard.",
-        status: "in progress",
+        status: "live",
         tags: ["React", "AI"],
         featured: true,
     },
