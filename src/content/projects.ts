@@ -69,7 +69,7 @@ export const projects: Project[] = [
         ],
         title: "Assistant Studio",
         summary:
-            "A research assistant UI: upload documents and get answers with citations you can open, tool calls that wait for approval, stop and resume, and evals.",
+            "A research assistant UI: answers from your documents with citations you can open, tool calls that wait for approval, and an Insights page for usage and evals.",
         status: "in progress",
         tags: ["React", "Next.js", "AI"],
         featured: true,
