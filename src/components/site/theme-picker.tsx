@@ -1,9 +1,5 @@
 import { useEffect, useId, useState } from 'react';
 import { type VariantName, variantNames, variants } from '@eylulg/ui/themes';
-// The heading fonts of the other pairings. A browser downloads a face only once a picked theme uses it.
-import '@fontsource-variable/inter-tight';
-import '@fontsource-variable/jetbrains-mono';
-import '@fontsource-variable/newsreader';
 import { type Key, ToggleButton, ToggleButtonGroup } from 'react-aria-components';
 
 // The swatch takes its colour from its own data-ui-variant, so it shows each project's solid in light and dark.
@@ -22,8 +18,8 @@ function currentVariant(): VariantName {
 }
 
 /**
- * One swatch per project. Picking one sets data-ui-variant on <html>, which re-themes the whole page live:
- * colour, heading font, text size and density.
+ * One swatch per project. Picking one sets data-ui-variant on <html>, which changes the page colour live.
+ * Fonts, text size and density stay the same.
  */
 export function ThemePicker() {
   const labelId = useId();

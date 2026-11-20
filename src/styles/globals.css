@@ -24,7 +24,7 @@
   unicode-range: U+011E-011F, U+0130, U+015E-015F;
 }
 
-/* Manrope variable, the portfolio's heading font: latin, plus latin-ext only for the Turkish letters. The other pairings load with the home page's theme picker. */
+/* Manrope variable, the portfolio's heading font: latin, plus latin-ext only for the Turkish letters. */
 @font-face {
   font-family: 'Manrope Variable';
   font-style: normal;
@@ -48,9 +48,6 @@
 :root {
   --font-inter: 'Inter Variable';
   --font-manrope: 'Manrope Variable';
-  --font-inter-tight: 'Inter Tight Variable';
-  --font-newsreader: 'Newsreader Variable';
-  --font-jetbrains-mono: 'JetBrains Mono Variable';
 }
 
 /* Between md and lg the desktop bar is tight: keep every link on one line rather than letting the labels wrap. */

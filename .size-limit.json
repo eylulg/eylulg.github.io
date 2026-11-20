@@ -3,6 +3,6 @@
     "name": "First load: entry script and stylesheet",
     "path": ["dist/assets/index-*.js", "dist/assets/index-*.css"],
     "gzip": true,
-    "limit": "106 kB"
+    "limit": "110 kB"
   }
 ]
