@@ -121,7 +121,7 @@ export default function ProjectsPage() {
             />
           </>
         ) : (
-          <p className='rounded-xl bg-secondary p-6 text-md text-tertiary'>
+          <p className='rounded-xl bg-primary p-6 text-md text-tertiary ring-1 ring-default'>
             No projects match. Try another tag or a shorter search.
           </p>
         )}

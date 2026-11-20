@@ -37,7 +37,10 @@ export function ThemePicker() {
   return (
     <div className='flex flex-col gap-3'>
       <p id={labelId} className='text-sm text-tertiary'>
-        This site runs on my design system. Pick a theme:
+        This site runs on my design system. Pick a theme:{' '}
+        <span className='font-semibold text-primary'>
+          {variants[picked].project}, {variants[picked].seed.name.toLowerCase()}
+        </span>
       </p>
       <ToggleButtonGroup
         aria-labelledby={labelId}
@@ -45,7 +48,7 @@ export function ThemePicker() {
         disallowEmptySelection
         selectedKeys={[picked]}
         onSelectionChange={handleSelectionChange}
-        className='flex flex-wrap gap-1.5'
+        className='grid w-fit grid-cols-5 gap-1.5 sm:grid-cols-9'
       >
         {variantNames.map((name) => (
           <ToggleButton
