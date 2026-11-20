@@ -61,7 +61,7 @@ export const roles: Role[] = [
       'Wrote and tuned the prompt rules that keep generated templates usable and editable.',
       'Extended the shared Vue component library and its Storybook.',
       'Made campaign templates accessible with ARIA and screen reader support, and fixed cross-browser bugs.',
-      'Fixed Content Security Policy and dependency security issues across several repos.',
+      'Fixed Content Security Policy and dependency security issues across six repos.',
       'Added unit tests and a Claude Code setup to an internal Chrome extension.',
     ],
     skills: [
@@ -115,11 +115,12 @@ export const roles: Role[] = [
     period: 'Mar 2022 to Jun 2023',
     start: '2022-03',
     end: '2023-06',
-    summary: 'London software company that builds products for clients.',
+    summary:
+      'London software company that builds products for clients, mostly AkzoNobel (Dulux) and TradeKart.',
     highlights: [
-      'Built features for a contractor platform in Angular and RxJS, and for merchant portals in React, Redux and Material UI.',
-      "Built features for a sales tool in Angular that calculates a project's cost over 30 years.",
-      'Built the React Native app and the React and Material UI portals for a service that delivers construction products to building sites within two hours.',
+      "Built features for AkzoNobel's contractor platform in Angular and RxJS, and for its merchant portals in React, Redux and Material UI.",
+      "Built features for an AkzoNobel sales tool in Angular that calculates a project's cost over 30 years.",
+      'Built the React Native app and the React and Material UI portals for TradeKart, which delivers construction products to building sites within two hours.',
       'Worked on the company website, turning designs into responsive pages.',
     ],
     skills: ['React', 'React Native', 'Angular', 'RxJS', 'Redux', 'Material UI', 'TypeScript'],
