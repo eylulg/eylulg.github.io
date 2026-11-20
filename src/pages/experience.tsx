@@ -12,7 +12,7 @@ export default function ExperiencePage() {
     <>
       <Seo
         title='Experience'
-        description='Five years of frontend work in TypeScript, React, Next.js and Vue across legal tech, marketing tech, healthcare, e-commerce and online learning.'
+        description='Frontend roles since 2021 in legal tech, marketing tech, healthcare, e-commerce and online learning, mostly in TypeScript, React, Next.js and Vue.'
       />
       <div className='max-w-3xl pt-6 pb-8 md:pb-12'>
         <PageHeader

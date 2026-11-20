@@ -1,6 +1,6 @@
 export const agentIntro = [
-  'I build AI agents that run a real delivery process, with human approval steps where they matter.',
-  "At Saga I designed and ran an engineering agent that takes tickets through to pull requests, and a library of reusable agent skills that encode a team's delivery workflow.",
+  'I build AI agents that run a delivery process, with human approval steps where they matter.',
+  "At Saga I built an engineering agent that takes tickets to pull requests, and a library of reusable agent skills for a team's delivery workflow.",
 ];
 
 export interface AgentSection {
@@ -14,7 +14,7 @@ export const agentSections: AgentSection[] = [
   {
     id: 'agent',
     title: 'The agent',
-    intro: 'It runs on a cloud VM and watches the places where tickets and reviews arrive.',
+    intro: 'It runs on a cloud VM and watches where tickets and reviews arrive.',
     points: [
       'Picks up tickets and writes a plan.',
       'Implements the approved plan, fixes failing CI and answers review findings.',
@@ -26,8 +26,7 @@ export const agentSections: AgentSection[] = [
   {
     id: 'skills',
     title: 'Skills library',
-    intro:
-      'A library of reusable agent skills that encode the delivery workflow, so every run follows the same steps.',
+    intro: 'Reusable agent skills for the delivery workflow, so every run follows the same steps.',
     points: [
       'Planning a task from its ticket and the code.',
       'Checking work locally before it is committed.',
@@ -39,22 +38,22 @@ export const agentSections: AgentSection[] = [
   {
     id: 'routing',
     title: 'Model routing',
-    intro: 'Models are routed by the kind of job, not by habit.',
+    intro: 'The model is chosen by the kind of job.',
     points: [
       'Strong reasoning models for plans, deep review and stuck bugs.',
       'Mid-tier models for implementing an agreed plan.',
       'Fast models for search and mechanical fixes.',
-      'The roles stay fixed; only the model table changes when new models ship.',
+      'The roles stay fixed. Only the model table changes when new models ship.',
     ],
   },
   {
     id: 'guardrails',
     title: 'Guardrails',
-    intro: 'The owner stays in charge of anything other people can see.',
+    intro: 'The owner decides anything other people can see.',
     points: [
       "It never posts under the owner's name without approval.",
       'It never merges on its own.',
-      'It keeps a human approval step for anything visible.',
+      'Anything visible waits for a human approval.',
       'It records decisions on the ticket.',
     ],
   },

@@ -12,7 +12,7 @@ import { site } from '@/content/site';
 export default function HomePage() {
   return (
     <>
-      <Seo description={`${site.tagline} Portfolio, projects and experience of ${site.name}.`} />
+      <Seo description={`${site.tagline} Portfolio of ${site.name}.`} />
 
       <section aria-labelledby='hero-title' className='flex flex-col gap-6 py-12 md:py-16'>
         <p className='text-md font-semibold text-brand'>{site.eyebrow}</p>

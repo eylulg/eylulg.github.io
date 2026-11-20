@@ -1,6 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
+import { agentSections } from '@/content/agents';
 import { renderRoute, runAxe } from '@/test/render-route';
 
 describe('AI agents page', () => {
@@ -40,13 +41,10 @@ describe('AI agents page', () => {
     const user = userEvent.setup();
     await renderRoute('/agents');
 
-    expect(screen.getByRole('tabpanel')).toHaveTextContent(
-      'watches the places where tickets and reviews arrive',
-    );
+    const [first, , , guardrails] = agentSections;
+    expect(screen.getByRole('tabpanel')).toHaveTextContent(first.intro);
     await user.click(screen.getByRole('tab', { name: 'Guardrails' }));
-    expect(screen.getByRole('tabpanel')).toHaveTextContent(
-      "never posts under the owner's name without approval",
-    );
+    expect(screen.getByRole('tabpanel')).toHaveTextContent(guardrails.points[0]);
   });
 
   it('has no axe violations', async () => {

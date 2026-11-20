@@ -37,7 +37,7 @@ export function ThemePicker() {
   return (
     <div className='flex flex-col gap-3'>
       <p id={labelId} className='text-sm text-tertiary'>
-        This site runs on my design system. Pick a theme:{' '}
+        This site uses my design system. Pick a theme:{' '}
         <span className='font-semibold text-primary'>
           {variants[picked].project}, {variants[picked].seed.name.toLowerCase()}
         </span>

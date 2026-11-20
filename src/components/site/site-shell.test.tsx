@@ -14,6 +14,14 @@ describe('Site shell', () => {
     expect(screen.getByRole('link', { name: 'Experience', current: 'page' })).toBeInTheDocument();
   });
 
+  it('names the site Eylül in the header', async () => {
+    await renderRoute('/');
+
+    expect(
+      within(screen.getByRole('banner')).getByRole('link', { name: /^Eylül/ }),
+    ).toHaveAttribute('href', '/');
+  });
+
   it('lists every project in the footer', async () => {
     await renderRoute('/');
 

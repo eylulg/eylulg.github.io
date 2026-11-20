@@ -1,5 +1,6 @@
 export const site = {
   name: 'Eylül Güneş',
+  brandName: 'Eylül',
   role: 'Senior Frontend Developer',
   tagline:
     'Senior Frontend Developer. React, Next.js and TypeScript, design systems and AI agents.',
@@ -7,7 +8,7 @@ export const site = {
   location: 'Türkiye',
   eyebrow: 'Senior frontend developer',
   headline: 'I build product interfaces and the design systems under them.',
-  intro: 'React, Next.js and TypeScript, with accessibility and tests as part of the work.',
+  intro: 'I work in React, Next.js and TypeScript, and I test and check accessibility as I go.',
   availability: 'Available from 1 December 2026. Remote, European time zones.',
   email: 'eylulgist@gmail.com',
   cvPath: '/Eylul-Gunes-CV.pdf',
@@ -16,9 +17,9 @@ export const site = {
     linkedin: 'https://www.linkedin.com/in/eylul-gunes',
   },
   about: [
-    "I'm a Senior Frontend Developer who builds product interfaces, the design systems behind them, and lately the AI agents that help ship them.",
-    "In 5+ years I've worked mainly in TypeScript, React and Next.js, and also in Vue, Angular and React Native, across legal tech, marketing tech, healthcare, e-commerce and online learning.",
-    'What I care about: building what the design defines, extending the design system rather than patching one screen, accessible interfaces, and tests that check what users see.',
+    'I build product interfaces and the design systems behind them. Lately I also build AI agents that help ship them.',
+    'In more than five years I have worked in TypeScript, React and Next.js, and also in Vue, Angular and React Native, in legal tech, marketing tech, healthcare, e-commerce and online learning.',
+    'I build what the design defines, extend the design system instead of patching one screen, and write tests that check what users see.',
   ],
 } as const;
 
