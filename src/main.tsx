@@ -1,8 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
-import { AppRoutes } from '@/router';
+import { AppRoutes, preloadPage } from '@/router';
 import '@/styles/globals.css';
+
+await preloadPage(window.location.pathname);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
