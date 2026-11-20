@@ -25,7 +25,8 @@ describe('Site shell', () => {
   it('lists every project in the footer', async () => {
     await renderRoute('/');
 
-    const repositories = within(screen.getByRole('list', { name: 'Code' }));
-    expect(repositories.getAllByRole('link')).toHaveLength(familyProjects.length);
+    const footer = within(screen.getByRole('contentinfo'));
+    const projects = within(footer.getByRole('navigation', { name: 'Projects' }));
+    expect(projects.getAllByRole('link')).toHaveLength(familyProjects.length);
   });
 });

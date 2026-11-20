@@ -1,3 +1,5 @@
+import { projects as familyProjects } from '@eylulg/ui/projects';
+
 export type ProjectStatus = 'live' | 'in progress';
 
 export const projectTags = [
@@ -16,7 +18,6 @@ export interface Project {
   slug: string;
   title: string;
   summary: string;
-  status: ProjectStatus;
   tags: ProjectTag[];
   featured?: boolean;
   /** One short line for the featured card on the home page. */
@@ -45,7 +46,6 @@ export const projects: Project[] = [
     title: 'Component Library',
     summary:
       '@eylulg/ui: accessible React components, charts and nine themes, plus the top bar and footer every project here uses.',
-    status: 'in progress',
     tags: ['React', 'Design system'],
     featured: true,
     teaser: 'React components, charts and the themes on this page.',
@@ -68,7 +68,6 @@ export const projects: Project[] = [
     title: 'Workspace',
     summary:
       'An issue tracker you can use without signing in, with a list, a board, a command palette and three languages.',
-    status: 'in progress',
     tags: ['Next.js', 'React'],
     featured: true,
     teaser: 'An issue tracker with a command palette and instant edits.',
@@ -90,7 +89,6 @@ export const projects: Project[] = [
     title: 'Agent Workflows',
     summary:
       'Draw the pipeline of a simulated engineering agent as a graph, run it and trace every job. Works by keyboard.',
-    status: 'live',
     tags: ['React', 'AI'],
     featured: true,
     teaser: "Draw an agent's pipeline as a graph, run it and trace every job.",
@@ -115,7 +113,6 @@ export const projects: Project[] = [
     title: 'Assistant Studio',
     summary:
       'A research assistant: answers from your documents with citations you can open, tool calls that wait for your approval, and an Insights page for usage and evals.',
-    status: 'in progress',
     tags: ['React', 'Next.js', 'AI'],
     featured: true,
     teaser: 'Answers from your documents with citations you can open.',
@@ -138,7 +135,6 @@ export const projects: Project[] = [
     title: 'Watchlist',
     summary:
       'A movie and series watchlist on the TMDB API, with search, ratings, notes, sharing without a server and three languages.',
-    status: 'in progress',
     tags: ['Next.js', 'React'],
   },
   {
@@ -157,7 +153,6 @@ export const projects: Project[] = [
     title: 'Tokens to Tailwind',
     summary:
       'Paste a design tokens file, preview it with real components and export a Tailwind CSS 4 theme.css. It runs in the browser.',
-    status: 'in progress',
     tags: ['React', 'Design system', 'Tooling'],
   },
   {
@@ -178,7 +173,6 @@ export const projects: Project[] = [
     title: 'Review Companion',
     summary:
       'Paste a public GitHub pull request and get a file-by-file review from Claude. You triage every finding.',
-    status: 'in progress',
     tags: ['Next.js', 'React', 'AI'],
     smaller: true,
   },
@@ -199,7 +193,6 @@ export const projects: Project[] = [
     title: 'Plain Language Add-in',
     summary:
       'A Word add-in that scores readability, flags hard sentences and rewrites a paragraph in plain language as a tracked change.',
-    status: 'in progress',
     tags: ['React', 'AI', 'Microsoft 365'],
     smaller: true,
   },
@@ -210,7 +203,6 @@ export const projects: Project[] = [
     title: 'Sudoku',
     summary:
       'Sudoku in Vue 3 and TypeScript, with four difficulty levels, hints, undo and redo, and keyboard play.',
-    status: 'in progress',
     tags: ['Vue'],
     smaller: true,
   },
@@ -228,4 +220,9 @@ export function tagToSlug(tag: ProjectTag): string {
 
 export function tagFromSlug(slug: string | null): ProjectTag | undefined {
   return projectTags.find((tag) => tagToSlug(tag) === slug);
+}
+
+/** Live when the shared project list in @eylulg/ui has a site for it. */
+export function projectStatus(project: Project): ProjectStatus {
+  return familyProjects.find((item) => item.id === project.libraryId)?.url ? 'live' : 'in progress';
 }

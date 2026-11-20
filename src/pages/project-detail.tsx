@@ -9,7 +9,7 @@ import { ProjectPager } from '@/components/site/project-pager';
 import { Seo } from '@/components/site/seo';
 import { StatusBadge } from '@/components/site/status-badge';
 import { getProjectDetail, projectLinks, realScreenshots } from '@/content/project-details';
-import { getProject, projects } from '@/content/projects';
+import { getProject, projectStatus, projects } from '@/content/projects';
 import NotFoundPage from './not-found';
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
@@ -50,7 +50,7 @@ export default function ProjectDetailPage() {
 
         <header className='grid items-center gap-8 lg:grid-cols-2 lg:gap-12'>
           <div className='flex flex-col items-start gap-4'>
-            <StatusBadge status={project.status} />
+            <StatusBadge status={projectStatus(project)} />
             <h1 className='text-2xl font-semibold text-primary md:text-3xl'>{project.title}</h1>
             <p className='max-w-2xl text-lg text-tertiary md:text-xl'>{detail.intro}</p>
             <div className='flex flex-wrap gap-3 pt-2'>
@@ -132,12 +132,7 @@ export default function ProjectDetailPage() {
             <h2 id='glance' className='text-sm font-semibold text-tertiary'>
               At a glance
             </h2>
-            <FactList
-              facts={[
-                { label: 'Role', value: detail.role },
-                { label: 'Status', value: <StatusBadge status={project.status} /> },
-              ]}
-            />
+            <FactList facts={[{ label: 'Role', value: detail.role }]} />
             <div className='flex flex-col gap-2'>
               <p id='stack' className='text-sm text-tertiary'>
                 Stack
@@ -152,29 +147,6 @@ export default function ProjectDetailPage() {
                 ))}
               </ul>
             </div>
-            <ul aria-label='Links' className='flex flex-col gap-1 border-t border-subtle pt-4'>
-              {[
-                { link: live, label: 'Live site' },
-                { link: source, label: 'Repository' },
-              ].map(
-                ({ link, label }) =>
-                  link && (
-                    <li key={link.href}>
-                      <Button
-                        href={link.href}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        variant='tertiary'
-                        size='md'
-                        iconTrailing={ArrowUpRight}
-                        className='-ml-3'
-                      >
-                        {label}
-                      </Button>
-                    </li>
-                  ),
-              )}
-            </ul>
           </aside>
         </div>
 

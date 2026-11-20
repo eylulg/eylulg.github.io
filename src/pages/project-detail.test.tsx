@@ -23,10 +23,6 @@ describe('Project detail page', () => {
 
     expect(within(aside).getByText('Built alone, design and code')).toBeInTheDocument();
     expect(within(aside).getByRole('list', { name: 'Stack' })).toHaveTextContent('Drizzle ORM');
-    expect(within(aside).getByRole('link', { name: /Repository/ })).toHaveAttribute(
-      'href',
-      'https://github.com/eylulg/workspace',
-    );
   });
 
   it('links to the previous and next project', async () => {
