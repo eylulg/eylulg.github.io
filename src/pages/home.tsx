@@ -14,29 +14,26 @@ export default function HomePage() {
     <>
       <Seo description={`${site.tagline} Portfolio, projects and experience of ${site.name}.`} />
 
-      <section
-        aria-labelledby='hero-title'
-        className='grid gap-10 py-12 md:py-20 lg:grid-cols-12 lg:items-end lg:gap-6'
-      >
-        <div className='flex flex-col gap-6 lg:col-span-8'>
-          <p className='text-md font-semibold text-brand'>{site.eyebrow}</p>
-          <h1 id='hero-title' className='font-display text-display font-extrabold text-primary'>
-            {site.headline}
-          </h1>
-          <p className='max-w-2xl text-lg text-secondary md:text-xl'>
-            {site.intro} <span>{site.availability}</span>
-          </p>
-          <ThemePicker />
-        </div>
-        <ul className='grid grid-cols-2 gap-3 lg:col-span-3 lg:col-start-10'>
-          <li className='col-span-2'>
+      <section aria-labelledby='hero-title' className='flex flex-col gap-6 py-12 md:py-16'>
+        <p className='text-md font-semibold text-brand'>{site.eyebrow}</p>
+        <h1
+          id='hero-title'
+          className='max-w-4xl font-display text-display font-extrabold text-primary'
+        >
+          {site.headline}
+        </h1>
+        <p className='max-w-2xl text-lg text-secondary md:text-xl'>
+          {site.intro} <span>{site.availability}</span>
+        </p>
+        <ul className='grid grid-cols-2 gap-3 sm:flex'>
+          <li className='col-span-2 sm:col-span-1'>
             <Button
               href={site.cvPath}
               target='_blank'
               rel='noopener'
               size='lg'
               iconLeading={FileText}
-              className='w-full'
+              className='w-full sm:w-auto'
             >
               Read my CV
             </Button>
@@ -49,7 +46,7 @@ export default function HomePage() {
               variant='secondary'
               size='lg'
               iconLeading={GitHubIcon}
-              className='w-full'
+              className='w-full sm:w-auto'
             >
               GitHub
             </Button>
@@ -62,15 +59,16 @@ export default function HomePage() {
               variant='secondary'
               size='lg'
               iconLeading={LinkedInIcon}
-              className='w-full'
+              className='w-full sm:w-auto'
             >
               LinkedIn
             </Button>
           </li>
         </ul>
+        <ThemePicker />
       </section>
 
-      <section aria-labelledby='work-title' className='flex flex-col gap-6 pb-16 md:pb-24'>
+      <section aria-labelledby='work-title' className='flex flex-col gap-6 pb-12 md:pb-16'>
         <div className='flex flex-wrap items-center justify-between gap-4'>
           <h2 id='work-title' className='font-display text-2xl font-bold text-primary'>
             Selected work
