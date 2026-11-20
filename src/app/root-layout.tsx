@@ -26,7 +26,7 @@ function Nav({ pathname }: { pathname: string }) {
 
   return (
     <TopNav
-      productName={site.name}
+      productName={site.brandName}
       portfolioHref='/'
       LinkComponent={RouterLink}
       links={links}
@@ -56,12 +56,12 @@ export function RootLayout() {
         footer={
           <SiteFooter currentId='portfolio'>
             <p className='text-sm text-tertiary'>
-              This portfolio was built with AI agents.{' '}
+              I built this site with AI agents.{' '}
               <Link
                 to='/how-this-was-built'
                 className='rounded text-brand underline-offset-2 outline-focus hover:underline focus-visible:outline-2 focus-visible:outline-offset-2'
               >
-                How this portfolio was built
+                How it was built
               </Link>
             </p>
           </SiteFooter>

@@ -9,7 +9,7 @@ export default function HowBuiltPage() {
     <>
       <Seo
         title='How this portfolio was built'
-        description='This portfolio and its projects were built in November 2026 with an AI agent workflow I designed and ran. What I decided, what the agents produced, and what went wrong.'
+        description='How this portfolio and its projects were built in November 2026 with AI agents: what I decided, what the agents wrote and what went wrong.'
       />
       <div className='max-w-3xl pt-6 pb-8 md:pb-12'>
         <PageHeader

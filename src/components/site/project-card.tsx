@@ -34,7 +34,7 @@ export function ProjectCard({ project, headingLevel = 3 }: ProjectCardProps) {
           aria-hidden='true'
           className='flex items-center gap-1.5 text-sm font-semibold text-brand'
         >
-          Read the case study
+          View project
           <ArrowRight className='size-4' />
         </span>
       </CardFooter>

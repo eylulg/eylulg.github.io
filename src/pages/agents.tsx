@@ -11,7 +11,7 @@ export default function AgentsPage() {
     <>
       <Seo
         title='AI agents'
-        description='An engineering agent that takes tickets to pull requests with human approval gates, and a library of reusable agent skills.'
+        description='An engineering agent that takes tickets to pull requests with human approval steps, and a library of reusable agent skills.'
       />
       <div className='flex max-w-3xl flex-col gap-4 pt-6 pb-8 md:pb-12'>
         <PageHeader eyebrow='AI engineering' title='AI agents' description={agentIntro[0]} />
@@ -82,14 +82,13 @@ export default function AgentsPage() {
             See it in practice
           </h2>
           <p className='max-w-3xl text-md text-tertiary'>
-            Three case studies show the human side of working with agents: the dashboard an operator
-            uses to approve, guard and route an engineering agent, a review tool where every AI
-            finding passes through a person, and an assistant interface built around streaming,
-            approval and evals.
+            Three projects show the human side of working with agents: a workflow builder for an
+            engineering agent, a review tool where a person triages every AI finding, and an
+            assistant interface with streaming, approval and evals.
           </p>
           <p className='max-w-3xl text-md text-tertiary'>
-            This site and its projects were built with the same kind of workflow, and the page about
-            it says what the agents did, what I decided and what went wrong.
+            I built this site with the same kind of workflow. The page about it says what the agents
+            did, what I decided and what went wrong.
           </p>
           <div className='flex flex-wrap gap-3'>
             <Button
