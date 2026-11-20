@@ -27,7 +27,7 @@ function ComponentLibraryPreview() {
 function WorkspacePreview() {
   const columns = [
     { label: 'To do', issues: [{ title: 'Add filters', className: issue }] },
-    { label: 'In progress', issues: [{ title: 'Fix login bug', className: activeIssue }] },
+    { label: 'In progress', issues: [{ title: 'Fix login', className: activeIssue }] },
     { label: 'Done', issues: [{ title: 'Write tests', className: issue }] },
   ];
   return (
