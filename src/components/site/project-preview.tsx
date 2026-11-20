@@ -3,8 +3,10 @@ import type { ReactNode } from 'react';
 const solidChip = 'rounded-md bg-brand-solid px-4 py-2 text-sm font-semibold text-on-solid';
 const outlineChip =
   'rounded-md border border-brand bg-primary px-4 py-2 text-sm font-medium text-brand';
-const issue = 'h-9 rounded-sm border border-default bg-primary';
-const activeIssue = 'h-9 rounded-sm border-2 border-brand bg-primary';
+const issue =
+  'truncate rounded-sm border border-default bg-primary px-2 py-2 text-xs text-secondary';
+const activeIssue =
+  'truncate rounded-sm border-2 border-brand bg-primary px-2 py-2 text-xs font-medium text-primary';
 const node = 'rounded-sm border border-default bg-primary px-3 py-2 text-xs text-secondary';
 const activeNode =
   'rounded-sm border-2 border-brand bg-primary px-3 py-2 text-xs font-semibold text-primary';
@@ -24,17 +26,19 @@ function ComponentLibraryPreview() {
 
 function WorkspacePreview() {
   const columns = [
-    { label: 'To do', issues: [issue, issue] },
-    { label: 'In progress', issues: [activeIssue] },
-    { label: 'Done', issues: [issue] },
+    { label: 'To do', issues: [{ title: 'Add filters', className: issue }] },
+    { label: 'In progress', issues: [{ title: 'Fix login bug', className: activeIssue }] },
+    { label: 'Done', issues: [{ title: 'Write tests', className: issue }] },
   ];
   return (
     <div className='grid w-full grid-cols-3 gap-3 px-6 sm:px-8'>
       {columns.map(({ label, issues }) => (
         <div key={label} className='flex flex-col gap-2'>
           <span className='text-xs font-semibold text-brand'>{label}</span>
-          {issues.map((className, index) => (
-            <span key={index} className={className} />
+          {issues.map(({ title, className }) => (
+            <span key={title} className={className}>
+              {title}
+            </span>
           ))}
         </div>
       ))}
