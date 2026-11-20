@@ -31,18 +31,13 @@ describe('Project detail page', () => {
     expect(screen.queryByRole('heading', { name: 'Screenshots' })).not.toBeInTheDocument();
   });
 
-  it('shows Live site as a disabled control with the planned badge while the project has no url', async () => {
+  it('links Live site to the deployed project', async () => {
     await renderRoute('/projects/workspace');
 
-    expect(screen.queryByRole('link', { name: /Live site/ })).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Live site' })).toBeDisabled();
-    expect(screen.getByText('Not deployed yet')).toBeInTheDocument();
-  });
-
-  it('has no live link for a project that runs inside Word', async () => {
-    await renderRoute('/projects/plain-language-word-addin');
-
-    expect(screen.queryByRole('link', { name: /Live site/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Live site/ })).toHaveAttribute(
+      'href',
+      'https://eg-workspace.vercel.app/',
+    );
   });
 
   it('shows the 404 page for an unknown slug', async () => {
