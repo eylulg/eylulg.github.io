@@ -76,7 +76,7 @@ export default function AgentsPage() {
 
         <section
           aria-labelledby='case-studies-title'
-          className='flex flex-col items-start gap-4 rounded-xl bg-secondary p-6 md:p-8'
+          className='flex flex-col items-start gap-4 rounded-xl bg-primary p-6 ring-1 ring-default md:p-8'
         >
           <h2 id='case-studies-title' className='text-xl font-semibold text-primary'>
             See it in practice
