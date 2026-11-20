@@ -22,15 +22,15 @@ export const roles: Role[] = [
     start: '2026-06',
     end: '2026-11',
     summary:
-      'Legal AI platform used by law firms in several European markets: a Next.js web app, a React design system, and Word and Outlook add-ins.',
+      'Legal AI platform used by law firms in several European markets. A Next.js web app, a React design system, and Word and Outlook add-ins.',
     highlights: [
-      'Built the project workspace in the Next.js web app from Figma to production: AI-assisted project creation, filters, lifecycle statuses, an activity feed and client management.',
-      'Redesigned the app navigation with a new sidebar and a chat overview, including responsive layouts and analytics.',
-      'Extended the React design system with new components and accessibility fixes, and rolled each release out to the web app and both add-ins.',
-      'Built Word and Outlook add-in features with Office.js and Microsoft Graph, working across the frontend, API routes and storage.',
-      'Improved quality and performance: CI checks in every repo, tests that check user-visible outcomes, and lazy-loaded dialogs.',
-      'Scoped projects that other engineers delivered, did code reviews across all products and sat on a hiring panel.',
-      'Built an AI engineering agent at Saga, connected to Slack, Linear and GitHub, that takes tickets to pull requests with human approval steps, plus a library of reusable agent skills.',
+      'Built the project workspace in the web app from Figma to production: AI-assisted project creation, filters, lifecycle statuses, an activity feed and client management.',
+      'Redesigned the app navigation with a new sidebar and a chat overview, with responsive layouts and analytics.',
+      'Added components and accessibility fixes to the React design system, and rolled each release out to the web app and both add-ins.',
+      'Built Word and Outlook add-in features with Office.js and Microsoft Graph, across the frontend, API routes and storage.',
+      'Added CI checks to every repo and tests that check what users see, and lazy-loaded dialogs.',
+      'Scoped projects for other engineers to deliver, reviewed code across all products and sat on a hiring panel.',
+      'Built an AI engineering agent that connects to Slack, Linear and GitHub and takes tickets to pull requests with human approval steps, plus a library of reusable agent skills.',
     ],
     skills: [
       'Next.js',
@@ -55,14 +55,14 @@ export const roles: Role[] = [
     start: '2025-03',
     end: '2026-06',
     summary:
-      'Customer engagement platform. I worked on Design Agent, its AI tool that generates popups and games from a prompt or a Figma file, and on its campaign templates.',
+      'Customer engagement platform. I worked on Design Agent, an AI tool that generates popups and games from a prompt or a Figma file, and on campaign templates.',
     highlights: [
-      'Built features in the Vue 3 editor of the AI design tool, including Figma import, theming and validated form elements.',
+      'Built features in the Vue 3 editor, including Figma import, theming and validated form elements.',
       'Wrote and tuned the prompt rules that keep generated templates usable and editable.',
       'Extended the shared Vue component library and its Storybook.',
-      'Made campaign templates accessible with ARIA and screen-reader support, and fixed cross-browser issues.',
+      'Made campaign templates accessible with ARIA and screen reader support, and fixed cross-browser bugs.',
       'Fixed Content Security Policy and dependency security issues across six repos.',
-      'Added unit tests and a Claude Code agent setup to an internal Chrome extension.',
+      'Added unit tests and a Claude Code setup to an internal Chrome extension.',
     ],
     skills: [
       'Vue 3',
@@ -116,12 +116,12 @@ export const roles: Role[] = [
     start: '2022-03',
     end: '2023-06',
     summary:
-      'London software company building products for clients, mostly AkzoNobel (Dulux) and TradeKart.',
+      'London software company that builds products for clients, mostly AkzoNobel (Dulux) and TradeKart.',
     highlights: [
       "Built features for AkzoNobel's contractor platform in Angular and RxJS, and for its merchant portals in React, Redux and Material UI.",
-      "Built features for an AkzoNobel sales tool in Angular that calculates a project's 30-year cost.",
-      'Worked on TradeKart, two-hour delivery of construction products to building sites: the React Native app and the React and Material UI portals.',
-      'Worked on the company website, implementing designs as responsive pages.',
+      "Built features for an AkzoNobel sales tool in Angular that calculates a project's cost over 30 years.",
+      'Built the React Native app and the React and Material UI portals for TradeKart, which delivers construction products to building sites within two hours.',
+      'Worked on the company website, turning designs into responsive pages.',
     ],
     skills: ['React', 'React Native', 'Angular', 'RxJS', 'Redux', 'Material UI', 'TypeScript'],
   },
@@ -135,7 +135,7 @@ export const roles: Role[] = [
     end: '2022-03',
     summary: 'Online learning and hiring platform for developers.',
     highlights: [
-      "Built dark mode and gamification features, including a leaderboard, for the platform's learning experience.",
+      'Built dark mode and a gamification feature with a leaderboard for the learning platform.',
     ],
     skills: ['Dark mode', 'Gamification'],
   },

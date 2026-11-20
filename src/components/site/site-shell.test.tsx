@@ -14,10 +14,19 @@ describe('Site shell', () => {
     expect(screen.getByRole('link', { name: 'Experience', current: 'page' })).toBeInTheDocument();
   });
 
+  it('names the site Eylül in the header', async () => {
+    await renderRoute('/');
+
+    expect(
+      within(screen.getByRole('banner')).getByRole('link', { name: /^Eylül/ }),
+    ).toHaveAttribute('href', '/');
+  });
+
   it('lists every project in the footer', async () => {
     await renderRoute('/');
 
-    const repositories = within(screen.getByRole('list', { name: 'Code' }));
-    expect(repositories.getAllByRole('link')).toHaveLength(familyProjects.length);
+    const footer = within(screen.getByRole('contentinfo'));
+    const projects = within(footer.getByRole('navigation', { name: 'Projects' }));
+    expect(projects.getAllByRole('link')).toHaveLength(familyProjects.length);
   });
 });

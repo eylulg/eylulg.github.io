@@ -3,10 +3,7 @@ import type { Project } from '@/content/projects';
 
 export interface ProjectLink {
   label: string;
-  /** Null while the project is not deployed: the link is shown as a disabled control. */
-  href: string | null;
-  /** True while the link points at something that is not published yet. */
-  planned?: boolean;
+  href: string;
 }
 
 export interface Screenshot {
@@ -15,335 +12,322 @@ export interface Screenshot {
   alt: string;
 }
 
+export interface Decision {
+  title: string;
+  /** What the choice gives and what it costs. */
+  body: string;
+}
+
 interface ProjectDetail {
-  context: string;
-  built: string[];
-  decisions: string[];
-  tested: string[];
-  next: string[];
-  /** Only written once there is something measured to say. */
-  outcome?: string;
+  intro: string;
+  role: string;
+  /** Label of the main link, for projects where "Open the live app" would not fit. */
+  liveLabel?: string;
+  why: string;
+  /** At most three short points. */
+  does: string[];
+  /** Two or three real trade-offs, each with its cost. */
+  decisions: Decision[];
+  testing: string;
+  next?: string;
+  /** Four to six items. */
+  stack: string[];
   screenshots: Screenshot[];
 }
 
 const PLACEHOLDER = '/placeholder-screenshot.svg';
+const ROLE = 'Built alone, design and code';
 
 const details: Record<string, ProjectDetail> = {
   ui: {
-    context:
-      'Most of my design-system work lives in private company repositories. This is a public library that shows how I design component APIs, tokens, accessibility and releases, and that makes the projects here read as one family.',
-    built: [
-      'Tokens in a Tailwind CSS 4 theme on one warm frame, with nine project themes that change colour only, so the fonts, text size and density stay the same in each.',
-      'More than thirty components on React Aria Components, each with its own entry point.',
-      'The shared chrome: app shell, top nav, project switcher, theme and text size toggles, and footer.',
-      'Line, bar and grid charts with keyboard-reachable marks, a table alternative and a palette checked for contrast and colour blindness in every variant.',
-      'Storybook with accessibility checks, and a bundle size budget in CI.',
+    intro:
+      'The React component library behind every project on this site, with nine colour themes and the shared site chrome.',
+    role: ROLE,
+    liveLabel: 'Open Storybook',
+    why: 'My design system work at companies is private. I wanted a public library that shows how I design component APIs, tokens and releases.',
+    does: [
+      'Over thirty components on React Aria, plus line, bar and grid charts with a table view.',
+      'Nine themes that change colour only, so type and spacing stay the same.',
+      'The top nav, project switcher, theme toggle and footer that every project here uses.',
     ],
     decisions: [
-      'React Aria for behaviour, my own code for API and looks. Keyboard handling, focus management and screen reader announcements are the parts that regress most and are hardest to test, so I use a tested base instead of rewriting them.',
-      'Components read semantic tokens such as text-primary, never a colour scale. Rebranding or dark mode is then a matter of redefining variables, with no component change.',
-      'Colour scales are generated in oklch with the same lightness at each step, so every variant has the same contrast and one test can check every text token for WCAG AA.',
-    ],
-    tested: [
-      'The behaviour the library adds on top of React Aria, because that is where its own bugs can be.',
-      'An axe audit of every component in light and dark, because a theme can break accessibility without touching the markup.',
-      'A contrast check of every text token, solid fill and focus ring in every theme, in light and dark, because a new colour is the easiest way to break it.',
-    ],
-    next: [
-      'Cut a first release on npm.',
-      'Add visual regression tests, so a token change shows up as a picture.',
-    ],
-    screenshots: [
       {
-        src: PLACEHOLDER,
-        alt: 'Storybook page for the Button component',
+        title: 'React Aria for behaviour',
+        body: 'Keyboard, focus and screen reader behaviour regress most, so I use a tested base and write the API and the look. The cost is a dependency I do not control.',
       },
       {
-        src: PLACEHOLDER,
-        alt: 'The nine theme variants side by side',
+        title: 'Semantic tokens only',
+        body: 'Components read names like text-primary, never a colour scale, so dark mode and themes are variable changes. The cost is a token layer to learn before styling anything.',
+      },
+      {
+        title: 'Generated colour scales',
+        body: 'Every theme uses the same lightness at each step, so one check covers contrast for all of them. The cost is less room to tune a single colour by hand.',
       },
     ],
+    testing:
+      'Every component runs through axe in light and dark, and a script checks the contrast of every text token, fill and focus ring in each theme. A size budget runs in CI.',
+    next: 'Visual regression tests, so a token change shows up as a picture.',
+    stack: [
+      'React 19',
+      'TypeScript',
+      'Tailwind CSS 4',
+      'React Aria Components',
+      'Storybook',
+      'Vitest',
+    ],
+    screenshots: [{ src: PLACEHOLDER, alt: 'Storybook page for the Button component' }],
   },
   workspace: {
-    context:
-      'A product UI with server data, optimistic updates and keyboard control is the best test of how I build front ends. I built one end to end: an issue tracker you can use without signing in.',
-    built: [
-      'An issue tracker with server actions, and an optimistic list and board.',
-      'A command palette with nested pages and keyboard shortcuts.',
-      'A Drizzle schema, migrations and a demo workspace seeded on PGlite, so it runs without a database server.',
-      'English, Turkish and German with locale routing.',
+    intro:
+      'An issue tracker you can use without signing in, with a list, a board, a command palette and three languages.',
+    role: ROLE,
+    why: 'I wanted one product-style app where server data, instant edits and keyboard control work together.',
+    does: [
+      'A grouped list and a board with drag and drop, and a command palette and shortcuts for every common action.',
+      'Changes show at once, and roll back with a message if the server refuses.',
+      'English, Turkish and German. A missing translation fails the build.',
     ],
     decisions: [
-      'PGlite instead of a database server. Without a connection string the app runs Postgres compiled to WebAssembly and seeds itself, so development, tests and the end to end run need nothing installed. The schema and migrations are the same ones the hosted Postgres uses.',
-      'Optimistic updates that roll back with a message. A tracker that waits for the server on every drag feels broken, so the change shows at once and is undone with an explanation if the server refuses.',
-      'Fractional sort keys for board order, so moving a card changes one row instead of renumbering a column.',
-      'One shared demo workspace that resets every night, instead of a copy per visitor. It is one cron call and nothing to clean up. The cost is that one visitor can change what the next one sees, and the lookup of who the viewer is sits in one function, so per-visitor copies are a small change.',
-    ],
-    tested: [
-      'Query logic and the board column rules as pure functions, because they decide what every view shows.',
-      'Server actions against a real PGlite database with the real migrations, so a schema change cannot pass a test that mocks it.',
-      'Message parity across the three languages, so a missing translation fails the build.',
-      'Keyboard flows, because the keyboard is the main way to use the app.',
-    ],
-    next: [
-      'Live presence, so you can see who else is looking at an issue.',
-      'An offline write queue.',
-      'A separate demo workspace for each visitor.',
-      'A measured performance pass, published with before and after numbers.',
-    ],
-    outcome:
-      'The app runs on a seeded demo workspace, so you can try the list, the board and the palette without signing up. Writes are optimistic and roll back with a message if the server refuses. Every flow in the README has a test: 11 test files cover the query logic, the server actions against a real PGlite database, message parity in three languages and the keyboard flows, and Playwright drives the production build.',
-    screenshots: [
       {
-        src: PLACEHOLDER,
-        alt: 'Issue list and board with the command palette open',
+        title: 'PGlite on my machine, Postgres in production',
+        body: 'Same schema and migrations, so development and tests need nothing installed. The cost is two database drivers to keep in step.',
+      },
+      {
+        title: 'Fractional sort keys',
+        body: 'Moving a card writes one row instead of renumbering the column.',
+      },
+      {
+        title: 'A private copy for each visitor',
+        body: "Nobody sees anyone else's edits, and a nightly job removes copies after a day. The cost is more rows than one shared demo.",
       },
     ],
+    testing:
+      'Server actions run against a real database with the real migrations, and Playwright drives the keyboard flows on the production build.',
+    next: 'Showing who else is looking at an issue.',
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Drizzle ORM', 'PGlite', 'Postgres on Neon'],
+    screenshots: [{ src: PLACEHOLDER, alt: 'Issue list and board with the command palette open' }],
   },
   'review-companion': {
-    context:
-      'An AI review is only useful if a person stays in charge of it. This is built for the reviewer, not as a bot: nothing is posted to GitHub, and every finding passes through a human first.',
-    built: [
-      'A server-sent events route that fetches the diff, parses it into files and hunks, and reviews one file per request with structured output.',
-      'Each finding is validated with zod and against the diff. Findings that cite a line outside the diff are dropped and counted in a warning.',
-      'Triage with accept, dismiss and edit, keyboard shortcuts, and an export of accepted findings as GitHub Markdown with suggestion blocks.',
-      'Limits on changed lines, estimated input tokens and reviews per IP, with an explained error for each.',
-      'A demo mode that replays a saved review through the real pipeline when no API key is set.',
+    intro:
+      'Paste a public GitHub pull request and get a review from Claude, file by file, that you triage before anything leaves the app.',
+    role: ROLE,
+    why: 'I wanted an AI review where the reviewer stays in charge. Nothing goes to GitHub unless a person accepts it.',
+    does: [
+      'Streams findings file by file and drops any finding that cites a line outside the diff.',
+      'Accept, dismiss or edit each finding with shortcuts, then export the accepted ones as GitHub Markdown.',
+      'Without an API key it replays one hand-written sample review, so the live demo never calls Claude.',
     ],
     decisions: [
-      'One file per model request, with large files split into batches of whole hunks. A whole pull request in one call mixes unrelated files and runs into size limits, and per-file requests let findings appear as they arrive.',
-      "A finding must cite a line that exists in the diff, or it is dropped and counted. A plausible comment on the wrong line costs the reviewer's trust faster than a missing comment.",
-      'Nothing is posted to GitHub. Accepted findings export as Markdown, so the person stays the author of the review.',
-      'A demo mode that runs the real pipeline over a saved review. The app can be tried without a key and without spending anything.',
-    ],
-    tested: [
-      'Parser, chunking, schema, export, route and store, because each one can quietly turn a good review into a wrong one.',
-      'UI flows with axe, running the real pipeline over the demo fixture with only the network stubbed, so the test exercises the code a user does.',
-      'A Playwright run of the production build in demo mode, with axe in light and dark and a 375 px check, because the build is what ships.',
-    ],
-    next: [
-      'Record one real pull request review as the demo fixture.',
-      'An evaluation set of pull requests with known problems, to measure how many the review finds and how many of its findings are wrong.',
-      'A rate limit that holds across server instances, before the app runs with a live key.',
-    ],
-    screenshots: [
       {
-        src: PLACEHOLDER,
-        alt: 'Review Companion with findings listed per file',
+        title: 'One file per model request',
+        body: 'Findings appear as they arrive and files do not mix. The cost is more requests, and problems that span files are harder to catch.',
       },
       {
-        src: PLACEHOLDER,
-        alt: 'Export drawer with the accepted findings as Markdown',
+        title: 'Drop findings on missing lines',
+        body: 'A comment on the wrong line costs the reviewer trust faster than a missing one. The cost is that some true findings are lost, and the review says how many.',
+      },
+      {
+        title: 'Export instead of posting',
+        body: 'The reviewer stays the author of the review. The cost is one paste per comment.',
       },
     ],
+    testing:
+      'The diff parser, chunking, finding validation, export and the review route have unit tests. Playwright runs the production build in demo mode with axe in light and dark.',
+    next: 'Record a real review as the demo sample.',
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Zustand', 'zod', 'Anthropic SDK'],
+    screenshots: [{ src: PLACEHOLDER, alt: 'Review Companion with findings listed per file' }],
   },
   'assistant-studio': {
-    context:
-      'Most AI demos are a chat box with a model behind it. The product work is in the states around the model: an answer that streams in, a source you need to check, a tool call that must wait for a person, a connection that drops. This project is built to get those right, and to measure what the assistant did instead of trusting how it looks.',
-    built: [
-      'Document upload for text, Markdown and PDF, by button or drag and drop, with a state per file and a specific message for every failure: wrong type, too large, empty, password protected, or a scanned PDF with no text.',
-      'Answers with numbered citations. Each one opens the source at the cited passage, highlighted, and focus returns to the citation on close.',
-      'A streaming conversation where one pure reducer turns server events into ordered message parts, with tool cards, approval before side effects, Stop, Resume, Regenerate and Edit, and the conversation kept as a tree.',
-      'An Insights page with usage from your own conversations (tokens, cache reads, estimated cost, latency, tool calls) and eval results as a case by check grid, with filters in the URL and saved views.',
-      'An eval suite that runs cases through the real engine, store and tools and checks tool choice, tool input, answer constraints and that every citation points at real text.',
+    intro:
+      'A research assistant that answers from your documents with citations you can open, and asks before it acts.',
+    role: ROLE,
+    why: 'I wanted to get the states around a model right: streaming, stopping, approval and what a person sees when something fails.',
+    does: [
+      'Answers from text, Markdown and PDF files, and each citation opens the source at the cited passage.',
+      'Tool calls wait for approval. Stop keeps the partial answer, and a dropped connection offers Resume.',
+      'An Insights page shows usage and eval results.',
     ],
     decisions: [
-      'The public demo never calls a model. Questions about your documents are answered in the browser by ranking passages and quoting the best ones with exact citations, labelled as an extractive answer, so the documents never leave the device. When the app runs with an API key on the server, the same screen sends the documents to Claude with citations turned on.',
-      'PDF reading loads only when you pick a PDF and runs off the main thread, so the first page does not pay for it.',
-      'The Insights page shows only data the app produced. Older answers without timing say so instead of showing zero, demo numbers are labelled as demo, and there is no invented history.',
-      'Stop and disconnect are different things. Stop keeps the partial answer. A dropped connection is shown as an interruption with a Resume button, never as an error, because the user did nothing wrong.',
-      'The server is stateless, so actions with side effects use two requests: the first reports the pending call and stops, the browser runs it after approval, and a second request carries the result. The protocol is written down in the repository.',
+      {
+        title: 'A demo that never calls Claude',
+        body: 'It replays written sample answers, and for your own files it quotes the best passages in the browser, so nothing leaves the page. The cost is that the demo says little about the model.',
+      },
+      {
+        title: 'A stateless server',
+        body: 'An action takes two requests: the first reports the tool call, the browser asks you, and the second carries the result. The cost is a protocol to keep in step on both sides.',
+      },
+      {
+        title: 'Stop and disconnect are different',
+        body: 'Stop keeps the answer so far. A dropped connection shows an interruption, not an error. The cost is more states to render and test.',
+      },
     ],
-    tested: [
-      'Passage splitting, ranking and citation offsets as plain functions, and eval checks that fail on a citation pointing outside the document or quoting the wrong text.',
-      'The reducer, the conversation tree, the two-phase protocol and the Insights selectors, including 1,000 generated answers, as plain functions.',
-      'Filter state in the URL, saved views with corrupt or refused storage, and the check that the committed eval report still matches the cases.',
-      'Browser runs in demo mode for upload errors, citations, the source viewer, approval, Stop, Resume and Insights, with axe in light and dark at 375 and 1280 pixels, and a test that inspects every request the demo makes after a document was used, switched off and removed, so no document text leaves the browser.',
-    ],
-    next: [
-      'Record the model fixtures with a real key once, locally. They are authored today, so passing on them shows the pipeline and the checks work and says nothing yet about the model.',
-      'Test dragging a file onto the composer in a real browser run.',
-      'Move the rate limit out of memory so it holds across server instances.',
-    ],
+    testing:
+      'The reducer, citation offsets, the approval protocol and the eval checks run as plain tests, and Playwright covers the demo with axe. I wrote the sample answers myself, so the evals check my code and say nothing about the model.',
+    next: 'Record the sample answers once with a real key on my machine.',
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'zod', 'IndexedDB', 'Anthropic SDK'],
     screenshots: [
       {
         src: PLACEHOLDER,
         alt: 'Answer with numbered citations and the source viewer open at the cited passage',
       },
-      {
-        src: PLACEHOLDER,
-        alt: 'Insights page with usage charts and the eval grid',
-      },
     ],
   },
   watchlist: {
-    context:
-      'A catalogue app is easy to start and hard to finish well. This one keeps the API key on the server and proves it with a bundle scan in CI, validates every TMDB response at the boundary so one bad record cannot break a page, and shares a list through the URL fragment so nothing is ever uploaded. It runs in three languages and installs as a PWA. I rebuilt it from a 2021 demo to show how I would ship the same idea today.',
-    built: [
-      'Server-rendered home, movie, series, person and collection pages on TMDB, with the key kept on the server.',
-      'Debounced search with the query in the URL and infinite loading.',
-      'A watchlist kept in localStorage and validated with zod, with JSON export and import and cross-tab sync.',
-      'A read-only share link that carries the list in the URL fragment, so nothing is uploaded.',
-      'English, Turkish and German, and an installable app with an offline page.',
+    intro:
+      'A movie and series watchlist on TMDB, with search, ratings, notes and a share link that needs no server.',
+    role: ROLE,
+    why: 'I rebuilt a 2021 demo to see how I would ship it now: the key on the server, data checked at the edge and three languages.',
+    does: [
+      'Browse and search the catalogue, then keep a list with a status, a rating and a note.',
+      'The list stays in your browser. A share link carries it in the URL fragment, so nothing is uploaded.',
+      'English, Turkish and German, and it installs as an app with an offline page.',
     ],
     decisions: [
-      'The list stays in the browser and is checked with zod on every read, import and share link. A personal list does not need an account, and an untrusted file cannot break the app.',
-      'Cache lifetimes by kind of data: an hour for trending, six hours for popular lists, ten minutes for search and twelve hours for details. Builds never call TMDB, and pages stay fresh enough.',
-      'A mock TMDB server for the Playwright run, so the end to end tests are deterministic and need no key.',
-    ],
-    tested: [
-      'The TMDB layer, the search route and the watchlist store, with MSW standing in for TMDB, so a changed response shape fails a test instead of a page.',
-      'Feature views rendered with real children, including where focus lands after an action.',
-      'Message parity across the three languages.',
-      'Playwright against a mock TMDB server: search, add, change status, open a shared link, axe in light and dark, and a 375 px check.',
-      'A bundle scan in CI that fails if anything that could reveal the API key is in the client build.',
-    ],
-    next: [
-      'A pick for tonight, chosen from the titles I have not watched yet.',
-      'A first row on the home page that comes from my own saved list.',
-    ],
-    screenshots: [
       {
-        src: PLACEHOLDER,
-        alt: 'Home page with trending and popular rows',
+        title: 'The list lives in localStorage',
+        body: 'No account and nothing stored by me, and every read, import and share link is checked with zod. The cost is that a list only moves to another browser by export.',
       },
       {
-        src: PLACEHOLDER,
-        alt: 'Watchlist with status filters and statistics',
+        title: 'The TMDB key stays on the server',
+        body: 'A scan of the built client in CI fails if the key appears. The cost is that every catalogue request goes through my server.',
+      },
+      {
+        title: 'Cache time by kind of data',
+        body: 'An hour for trending, twelve for details. Pages stay fresh enough and builds never call TMDB. The cost is details that can be twelve hours old.',
       },
     ],
+    testing:
+      'MSW stands in for TMDB in unit tests and a small mock server does in Playwright, so no test needs a key. Playwright covers search, adding a title, a shared link and axe in light and dark.',
+    next: 'A pick for tonight from the titles I have not watched.',
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'next-intl', 'zod', 'Playwright'],
+    screenshots: [{ src: PLACEHOLDER, alt: 'Watchlist with status filters and statistics' }],
   },
   'tokens-to-tailwind': {
-    context:
-      'Moving design tokens from Figma into code is usually done by hand, and small mistakes in names and aliases are easy to miss. This tool reads a tokens file, shows it on real components and exports a Tailwind CSS 4 theme.',
-    built: [
-      'A typed parser for W3C design tokens, Figma Variables and Tokens Studio files.',
-      'Alias resolution that reports unresolved aliases and cycles without dropping the valid tokens.',
-      'A preview of a card, a form, buttons and badges themed with the pasted tokens.',
-      'Export of a Tailwind CSS 4 theme.css with a dark mode override, plain CSS variables, or normalised JSON.',
+    intro:
+      'Paste a design tokens file, preview it on real components and export a Tailwind CSS 4 theme.',
+    role: ROLE,
+    why: 'Tokens move from Figma to code by hand, and small naming mistakes slip through. I wanted a tool that checks them.',
+    does: [
+      'Reads W3C, Figma Variables and Tokens Studio files, and reports broken aliases and cycles.',
+      'Previews a card, a form, buttons and badges with your tokens. Everything runs in the browser.',
+      'Exports a Tailwind CSS 4 theme.css, CSS variables or JSON.',
     ],
     decisions: [
-      'Three formats, one model. Every parser produces the same typed token model, so the preview and each export read one shape.',
-      'Report problems and keep going. An unresolved alias or a cycle produces a warning and every valid token still exports.',
-      'Skip what Tailwind has no namespace for, with a warning, instead of inventing variables that do nothing.',
+      {
+        title: 'One token model for three formats',
+        body: 'Each parser produces the same typed model, so the preview and every export read one shape. The cost is that a format feature outside the model is lost.',
+      },
+      {
+        title: 'Warn and keep going',
+        body: 'A broken alias gives a warning and every valid token still exports. The cost is that a file can export with a gap, so the warnings matter.',
+      },
+      {
+        title: 'Skip what Tailwind has no place for',
+        body: 'Types such as gradients are skipped with a warning instead of becoming variables that do nothing. The cost is that you write those by hand.',
+      },
     ],
-    tested: [
-      'Fixture tests for every parser, including invalid JSON, an unknown format, unresolved aliases and alias cycles, because pasted files are the input I cannot control.',
-      'Generator output checked against snapshot files, because the output is a file people paste into a project.',
-      'App tests for pasting, errors, export and copy, with axe.',
-    ],
-    next: [
-      'A round trip with a public Figma file: export, build, compare against the design.',
-      'Evaluate the math expressions that Tokens Studio allows, which are skipped today.',
-    ],
+    testing:
+      'Each parser runs against fixtures, including invalid JSON and alias cycles. The generated theme is compared with snapshot files, and the app is tested with axe.',
+    next: 'Evaluating the Tokens Studio math expressions, which are skipped today.',
+    stack: ['React 19', 'TypeScript', 'Vite 7', 'Tailwind CSS 4', 'culori', 'Vitest'],
     screenshots: [
-      {
-        src: PLACEHOLDER,
-        alt: 'Token JSON pasted on the left and a live component preview on the right',
-      },
-      {
-        src: PLACEHOLDER,
-        alt: 'Generated theme.css ready to copy',
-      },
+      { src: PLACEHOLDER, alt: 'Token JSON pasted on the left and a live component preview' },
     ],
   },
   'plain-language-word-addin': {
-    context:
-      'Writers need to know which sentences make a document hard to read, and a rewrite they can trust. The author stays in control: the rewrite goes in as a tracked change they can accept, reject or edit.',
-    built: [
-      'A readability engine with Flesch-Kincaid grade, Flesch Reading Ease and checks for long sentences, passive voice, nominalisations, jargon and filler words.',
-      'A task pane that jumps to the sentence in the document and highlights every long sentence.',
-      'A rewrite with a word-level diff and warnings if a number or a protected term goes missing.',
-      "An insert that stops if the paragraph changed since the rewrite, and restores the author's tracking setting afterwards.",
-      'A small rewrite server that validates input, caps the body size and rate limits, with a demo mode when no API key is set.',
+    intro:
+      'A Word add-in that scores readability, points to hard sentences and rewrites a paragraph in plain language as a tracked change.',
+    role: ROLE,
+    liveLabel: 'Open the browser preview',
+    why: 'I wanted an AI rewrite where the author keeps control: it arrives as a tracked change they can accept, reject or edit.',
+    does: [
+      'Scores the document and lists long sentences, passive voice, jargon and filler words.',
+      'Shows a rewrite as a word-level diff, with a warning if a number or protected term went missing.',
+      'Inserts it as a tracked change, and refuses if the paragraph changed since the rewrite.',
     ],
     decisions: [
-      "A tracked change instead of a silent replace, and a refusal to insert if the paragraph changed since the rewrite. The author's edits are never overwritten.",
-      'The interface never calls Word directly. It talks to a gateway interface, so tests use a fake and a plain browser tab gets a preview with a sample document.',
-      'The server checks that every number and protected term from the original is still in the rewrite and adds a warning if not, instead of trusting the model.',
-      'The XML manifest rather than the unified one, because it works in Word on Mac, Windows and the web today. Moving later is a conversion.',
-    ],
-    tested: [
-      'Sentence splitting edge cases, syllables, the readability formulas and each check, because every score depends on them.',
-      'The Word wrapper against a fake of the Word object model, including restoring track changes when an insert fails.',
-      'Task pane flows with axe, with Word faked at the gateway.',
-      'Server validation, CORS, body cap, rate limit and error mapping.',
-    ],
-    next: [
-      'A short demo video, because an add-in cannot be opened in a browser.',
-      'Check the rewrite warnings against a set of real paragraphs.',
-      'Move to the unified manifest once it covers the platforms I target.',
-    ],
-    screenshots: [
       {
-        src: PLACEHOLDER,
-        alt: 'Word task pane with a readability score and an issue list',
+        title: 'A tracked change, not a replace',
+        body: "The author's edits are never overwritten, and their tracking setting comes back afterwards. The cost is a check on every insert and a refusal when the paragraph moved.",
       },
+      {
+        title: 'A gateway between the interface and Word',
+        body: 'The interface never calls Word directly, so tests use a fake and a browser tab gets a sample document. The cost is an interface to keep in step with Word.',
+      },
+      {
+        title: 'The server checks the model',
+        body: 'It confirms every number and protected term is still in the rewrite and warns if not, instead of trusting the model. The cost is a warning the author has to read.',
+      },
+    ],
+    testing:
+      'The readability engine, the Word wrapper (against a fake Word) and the server have unit tests. Without an API key the server returns sample rewrites, so the browser preview never calls Claude.',
+    next: 'A short demo video, since the add-in only runs inside Word.',
+    stack: ['Office.js', 'React 19', 'TypeScript', 'Hono', 'zod', 'Anthropic SDK'],
+    screenshots: [
+      { src: PLACEHOLDER, alt: 'Word task pane with a readability score and an issue list' },
     ],
   },
   'agent-control-room': {
-    context:
-      'Most agent demos show the output. The harder part is the process around it: which steps run, where a person has to say yes, and what happens when CI fails twice. This project makes that process a graph you can draw, publish and watch, on a simulated engineering agent.',
-    built: [
-      'A workflow editor on a canvas I wrote myself: drag steps from a palette, connect ports, pan and zoom, undo and redo, duplicate, tidy up with a layered auto-layout, and import or export JSON.',
-      'Eleven step types, from trigger and plan to approval gate, CI check with a bounded retry loop, review, condition, guard and end, each with its own settings form and validation.',
-      'A problems panel that lists what is wrong with the draft, from unreachable steps to unbounded loops, and keeps Publish disabled until the graph is valid.',
-      'A seeded simulator that runs every job through the published workflow, with live counts on each step, a trace of the path any job took, and a dry run of the draft you can play, pause and step.',
-      'The operator pages around it: queue, job detail, approvals, guards and model routing.',
+    intro:
+      'A workflow builder and control room for a simulated engineering agent: draw its steps as a graph, dry run it and publish.',
+    role: ROLE,
+    why: 'An agent that writes code is only useful if people can see and steer it. I wanted the operating surface: approval gates, guards and a trace of every job.',
+    does: [
+      'Edit the steps on a canvas with eleven step types. Publish stays off until the graph is valid.',
+      'A seeded simulator runs jobs through the published workflow, with live counts and a trace for each job.',
+      'Queue, approvals, guards and model routing pages around it.',
     ],
     decisions: [
-      'No graph library. Steps are HTML over one SVG layer for the connections, because I needed full control of focus, keyboard and announcements.',
-      'Every pointer action has a keyboard path. Steps form a list with roving focus in graph order, a menu connects a port to any valid target, and an outline view shows and edits the same graph as one ordered list of steps and their connections.',
-      "The workflow is data that the simulator interprets. Before that refactor I recorded the simulator's event stream for three seeds, and the default workflow reproduces them exactly, apart from the step and publish events added since, which proves the change kept behaviour.",
-      'Publishing is a versioned command on the event stream. Jobs keep the version they started with, so editing the workflow never changes work in flight.',
-      'Every edit goes through one capped command history, so undo and redo cover changes made with the pointer, the keyboard and the outline alike.',
+      {
+        title: 'A custom canvas instead of React Flow',
+        body: 'Owning the nodes gave me control of focus, keyboard and announcements. The cost is pan and zoom maths and hit testing, and there is no minimap.',
+      },
+      {
+        title: 'Workflows are versioned data',
+        body: 'Jobs keep the version they started on, so publishing never changes work in flight. The cost is several versions alive at once, and only the last 20 are kept.',
+      },
+      {
+        title: 'A keyboard path for every pointer action',
+        body: 'An outline view builds the same graph without the canvas, even on a phone. The cost is two views to keep in step.',
+      },
     ],
-    tested: [
-      'Graph logic as plain functions: validation, cycle detection, reachability, topological order and auto-layout.',
-      'The recorded event streams, so any change to how the simulator walks the graph shows up as a diff.',
-      'Keyboard flows: add a step, connect through the menu, delete and undo, and where focus lands after each, with axe on the editor and on the outline view.',
-      'Pointer flows: drag a step and undo, drag from a port onto a step to connect, open a job trace and run a dry run to the end.',
-    ],
-    next: ['Measure the canvas on a production build and on a phone.'],
+    testing:
+      'Graph logic, the simulator and recorded event streams run as plain tests. Keyboard and pointer editing flows run with axe on every page.',
+    next: 'Measuring the canvas on a production build and on a phone. So far I measured only a development build.',
+    stack: ['React 19', 'TypeScript', 'Vite 7', 'Zustand', 'zod', 'Vitest'],
     screenshots: [
       {
         src: PLACEHOLDER,
         alt: 'Workflow editor with the default pipeline and live job counts on each step',
       },
-      {
-        src: PLACEHOLDER,
-        alt: 'Dry run stepping a single job through the draft workflow',
-      },
     ],
   },
   sudoku: {
-    context:
-      'A small Vue 3 project around one real problem: generating puzzles that have exactly one solution.',
-    built: [
-      'A generator that fills a grid by backtracking and hides cells only while the puzzle keeps exactly one solution.',
-      'Four difficulty levels, a score that rewards correct entries and penalises mistakes, hints and time, and a local leaderboard.',
-      'Conflict highlighting, undo and redo, up to ten hints, and a timer that pauses when the tab is hidden.',
-      'Keyboard play with one tab stop for the grid and labelled cells.',
+    intro:
+      'A Sudoku game in Vue 3 with four difficulty levels, hints, undo and keyboard play, where every puzzle has one solution.',
+    role: ROLE,
+    liveLabel: 'Play the game',
+    why: 'I wanted a small project around one real problem: generating puzzles with exactly one solution.',
+    does: [
+      'Four difficulty levels, up to ten hints, undo and redo, and highlighted conflicts.',
+      'A score that rewards correct entries and penalises mistakes, hints and time, with a local top three.',
+      'Keyboard play with one tab stop for the grid. The timer pauses when the tab is hidden.',
     ],
     decisions: [
-      'A cell is hidden only if the solver still finds exactly one solution, so checking an entry against the stored solution is always fair.',
-      'The solver stops counting at two solutions, which is enough to tell unique from not unique, and tries the cell with the fewest candidates first to keep the search small.',
-      'Difficulty is the number of visible cells, not the techniques a puzzle needs. It is simpler, and the README says so.',
-    ],
-    tested: [
-      'The generator: valid full grids, solution counting, unique solutions and visible cell counts per difficulty, because a puzzle with two solutions is a bug a player can feel.',
-      'The puzzle store: scoring, error marking, hint costs, undo and redo, and finishing a game.',
-      'The timer and the leaderboard storage.',
-    ],
-    next: [
-      'Grade difficulty by the solving techniques a puzzle needs instead of by the number of visible cells.',
-    ],
-    screenshots: [
       {
-        src: PLACEHOLDER,
-        alt: 'Sudoku board in the middle of a game',
+        title: 'Hide a cell only if one solution remains',
+        body: 'The stored solution is then the only answer, so checking an entry is always fair. The cost is a solver run for each cell tried, which stops counting at two solutions to stay fast.',
+      },
+      {
+        title: 'Difficulty is the number of visible cells',
+        body: 'It is simple and predictable. The cost is that a puzzle with few clues can still be easy, because I do not grade by solving technique.',
       },
     ],
+    testing:
+      'The generator is tested for valid grids, unique solutions and clue counts per difficulty. The puzzle store, the timer and the leaderboard storage have unit tests.',
+    next: 'Grading difficulty by the solving techniques a puzzle needs.',
+    stack: ['Vue 3', 'TypeScript', 'Vite 7', 'Vitest', 'Vue Test Utils'],
+    screenshots: [{ src: PLACEHOLDER, alt: 'Sudoku board in the middle of a game' }],
   },
 };
 
@@ -356,12 +340,12 @@ export function realScreenshots(detail: ProjectDetail): Screenshot[] {
   return detail.screenshots.filter((shot) => shot.src !== PLACEHOLDER);
 }
 
-/** Repository and live URLs come from the shared project list, so there is one source of truth. */
-export function projectLinks(project: Project): ProjectLink[] {
+/** The live link first, then the source. URLs come from the shared project list, so there is one source of truth. */
+export function projectLinks(project: Project, detail: ProjectDetail): ProjectLink[] {
   const family = familyProjects.find((item) => item.id === project.libraryId);
   if (!family) return [];
-  const links: ProjectLink[] = [{ label: 'Source on GitHub', href: family.repoUrl }];
-  if (family.url) links.push({ label: 'Live site', href: family.url });
-  else if (family.plannedUrl) links.push({ label: 'Live site', href: null, planned: true });
+  const links: ProjectLink[] = [];
+  if (family.url) links.push({ label: detail.liveLabel ?? 'Open the live app', href: family.url });
+  links.push({ label: 'Source on GitHub', href: family.repoUrl });
   return links;
 }

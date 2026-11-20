@@ -69,13 +69,13 @@ export default function ProjectsPage() {
     <>
       <Seo
         title='Projects'
-        description='Projects by Eylül Güneş: a component library, an issue tracker, an AI pull request review tool, a design-token tool, a Word add-in and smaller apps.'
+        description='Projects by Eylül Güneş: a component library, an issue tracker, an AI pull request review tool, a design token tool, a Word add-in and smaller apps.'
       />
       <div className='max-w-3xl pt-6 pb-8 md:pb-12'>
         <PageHeader
           eyebrow='Work'
           title='Projects'
-          description='Public projects with tests and CI. The main ones come first, smaller ones after. Filter by tag or search by name or stack.'
+          description='Public projects with tests and CI. Filter by tag or search by name or stack.'
         />
       </div>
 

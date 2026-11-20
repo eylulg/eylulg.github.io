@@ -7,27 +7,27 @@ export interface PrincipleGroup {
 }
 
 export const principlesIntro =
-  'These are the rules I hold myself to, and the same rules I write into the briefs of the agents I build. If a rule is too vague for an agent to follow, it is too vague for me. Each group says when I bend it.';
+  'The rules I follow, and the ones I write into the briefs of the agents I build. A rule too vague for an agent is too vague for me. Each group says when it bends.';
 
 export const principleGroups: PrincipleGroup[] = [
   {
     id: 'design-and-ui',
     title: 'Design and UI',
     principles: [
-      'I build what the design defines, because a missing style is a question for the designer, not a prop for me to invent.',
-      'I use the design system first and extend it when it falls short, because a fix in one screen becomes a bug in the next.',
-      'I cover responsive layouts and empty, loading and error states even when the designs show only the desktop happy path, because users meet those first.',
+      'I build what the design defines. A missing style is a question for the designer, not a prop for me to invent.',
+      'I use the design system and extend it when it falls short. A fix in one screen becomes a bug in the next.',
+      'I cover responsive layouts and empty, loading and error states, even when the designs show only the desktop happy path.',
     ],
     bends:
-      'When a missing design blocks the work, I ship the smallest honest version, write down what I assumed and change it once the design owner has answered.',
+      'If a missing design blocks the work, I ship the smallest version, write down what I assumed and change it when the designer answers.',
   },
   {
     id: 'code',
     title: 'Code and checks',
     principles: [
-      'I search for an existing helper before writing one, because duplicates drift apart.',
-      'I write tests that prove what a user can see, and comments that explain why, because tests of internals and comments that restate code go stale.',
-      'I run the type check, lint and the tests for my change before I commit, because CI should confirm what I already know.',
+      'I search for an existing helper before writing one.',
+      'I write tests for what a user can see, and comments that say why, not what.',
+      'I run the type check, lint and the tests for my change before I commit.',
     ],
     bends:
       'A throwaway prototype does not need the full set of tests. Anything that lives longer than a week does.',
@@ -36,19 +36,19 @@ export const principleGroups: PrincipleGroup[] = [
     id: 'pull-requests',
     title: 'Pull requests and review',
     principles: [
-      'I open a draft pull request with a summary, a test plan and evidence such as before and after screenshots, and I keep the description true after every change, because reviewers read it first.',
-      'I review the diff rather than the description, say which findings block and which are suggestions, answer every thread, and dismiss a finding only when it is wrong, because the next reader pays for every unclear name and every duplicate.',
+      'I open a draft pull request with a summary, a test plan and before and after screenshots, and I keep the description true after every change.',
+      'I review the diff, not the description. I say which findings block and which are suggestions, answer every thread, and dismiss a finding only when it is wrong.',
     ],
-    bends: 'A typo fix does not need a screenshot. I say so in the description instead.',
+    bends: 'A typo fix does not need a screenshot. I say so in the description.',
   },
   {
     id: 'communication',
     title: 'Communication',
     principles: [
-      'When I am blocked on a product question I ask the owner once, with a recommended option, because a clear question gets a quick answer.',
-      'I record decisions where the team will look for them, usually on the ticket, because a plan agreed in chat is forgotten.',
+      'When a product question blocks me, I ask the owner once, with a recommended option.',
+      'I record decisions on the ticket, where the team will look for them.',
     ],
     bends:
-      'For a small question I skip the write-up and ask in a message. The record is for decisions that someone will need later.',
+      'For a small question I send a message. Write-ups are for decisions someone will need later.',
   },
 ];

@@ -1,7 +1,7 @@
 import { Badge } from '@eylulg/ui/badge';
 import { Card, CardBody, CardFooter, CardHeader } from '@eylulg/ui/card';
 import { ArrowRight } from 'lucide-react';
-import type { Project } from '@/content/projects';
+import { type Project, projectStatus } from '@/content/projects';
 import { StatusBadge } from './status-badge';
 
 interface ProjectCardProps {
@@ -17,7 +17,7 @@ export function ProjectCard({ project, headingLevel = 3 }: ProjectCardProps) {
       <CardBody>
         <div className='flex flex-col gap-4'>
           <div className='flex flex-wrap items-center gap-2'>
-            <StatusBadge status={project.status} />
+            <StatusBadge status={projectStatus(project)} />
           </div>
           <p className='text-md text-tertiary'>{project.summary}</p>
           <ul aria-label='Tags' className='flex flex-wrap gap-1.5'>
@@ -34,7 +34,7 @@ export function ProjectCard({ project, headingLevel = 3 }: ProjectCardProps) {
           aria-hidden='true'
           className='flex items-center gap-1.5 text-sm font-semibold text-brand'
         >
-          Read the case study
+          View project
           <ArrowRight className='size-4' />
         </span>
       </CardFooter>

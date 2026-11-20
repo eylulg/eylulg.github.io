@@ -18,7 +18,7 @@ export default function ContactPage() {
         <PageHeader
           eyebrow='Get in touch'
           title='Contact'
-          description="The quickest way to reach me is email. I'm based in Türkiye and open to remote work."
+          description='Email is the quickest way to reach me. I am based in Türkiye and open to remote work.'
         />
         <ContactButtons size='lg' />
       </div>

@@ -7,7 +7,7 @@ export default function PrinciplesPage() {
     <>
       <Seo
         title='How I work'
-        description='How Eylül Güneş works: design and UI, code and checks, pull requests and review, and communication, with when each rule bends.'
+        description='How Eylül Güneş works on design and UI, code and checks, pull requests and review, and communication, and when each rule bends.'
       />
       <div className='max-w-3xl pt-6 pb-8 md:pb-12'>
         <PageHeader

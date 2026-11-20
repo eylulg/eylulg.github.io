@@ -1,5 +1,5 @@
 import { type ComponentType, Suspense, lazy, useEffect, useLayoutEffect } from 'react';
-import { Route, Routes, useLocation, useNavigationType } from 'react-router';
+import { Route, Routes, matchRoutes, useLocation, useNavigationType } from 'react-router';
 import { RootLayout, RouteFallback } from '@/app/root-layout';
 
 type PageModule = { default: ComponentType };
@@ -24,9 +24,32 @@ function ScrollByPathname() {
   return null;
 }
 
-/** Every page is its own lazy-loaded chunk. The scroll reset renders with the page, so it runs once the content exists. */
-function page(load: () => Promise<PageModule>) {
-  const Page = lazy(load);
+type Load = () => Promise<PageModule>;
+
+/** Every page is its own lazy-loaded chunk. */
+const pages: { path: string; load: Load }[] = [
+  { path: '/', load: () => import('@/pages/home') },
+  { path: 'projects', load: () => import('@/pages/projects') },
+  { path: 'projects/:slug', load: () => import('@/pages/project-detail') },
+  { path: 'experience', load: () => import('@/pages/experience') },
+  { path: 'principles', load: () => import('@/pages/principles') },
+  { path: 'agents', load: () => import('@/pages/agents') },
+  { path: 'how-this-was-built', load: () => import('@/pages/how-built') },
+  { path: 'contact', load: () => import('@/pages/contact') },
+  { path: '*', load: () => import('@/pages/not-found') },
+];
+
+const loaded = new Map<Load, ComponentType>();
+
+/** Loads the page for a path ahead of the first render. A lazy page would show the fallback first, and React keeps a fallback on screen for 300 ms. */
+export async function preloadPage(pathname: string) {
+  const load = matchRoutes(pages, pathname)?.[0]?.route.load;
+  if (load) loaded.set(load, (await load()).default);
+}
+
+/** The scroll reset renders with the page, so it runs once the content exists. */
+function page(load: Load) {
+  const Page = loaded.get(load) ?? lazy(load);
 
   return (
     <Suspense fallback={<RouteFallback />}>
@@ -40,15 +63,9 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route element={<RootLayout />}>
-        <Route index element={page(() => import('@/pages/home'))} />
-        <Route path='projects' element={page(() => import('@/pages/projects'))} />
-        <Route path='projects/:slug' element={page(() => import('@/pages/project-detail'))} />
-        <Route path='experience' element={page(() => import('@/pages/experience'))} />
-        <Route path='principles' element={page(() => import('@/pages/principles'))} />
-        <Route path='agents' element={page(() => import('@/pages/agents'))} />
-        <Route path='how-this-was-built' element={page(() => import('@/pages/how-built'))} />
-        <Route path='contact' element={page(() => import('@/pages/contact'))} />
-        <Route path='*' element={page(() => import('@/pages/not-found'))} />
+        {pages.map(({ path, load }) => (
+          <Route key={path} path={path} element={page(load)} />
+        ))}
       </Route>
     </Routes>
   );

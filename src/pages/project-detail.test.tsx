@@ -1,48 +1,40 @@
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { renderRoute, runAxe } from '@/test/render-route';
 
 describe('Project detail page', () => {
-  it('renders the case-study sections', async () => {
-    const { heading } = await renderRoute('/projects/ui');
+  it('links the live app and the source from the hero', async () => {
+    await renderRoute('/projects/workspace');
 
-    expect(heading).toHaveTextContent('Component Library');
-    for (const section of [
-      'Context',
-      'What I built',
-      'Decisions',
-      'What I tested',
-      'Stack',
-      'What I would do next',
-      'Links',
-    ]) {
-      expect(screen.getByRole('heading', { level: 2, name: section })).toBeInTheDocument();
-    }
+    expect(screen.getByRole('link', { name: /Open the live app/ })).toHaveAttribute(
+      'href',
+      'https://eg-workspace.vercel.app/',
+    );
     expect(screen.getByRole('link', { name: /Source on GitHub/ })).toHaveAttribute(
       'href',
-      'https://github.com/eylulg/ui',
+      'https://github.com/eylulg/workspace',
     );
   });
 
-  it('has no Outcome section until something is measured, and no screenshots section while they are placeholders', async () => {
-    await renderRoute('/projects/review-companion');
-
-    expect(screen.queryByRole('heading', { name: 'Outcome' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Screenshots' })).not.toBeInTheDocument();
-  });
-
-  it('shows Live site as a disabled control with the planned badge while the project has no url', async () => {
+  it('summarises the project in the at a glance aside', async () => {
     await renderRoute('/projects/workspace');
 
-    expect(screen.queryByRole('link', { name: /Live site/ })).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Live site' })).toBeDisabled();
-    expect(screen.getByText('Not deployed yet')).toBeInTheDocument();
+    const aside = screen.getByRole('complementary', { name: 'At a glance' });
+
+    expect(within(aside).getByText('Built alone, design and code')).toBeInTheDocument();
+    expect(within(aside).getByRole('list', { name: 'Stack' })).toHaveTextContent('Drizzle ORM');
   });
 
-  it('has no live link for a project that runs inside Word', async () => {
-    await renderRoute('/projects/plain-language-word-addin');
+  it('links to the previous and next project', async () => {
+    await renderRoute('/projects/workspace');
 
-    expect(screen.queryByRole('link', { name: /Live site/ })).not.toBeInTheDocument();
+    const pager = screen.getByRole('navigation', { name: 'More projects' });
+
+    expect(within(pager).getByRole('link', { name: /Component Library/ })).toHaveAttribute(
+      'href',
+      '/projects/ui',
+    );
+    expect(within(pager).getAllByRole('link')).toHaveLength(2);
   });
 
   it('shows the 404 page for an unknown slug', async () => {

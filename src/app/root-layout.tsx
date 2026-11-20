@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { AppShell, type LinkProps, SiteFooter, TopNav } from '@eylulg/ui/chrome';
+import { AppShell, BrandLoader, type LinkProps, SiteFooter, TopNav } from '@eylulg/ui/chrome';
 import { Link, Outlet, useLocation } from 'react-router';
 import { NavActionsShell } from '@/components/site/nav-actions-shell';
 import { site } from '@/content/site';
@@ -26,7 +26,8 @@ function Nav({ pathname }: { pathname: string }) {
 
   return (
     <TopNav
-      productName={site.name}
+      productName={site.brandName}
+      portfolioHref='/'
       LinkComponent={RouterLink}
       links={links}
       actions={<NavActionsShell />}
@@ -55,12 +56,12 @@ export function RootLayout() {
         footer={
           <SiteFooter currentId='portfolio'>
             <p className='text-sm text-tertiary'>
-              This portfolio was built with AI agents.{' '}
+              I built this site with AI agents.{' '}
               <Link
                 to='/how-this-was-built'
                 className='rounded text-brand underline-offset-2 outline-focus hover:underline focus-visible:outline-2 focus-visible:outline-offset-2'
               >
-                How this portfolio was built
+                How it was built
               </Link>
             </p>
           </SiteFooter>
@@ -74,11 +75,8 @@ export function RootLayout() {
 
 export function RouteFallback() {
   return (
-    <div
-      role='status'
-      className='flex min-h-dvh items-center justify-center bg-primary text-sm text-tertiary'
-    >
-      Loading…
+    <div className='flex min-h-[60dvh] items-center justify-center'>
+      <BrandLoader size={96} label='Loading the page' />
     </div>
   );
 }
