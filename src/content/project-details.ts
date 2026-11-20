@@ -33,7 +33,7 @@ const details: Record<string, ProjectDetail> = {
     context:
       'Most of my design-system work lives in private company repositories. This is a public library that shows how I design component APIs, tokens, accessibility and releases, and that makes the projects here read as one family.',
     built: [
-      'Tokens in a Tailwind CSS 4 theme on one warm frame, with nine project themes that each set four things: a colour, a font pairing, a text size and a density.',
+      'Tokens in a Tailwind CSS 4 theme on one warm frame, with nine project themes that change colour only, so the fonts, text size and density stay the same in each.',
       'More than thirty components on React Aria Components, each with its own entry point.',
       'The shared chrome: app shell, top nav, project switcher, theme and text size toggles, and footer.',
       'Line, bar and grid charts with keyboard-reachable marks, a table alternative and a palette checked for contrast and colour blindness in every variant.',
