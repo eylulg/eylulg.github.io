@@ -43,7 +43,7 @@ Analytics are off. `src/lib/analytics.ts` holds a commented PostHog hook.
 
 ## Deploy
 
-`.github/workflows/deploy.yml` builds the site and publishes `dist/` to GitHub Pages on every push to `main`. `ci.yml` runs the checks above, the Playwright test, Lighthouse and a secret scan on pull requests and pushes. Both build `@eylulg/ui` from source first, until the library is published to npm.
+`.github/workflows/deploy.yml` builds the site and publishes `dist/` to GitHub Pages on every push to `main`. `ci.yml` runs the checks above, the Playwright test, Lighthouse and a secret scan on pull requests and pushes. Both build `@eylulg/ui` from its main branch first, so the site uses the latest library code before it is released to npm.
 
 ## License
 
