@@ -6,7 +6,7 @@ The portfolio site of Eylül Güneş, Senior Frontend Developer: projects, exper
 
 - Vite 7, React 19, TypeScript (strict), React Router 7 with a lazy-loaded chunk per page
 - [`@eylulg/ui`](https://github.com/eylulg/ui), the shared design system, with its `portfolio` theme variant, on React Aria Components and Tailwind CSS 4
-- The shared chrome from the library: top nav with the project switcher, theme toggle and a footer that lists every project
+- The shared chrome from the library: top nav with the theme toggle and a footer that lists every project
 - Inter, self-hosted through `@fontsource-variable/inter`
 - Dark mode with the library's `dark-mode` class: the library's theme toggle follows the system setting until the visitor flips it, and an inline script avoids a flash on load
 - Vitest, Testing Library and vitest-axe for unit and accessibility tests; Playwright for a smoke test of the built site

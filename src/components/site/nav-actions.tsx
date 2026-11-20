@@ -1,42 +1,32 @@
 import { useEffect, useRef } from 'react';
-import { ProjectSwitcher, TextSizeToggle, ThemeToggle } from '@eylulg/ui/chrome';
-
-export type NavActionTarget = 'switcher' | 'theme';
+import { ThemeToggle } from '@eylulg/ui/chrome';
 
 interface NavActionsProps {
-  /** The menu the visitor pressed while this code was still loading; it opens once the real trigger exists. */
-  openTarget?: NavActionTarget;
+  /** The menu button was pressed while this code was still loading; the menu opens once the real trigger exists. */
+  shouldOpenMenu?: boolean;
 }
 
-/** The two menus of the top bar, in one module so React Aria's menu and overlay code loads on demand. */
-export default function NavActions({ openTarget }: NavActionsProps) {
+/** The theme controls of the top bar, in one module so React Aria's menu and toggle code loads on demand. */
+export default function NavActions({ shouldOpenMenu }: NavActionsProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!openTarget) return;
-    const wrappers =
-      rootRef.current?.querySelectorAll<HTMLElement>(`[data-nav-action="${openTarget}"]`) ?? [];
-    // Each control is rendered once per breakpoint; only the visible one can be pressed.
+    if (!shouldOpenMenu) return;
+    const wrappers = rootRef.current?.querySelectorAll<HTMLElement>('[data-nav-menu]') ?? [];
+    // The control is rendered once per breakpoint; only the visible one can be pressed.
     const trigger = [...wrappers]
       .find((wrapper) => wrapper.getClientRects().length > 0)
       ?.querySelector('button');
     trigger?.focus();
     trigger?.click();
-  }, [openTarget]);
+  }, [shouldOpenMenu]);
 
   return (
     <div ref={rootRef} className='contents'>
-      <div data-nav-action='switcher' className='max-md:block md:hidden lg:block'>
-        <ProjectSwitcher currentId='portfolio' label='Switch project' />
-      </div>
-      <div data-nav-action='switcher' className='hidden md:block lg:hidden'>
-        <ProjectSwitcher currentId='portfolio' label='Switch' />
-      </div>
-      <TextSizeToggle />
-      <div data-nav-action='theme' className='max-md:block md:hidden lg:block'>
+      <div className='max-md:block md:hidden lg:block'>
         <ThemeToggle />
       </div>
-      <div data-nav-action='theme' className='hidden md:block lg:hidden'>
+      <div data-nav-menu className='hidden md:block lg:hidden'>
         <ThemeToggle compact />
       </div>
     </div>

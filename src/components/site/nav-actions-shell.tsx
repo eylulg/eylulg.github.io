@@ -1,7 +1,6 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
-import { type ThemePreference, useTextSize, useTheme } from '@eylulg/ui/chrome';
-import { ALargeSmall, ChevronDown, LayoutGrid, Monitor, Moon, Sun } from 'lucide-react';
-import type { NavActionTarget } from '@/components/site/nav-actions';
+import { type ThemePreference, useTheme } from '@eylulg/ui/chrome';
+import { Monitor, Moon, Sun } from 'lucide-react';
 import type { IconComponent } from '@/types/icon';
 
 let isChunkLoaded = false;
@@ -18,39 +17,13 @@ const themeChoices: Array<{ id: ThemePreference; label: string; icon: IconCompon
   { id: 'system', label: 'System theme', icon: Monitor },
 ];
 
-// The classes mirror the library's tertiary Button and ThemeToggle, so the real controls replace these without a shift.
+// The classes mirror the library's ThemeToggle, so the real controls replace these without a shift.
 const focusStyles =
   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus';
-const switcherButton = `relative inline-flex h-control-sm cursor-pointer items-center justify-center gap-1.5 rounded-md bg-transparent px-3 text-sm font-semibold whitespace-nowrap text-secondary transition-colors select-none hover:bg-hover hover:text-primary active:bg-tertiary ${focusStyles}`;
 const compactButton = `relative inline-flex size-control-md cursor-pointer items-center justify-center rounded-md bg-transparent p-0 font-semibold text-secondary transition-colors select-none hover:bg-hover hover:text-primary active:bg-tertiary ${focusStyles}`;
 const themeGroup =
-  'inline-flex items-center gap-0.5 rounded-md border border-default bg-primary p-0.5';
-const themeButton = `inline-flex size-control-xs min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-sm text-fg-tertiary transition-colors hover:bg-hover hover:text-fg-secondary aria-checked:bg-tertiary aria-checked:text-fg-primary ${focusStyles}`;
-
-const textSizeButton = `inline-flex size-control-md cursor-pointer items-center justify-center rounded-md border border-default bg-primary text-fg-tertiary transition-colors hover:bg-hover hover:text-fg-secondary data-selected:border-brand data-selected:bg-brand-subtle data-selected:text-brand ${focusStyles}`;
-
-interface PlaceholderProps {
-  onOpen: (target: NavActionTarget) => void;
-}
-
-/** A native button that looks and is labelled like the project switcher, and loads the real menu when pressed. */
-function SwitcherPlaceholder({ label, onOpen }: PlaceholderProps & { label: string }) {
-  const handleClick = () => onOpen('switcher');
-
-  return (
-    <button
-      type='button'
-      aria-haspopup='menu'
-      aria-expanded='false'
-      className={switcherButton}
-      onClick={handleClick}
-    >
-      <LayoutGrid aria-hidden='true' className='size-4 shrink-0' />
-      {label}
-      <ChevronDown aria-hidden='true' className='size-4 shrink-0' />
-    </button>
-  );
-}
+  'inline-flex h-control-md items-center gap-0.5 rounded-md border border-default bg-primary p-0.5';
+const themeButton = `inline-flex aspect-square h-full cursor-pointer items-center justify-center rounded-sm text-fg-tertiary transition-colors hover:bg-hover hover:text-fg-secondary aria-checked:bg-tertiary aria-checked:text-fg-primary ${focusStyles}`;
 
 function ThemeChoiceButton({ id, label, icon: Icon }: (typeof themeChoices)[number]) {
   const { theme, setTheme } = useTheme();
@@ -70,26 +43,6 @@ function ThemeChoiceButton({ id, label, icon: Icon }: (typeof themeChoices)[numb
   );
 }
 
-/** Mirrors the library's TextSizeToggle with a native button, so the first load carries no React Aria. */
-function TextSizePlaceholder() {
-  const { size, setSize } = useTextSize();
-  const handleClick = () => setSize(size === 'compact' ? 'default' : 'compact');
-
-  return (
-    <button
-      type='button'
-      aria-pressed={size === 'compact'}
-      // The same state attribute as the library's toggle, so both share one set of styles.
-      data-selected={size === 'compact' || undefined}
-      aria-label='Compact text'
-      className={textSizeButton}
-      onClick={handleClick}
-    >
-      <ALargeSmall aria-hidden='true' className='size-4' />
-    </button>
-  );
-}
-
 /** The three-way theme switch needs no menu code, so it works from the first paint. */
 function ThemeGroupPlaceholder() {
   return (
@@ -101,11 +54,9 @@ function ThemeGroupPlaceholder() {
   );
 }
 
-function ThemeMenuPlaceholder({ onOpen }: PlaceholderProps) {
+function ThemeMenuPlaceholder({ onOpen }: { onOpen: () => void }) {
   const { theme } = useTheme();
   const Icon = themeChoices.find((choice) => choice.id === theme)?.icon ?? Monitor;
-  const handleClick = () => onOpen('theme');
-
   return (
     <button
       type='button'
@@ -113,23 +64,16 @@ function ThemeMenuPlaceholder({ onOpen }: PlaceholderProps) {
       aria-expanded='false'
       aria-label='Colour theme'
       className={compactButton}
-      onClick={handleClick}
+      onClick={onOpen}
     >
       <Icon aria-hidden='true' className='size-5' />
     </button>
   );
 }
 
-function Placeholders({ onOpen }: PlaceholderProps) {
+function Placeholders({ onOpen }: { onOpen: () => void }) {
   return (
     <>
-      <div className='max-md:block md:hidden lg:block'>
-        <SwitcherPlaceholder label='Switch project' onOpen={onOpen} />
-      </div>
-      <div className='hidden md:block lg:hidden'>
-        <SwitcherPlaceholder label='Switch' onOpen={onOpen} />
-      </div>
-      <TextSizePlaceholder />
       <div className='max-md:block md:hidden lg:block'>
         <ThemeGroupPlaceholder />
       </div>
@@ -141,13 +85,13 @@ function Placeholders({ onOpen }: PlaceholderProps) {
 }
 
 /**
- * The project switcher, text size toggle and theme toggle. The first paint has native buttons that work at once: the theme switch
- * changes the theme, the menu buttons load the menu code and open the menu. The real controls take their place
- * when the browser is idle, or when a menu button is pressed.
+ * The theme controls. The first paint has native buttons that work at once: the theme switch changes the theme and the
+ * menu button loads the menu code and opens the menu. The real controls take their place when the browser is idle, or
+ * when the menu button is pressed.
  */
 export function NavActionsShell() {
   const [isUpgraded, setIsUpgraded] = useState(isChunkLoaded);
-  const [openTarget, setOpenTarget] = useState<NavActionTarget>();
+  const [shouldOpenMenu, setShouldOpenMenu] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -169,8 +113,8 @@ export function NavActionsShell() {
     return () => window.removeEventListener('load', whenIdle);
   }, [isUpgraded]);
 
-  const handleOpen = (target: NavActionTarget) => {
-    setOpenTarget(target);
+  const handleOpen = () => {
+    setShouldOpenMenu(true);
     setIsUpgraded(true);
   };
 
@@ -180,7 +124,7 @@ export function NavActionsShell() {
     <div ref={rootRef} className='contents'>
       {isUpgraded ? (
         <Suspense fallback={placeholders}>
-          <NavActions openTarget={openTarget} />
+          <NavActions shouldOpenMenu={shouldOpenMenu} />
         </Suspense>
       ) : (
         placeholders

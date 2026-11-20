@@ -92,18 +92,12 @@ test.describe('top bar controls before the idle upgrade', () => {
     await page.goto('/');
   });
 
-  test('pressing Switch project right after load opens the switcher', async ({ page }) => {
-    await page.getByRole('button', { name: 'Switch project' }).click();
+  test('pressing the theme menu button right after load opens the menu', async ({ page }) => {
+    await page.setViewportSize({ width: 800, height: 800 });
+    await page.getByRole('button', { name: 'Colour theme' }).click();
 
     await expect(page.getByRole('menu')).toBeVisible();
-    await expect(page.getByRole('menuitem', { name: /Portfolio/ })).toBeVisible();
-  });
-
-  test('a keyboard press on Switch project opens the switcher', async ({ page }) => {
-    await page.getByRole('button', { name: 'Switch project' }).focus();
-    await page.keyboard.press('Enter');
-
-    await expect(page.getByRole('menu')).toBeVisible();
+    await expect(page.getByRole('menuitemradio', { name: 'Dark theme' })).toBeVisible();
   });
 
   test('the theme switch changes the theme at once', async ({ page }) => {

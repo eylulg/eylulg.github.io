@@ -35,7 +35,7 @@ const details: Record<string, ProjectDetail> = {
     built: [
       'Tokens in a Tailwind CSS 4 theme on one warm frame, with nine project themes that change colour only, so the fonts, text size and density stay the same in each.',
       'More than thirty components on React Aria Components, each with its own entry point.',
-      'The shared chrome: app shell, top nav, project switcher, theme and text size toggles, and footer.',
+      'The shared chrome: app shell, top nav, project switcher, theme toggle, and footer.',
       'Line, bar and grid charts with keyboard-reachable marks, a table alternative and a palette checked for contrast and colour blindness in every variant.',
       'Storybook with accessibility checks, and a bundle size budget in CI.',
     ],

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { AppShell, type LinkProps, SiteFooter, TopNav } from '@eylulg/ui/chrome';
+import { AppShell, BrandLoader, type LinkProps, SiteFooter, TopNav } from '@eylulg/ui/chrome';
 import { Link, Outlet, useLocation } from 'react-router';
 import { NavActionsShell } from '@/components/site/nav-actions-shell';
 import { site } from '@/content/site';
@@ -27,6 +27,7 @@ function Nav({ pathname }: { pathname: string }) {
   return (
     <TopNav
       productName={site.name}
+      portfolioHref='/'
       LinkComponent={RouterLink}
       links={links}
       actions={<NavActionsShell />}
@@ -74,11 +75,8 @@ export function RootLayout() {
 
 export function RouteFallback() {
   return (
-    <div
-      role='status'
-      className='flex min-h-dvh items-center justify-center bg-primary text-sm text-tertiary'
-    >
-      Loading…
+    <div className='flex min-h-[60dvh] items-center justify-center'>
+      <BrandLoader size={96} label='Loading the page' />
     </div>
   );
 }
